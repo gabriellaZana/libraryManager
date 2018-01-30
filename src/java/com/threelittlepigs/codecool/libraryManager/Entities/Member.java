@@ -12,10 +12,10 @@ import java.util.List;
 @DiscriminatorValue("Member")
 class Member extends User{
 
-    @OneToMany(mappedBy = "rentedBy")
+    @OneToMany(mappedBy = "rentedByMember")
     List<Book> rentedBooks = new ArrayList<>();
 
-    @OneToMany(mappedBy = "reservedBy")
+    @OneToMany(mappedBy = "reservedByMember")
     List<Book> reservedBooks = new ArrayList<>();
 
     Member(String userName, String password, String firstName, String lastName, String email, Date dateOfBirth, String address, String phoneNumber, UserType userType){
