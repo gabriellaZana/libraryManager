@@ -1,5 +1,7 @@
 package java.com.threelittlepigs.codecool.libraryManager.Entities;
 
+import com.threelittlepigs.codecool.libraryManager.Enums.Location;
+
 import javax.persistence.*;
 import java.lang.reflect.Member;
 import java.util.ArrayList;
@@ -27,14 +29,12 @@ public class Book {
     private boolean isAvailable = true;
 
     @ManyToOne
-    @JoinColumn(name = "member_id")
-    private Member member;
-    private int rentedBy;
+    @Column(name = "rentedBy")
+    private Member rentedByMember;
 
     @ManyToOne
-    @JoinColumn(name = "member_id")
-    private Member member;
-    private int reservedBy;
+    @Column(name = "reservedBy")
+    private Member reservedByMember;
 
 
     public Book(String title, String author, String picture_url, int year, String description, String publisher,
@@ -47,7 +47,6 @@ public class Book {
         this.publisher = publisher;
         this.genre = genre;
         this.location = location;
-        allBooks.add(this);
     }
 
 
@@ -135,19 +134,19 @@ public class Book {
         isAvailable = available;
     }
 
-    public int getRentedBy() {
-        return rentedBy;
+    public Member getRentedBy() {
+        return rentedByMember;
     }
 
-    public void setRentedBy(int rentedBy) {
-        this.rentedBy = rentedBy;
+    public void setRentedBy(Member rentedByMember) {
+        this.rentedByMember = rentedByMember;
     }
 
-    public int getReservedBy() {
-        return reservedBy;
+    public Member getReservedBy() {
+        return reservedByMember;
     }
 
-    public void setReservedBy(int reservedBy) {
-        this.reservedBy = reservedBy;
+    public void setReservedBy(Member reservedByMember) {
+        this.reservedByMember = reservedByMember    ;
     }
 }
