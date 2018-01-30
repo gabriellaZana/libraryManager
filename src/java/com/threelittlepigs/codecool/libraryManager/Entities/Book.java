@@ -1,7 +1,9 @@
 package java.com.threelittlepigs.codecool.libraryManager.Entities;
 
 import javax.persistence.*;
-
+import java.lang.reflect.Member;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "books")
@@ -23,6 +25,30 @@ public class Book {
     private Location location;
     private String isbn;
     private boolean isAvailable = true;
+
+    @ManyToOne
+    @JoinColumn(name = "member_id")
+    private Member member;
+    private int rentedBy;
+
+    @ManyToOne
+    @JoinColumn(name = "member_id")
+    private Member member;
+    private int reservedBy;
+
+
+    public Book(String title, String author, String picture_url, int year, String description, String publisher,
+                Genre genre, Location location, String isbn) {
+        this.title = title;
+        this.author = author;
+        this.picture_url = picture_url;
+        this.year = year;
+        this.description = description;
+        this.publisher = publisher;
+        this.genre = genre;
+        this.location = location;
+        allBooks.add(this);
+    }
 
 
     public int getId() {
@@ -107,5 +133,21 @@ public class Book {
 
     public void setAvailable(boolean available) {
         isAvailable = available;
+    }
+
+    public int getRentedBy() {
+        return rentedBy;
+    }
+
+    public void setRentedBy(int rentedBy) {
+        this.rentedBy = rentedBy;
+    }
+
+    public int getReservedBy() {
+        return reservedBy;
+    }
+
+    public void setReservedBy(int reservedBy) {
+        this.reservedBy = reservedBy;
     }
 }
