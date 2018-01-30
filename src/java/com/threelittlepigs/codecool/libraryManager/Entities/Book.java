@@ -48,6 +48,9 @@ public class Book {
         this.location = location;
     }
 
+    public Book() {
+    }
+
 
     public int getId() {
         return id;

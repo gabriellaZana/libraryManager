@@ -53,6 +53,9 @@ abstract class User {
         this.userType = userType;
     }
 
+    protected User() {
+    }
+
     public long getId() {
         return id;
     }

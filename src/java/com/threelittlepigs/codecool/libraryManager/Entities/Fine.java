@@ -25,6 +25,9 @@ class Fine {
     @Column(name = "member_id")
     private Member member;
 
+    public Fine() {
+    }
+
     public Fine(double amount, Date occurrence, Date dueDate, Member member) {
         this.amount = amount;
         this.occurrence = occurrence;

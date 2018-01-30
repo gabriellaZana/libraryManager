@@ -14,6 +14,10 @@ public class Librarian extends User {
         super(userName,password,firstName,lastName, email, dateOfBirth, address, phoneNumber, userType);
     }
 
+    public Librarian() {
+        super();
+    }
+
     void addBook(Book book){
         EntityUtility.persistEntity(book);
     }
