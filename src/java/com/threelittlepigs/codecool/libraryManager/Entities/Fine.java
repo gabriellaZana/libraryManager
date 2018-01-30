@@ -25,7 +25,7 @@ class Fine {
     @Column(name = "member_id")
     private Member member;
 
-    private Fine() {
+    public Fine() {
     }
 
     public Fine(double amount, Date occurrence, Date dueDate, Member member) {
