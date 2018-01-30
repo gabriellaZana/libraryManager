@@ -22,6 +22,9 @@ class Member extends User{
         super(userName, password, firstName, lastName, email, dateOfBirth, address, phoneNumber, userType);
     }
 
+    private Member() {
+    }
+
     void reserveBook(Book book){
 
     }

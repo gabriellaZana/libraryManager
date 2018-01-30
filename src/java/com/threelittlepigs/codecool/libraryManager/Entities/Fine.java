@@ -5,7 +5,7 @@ import java.util.Date;
 
 @Entity
 @NamedQuery(name = "getFineByMember",
-            query = "SELECT f FROM Fine f" +
+            query = "SELECT f FROM Fine f " +
                     "WHERE f.member_id = :memberid")
 class Fine {
 
@@ -25,7 +25,7 @@ class Fine {
     @Column(name = "member_id")
     private Member member;
 
-    public Fine() {
+    private Fine() {
     }
 
     public Fine(double amount, Date occurrence, Date dueDate, Member member) {
