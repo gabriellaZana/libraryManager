@@ -1,5 +1,7 @@
 package com.threelittlepigs.codecool.libraryManager.Entities;
 
+import com.threelittlepigs.codecool.libraryManager.Utils.EntityUtility;
+
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import java.util.Date;
@@ -13,19 +15,21 @@ public class Librarian extends User {
     }
 
     void addBook(Book book){
-
+        EntityUtility.persistEntity(book);
     }
 
     void removeBook(Book book){
-
+        EntityUtility.removeEntity(book);
     }
 
     void rentBook(Book book, Member member){
-
+        book.setRentedBy(member);
+        EntityUtility.mergeEntity(book);
     }
 
     void returnBook(Book book){
-
+        book.setRentedBy(null);
+        EntityUtility.mergeEntity(book);
     }
 
     void payFine(Fine fine){

@@ -3,7 +3,6 @@ package com.threelittlepigs.codecool.libraryManager.Entities;
 import com.threelittlepigs.codecool.libraryManager.Enums.Location;
 
 import javax.persistence.*;
-import java.lang.reflect.Member;
 import java.util.ArrayList;
 import java.util.List;
 
