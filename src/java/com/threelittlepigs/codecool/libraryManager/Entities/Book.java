@@ -7,6 +7,18 @@ import java.lang.reflect.Member;
 import java.util.ArrayList;
 import java.util.List;
 
+@NamedQueries({
+        @NamedQuery(
+                name = "getAllBooks",
+                query = "SELECT b FROM books b "),
+
+        @NamedQuery(
+                name = "getRentedBooksByMember",
+                query = "SELECT b FROM books b " +
+                        "WHERE b.rentedByMember = :rentedByMember"
+        )
+})
+
 @Entity
 @Table(name = "books")
 public class Book {
