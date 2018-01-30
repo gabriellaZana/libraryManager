@@ -1,4 +1,4 @@
-package java.com.threelittlepigs.codecool.libraryManager.Entities;
+package com.threelittlepigs.codecool.libraryManager.Entities;
 
 import javax.persistence.*;
 import java.lang.reflect.Member;
