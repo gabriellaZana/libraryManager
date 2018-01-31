@@ -2,7 +2,7 @@ package com.threelittlepigs.codecool.libraryManager.Entities.Users;
 
 import com.threelittlepigs.codecool.libraryManager.Entities.Book;
 import com.threelittlepigs.codecool.libraryManager.Entities.Fine;
-import com.threelittlepigs.codecool.libraryManager.Entities.UserType;
+import com.threelittlepigs.codecool.libraryManager.Enums.UserType;
 import com.threelittlepigs.codecool.libraryManager.Utils.EntityUtility;
 
 import javax.persistence.DiscriminatorValue;

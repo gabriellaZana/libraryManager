@@ -1,6 +1,6 @@
 package com.threelittlepigs.codecool.libraryManager.Entities.Users;
 
-import com.threelittlepigs.codecool.libraryManager.Entities.UserType;
+import com.threelittlepigs.codecool.libraryManager.Enums.UserType;
 import org.mindrot.jbcrypt.BCrypt;
 
 import javax.persistence.*;
