@@ -7,9 +7,10 @@ import javax.persistence.Persistence;
 
 public class EntityUtility {
 
-    private static EntityManagerFactory entityManagerFactory;
+    private static EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("libraryPU");
     private static EntityManager entityManager;
     private static EntityTransaction entityTransaction;
+
 
     public static void persistEntity(Object object) {
         createTransaction();
@@ -43,11 +44,9 @@ public class EntityUtility {
 
     private static void closeTransaction() {
         entityManager.close();
-        entityManagerFactory.close();
     }
 
     private static void createTransaction() {
-        entityManagerFactory = Persistence.createEntityManagerFactory("libraryPU");
         entityManager = entityManagerFactory.createEntityManager();
         entityTransaction = entityManager.getTransaction();
     }

@@ -5,7 +5,10 @@ import com.threelittlepigs.codecool.libraryManager.Enums.Location;
 import javax.persistence.*;
 import java.lang.reflect.Member;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.spi.CalendarNameProvider;
 
 @NamedQueries({
         @NamedQuery(
@@ -49,6 +52,16 @@ public class Book {
     private Member reservedByMember;
 
 
+    final int daysForRent = 7;
+    private Date currentDate = Calendar.getInstance().getTime();
+    private Date dueDate = getDueDate();
+
+
+    public Book() {
+
+    }
+
+    
     public Book(String title, String author, String picture_url, int year, String description, String publisher,
                 Genre genre, Location location, String isbn) {
         this.title = title;
@@ -160,5 +173,19 @@ public class Book {
 
     public void setReservedBy(Member reservedByMember) {
         this.reservedByMember = reservedByMember    ;
+    }
+
+    public Date getCurrentDate() {
+        return currentDate;
+    }
+
+    public Date getDueDate() {
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.DAY_OF_YEAR, 7);
+        return calendar.getTime();
+    }
+
+    public void setDueDate(Date dueDate) {
+        this.dueDate = dueDate;
     }
 }
