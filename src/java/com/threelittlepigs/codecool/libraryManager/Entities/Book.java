@@ -1,5 +1,7 @@
 package com.threelittlepigs.codecool.libraryManager.Entities;
 
+import com.threelittlepigs.codecool.libraryManager.Enums.Genre;
+import com.threelittlepigs.codecool.libraryManager.Entities.Users.Member;
 import com.threelittlepigs.codecool.libraryManager.Enums.Location;
 
 import javax.persistence.*;
@@ -8,6 +10,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.spi.CalendarNameProvider;
+
 
 @NamedQueries({
         @NamedQuery(
@@ -26,6 +29,7 @@ import java.util.spi.CalendarNameProvider;
                         "WHERE :columnName = :keyword"
         )
 })
+
 
 @Entity
 @Table(name = "books")
@@ -53,6 +57,7 @@ public class Book {
     private String publisher;
 
     @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
     private Genre genre;
 
     @Column(nullable = false)

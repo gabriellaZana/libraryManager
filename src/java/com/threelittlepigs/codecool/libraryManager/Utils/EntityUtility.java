@@ -9,51 +9,44 @@ import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
 
 public class EntityUtility {
-    private static EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("libraryPU");
-    private static EntityManager entityManager;
+    private static final Logger logger = LoggerFactory.getLogger(EntityUtility.class);
+    private static final EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("libraryPU");
+    private static final EntityManager entityManager = entityManagerFactory.createEntityManager();
+
     private static EntityTransaction entityTransaction;
 
-    private static final Logger logger = LoggerFactory.getLogger(EntityUtility.class);
-
-
     public static void persistEntity(Object object) {
-        logger.info("");
-        createTransaction();
+        logger.info("Persisting object : " + object.getClass().getSimpleName());
 
+        createTransaction();
         entityTransaction.begin();
         entityManager.persist(object);
         entityTransaction.commit();
-
-        closeTransaction();
     }
 
     public static void mergeEntity(Object object) {
-        createTransaction();
+        logger.info("Merging object : " + object.getClass().getSimpleName());
 
+        createTransaction();
         entityTransaction.begin();
         entityManager.merge(object);
         entityTransaction.commit();
-
-        closeTransaction();
     }
 
     public static void removeEntity(Object object) {
-        createTransaction();
+        logger.info("Removing object : " + object.getClass().getSimpleName());
 
+        createTransaction();
         entityTransaction.begin();
         entityManager.remove(object);
         entityTransaction.commit();
-
-        closeTransaction();
-    }
-
-    private static void closeTransaction() {
-        entityManager.close();
     }
 
     private static void createTransaction() {
-        entityManager = entityManagerFactory.createEntityManager();
         entityTransaction = entityManager.getTransaction();
     }
 
+    public static EntityManagerFactory getEntityManagerFactory() {
+        return entityManagerFactory;
+    }
 }
