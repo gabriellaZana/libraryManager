@@ -13,15 +13,11 @@ public class EntityUtility {
     private static final Logger logger = LoggerFactory.getLogger(EntityUtility.class);
     private static final EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("libraryPU");
 
-    public static EntityManagerFactory getEntityManagerFactory() {
-        return entityManagerFactory;
-    }
-
     private static EntityManager entityManager;
     private static EntityTransaction entityTransaction;
 
     public static void persistEntity(Object object) {
-        logger.info("");
+        logger.info("Persisting object : " + object.getClass().getSimpleName());
         createTransaction();
 
         entityTransaction.begin();
@@ -32,6 +28,7 @@ public class EntityUtility {
     }
 
     public static void mergeEntity(Object object) {
+        logger.info("Merging object : " + object.getClass().getSimpleName());
         createTransaction();
 
         entityTransaction.begin();
@@ -42,6 +39,7 @@ public class EntityUtility {
     }
 
     public static void removeEntity(Object object) {
+        logger.info("Removing object : " + object.getClass().getSimpleName());
         createTransaction();
 
         entityTransaction.begin();
@@ -59,4 +57,7 @@ public class EntityUtility {
         entityTransaction = entityManager.getTransaction();
     }
 
+    public static EntityManagerFactory getEntityManagerFactory() {
+        return entityManagerFactory;
+    }
 }
