@@ -9,7 +9,7 @@ import java.util.Date;
 @Inheritance
 @DiscriminatorColumn(name= "USER_TYPE")
 @Table(name="Users")
-abstract class User {
+public abstract class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -22,7 +22,6 @@ class Fine {
     private boolean status = true;
 
     @ManyToOne
-    @Column(name = "member_id")
     private Member member;
 
     public Fine() {

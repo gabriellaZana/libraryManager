@@ -28,11 +28,9 @@ public class Book {
     private boolean isAvailable = true;
 
     @ManyToOne
-    @Column(name = "rentedBy")
     private Member rentedByMember;
 
     @ManyToOne
-    @Column(name = "reservedBy")
     private Member reservedByMember;
 
 
@@ -46,6 +44,7 @@ public class Book {
         this.publisher = publisher;
         this.genre = genre;
         this.location = location;
+        this.isbn = isbn;
     }
 
     public Book() {

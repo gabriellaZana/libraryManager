@@ -1,5 +1,5 @@
 package com.threelittlepigs.codecool.libraryManager.Entities;
 
-enum UserType {
+public enum UserType {
     LIBRARIAN, MEMBER
 }

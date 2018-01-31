@@ -10,7 +10,7 @@ import java.util.Date;
 @DiscriminatorValue("Librarian")
 public class Librarian extends User {
 
-    Librarian(String userName, String password, String firstName, String lastName, String email, Date dateOfBirth, String address, String phoneNumber, UserType userType){
+    public Librarian(String userName, String password, String firstName, String lastName, String email, Date dateOfBirth, String address, String phoneNumber, UserType userType){
         super(userName,password,firstName,lastName, email, dateOfBirth, address, phoneNumber, userType);
     }
 
@@ -18,25 +18,25 @@ public class Librarian extends User {
         super();
     }
 
-    void addBook(Book book){
+    public void addBook(Book book){
         EntityUtility.persistEntity(book);
     }
 
-    void removeBook(Book book){
+    public void removeBook(Book book){
         EntityUtility.removeEntity(book);
     }
 
-    void rentBook(Book book, Member member){
+    public void rentBook(Book book, Member member){
         book.setRentedBy(member);
         EntityUtility.mergeEntity(book);
     }
 
-    void returnBook(Book book){
+    public void returnBook(Book book){
         book.setRentedBy(null);
         EntityUtility.mergeEntity(book);
     }
 
-    void payFine(Fine fine){
+    public void payFine(Fine fine){
 
     }
 }
