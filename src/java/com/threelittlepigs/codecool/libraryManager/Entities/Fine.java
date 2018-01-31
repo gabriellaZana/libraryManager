@@ -1,13 +1,15 @@
 package com.threelittlepigs.codecool.libraryManager.Entities;
 
+import com.threelittlepigs.codecool.libraryManager.Entities.Users.Member;
+
 import javax.persistence.*;
 import java.util.Date;
 
 @Entity
 @NamedQuery(name = "getFineByMember",
             query = "SELECT f FROM Fine f " +
-                    "WHERE f.member_id = :memberid")
-class Fine {
+                    "WHERE f.member = :memberid")
+public class Fine {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

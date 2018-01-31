@@ -12,6 +12,11 @@ public class EntityUtility {
 
     private static final Logger logger = LoggerFactory.getLogger(EntityUtility.class);
     private static final EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("libraryPU");
+
+    public static EntityManagerFactory getEntityManagerFactory() {
+        return entityManagerFactory;
+    }
+
     private static EntityManager entityManager;
     private static EntityTransaction entityTransaction;
 
@@ -42,7 +47,6 @@ public class EntityUtility {
         entityTransaction.begin();
         entityManager.remove(object);
         entityTransaction.commit();
-
         closeTransaction();
     }
 

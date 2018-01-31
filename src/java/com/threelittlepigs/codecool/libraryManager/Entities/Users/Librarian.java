@@ -1,5 +1,10 @@
-package com.threelittlepigs.codecool.libraryManager.Entities;
+package com.threelittlepigs.codecool.libraryManager.Entities.Users;
 
+import com.threelittlepigs.codecool.libraryManager.Entities.Book;
+import com.threelittlepigs.codecool.libraryManager.Entities.Fine;
+import com.threelittlepigs.codecool.libraryManager.Entities.UserType;
+import com.threelittlepigs.codecool.libraryManager.Entities.Users.Member;
+import com.threelittlepigs.codecool.libraryManager.Entities.Users.User;
 import com.threelittlepigs.codecool.libraryManager.Utils.EntityUtility;
 
 import javax.persistence.DiscriminatorValue;

@@ -1,10 +1,10 @@
 package com.threelittlepigs.codecool.libraryManager.Entities;
 
+import com.threelittlepigs.codecool.libraryManager.Entities.Genres.Genre;
+import com.threelittlepigs.codecool.libraryManager.Entities.Users.Member;
 import com.threelittlepigs.codecool.libraryManager.Enums.Location;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Table(name = "books")
@@ -22,6 +22,7 @@ public class Book {
     private int year;
     private String description;
     private String publisher;
+    @Enumerated(EnumType.STRING)
     private Genre genre;
     private Location location;
     private String isbn;
