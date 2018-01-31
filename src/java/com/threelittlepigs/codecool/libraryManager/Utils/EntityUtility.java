@@ -9,10 +9,10 @@ import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
 
 public class EntityUtility {
-
     private static final Logger logger = LoggerFactory.getLogger(EntityUtility.class);
     private static final EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("libraryPU");
     private static final EntityManager entityManager = entityManagerFactory.createEntityManager();
+
     private static EntityTransaction entityTransaction;
 
     public static void persistEntity(Object object) {

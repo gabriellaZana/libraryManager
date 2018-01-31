@@ -5,6 +5,31 @@ import com.threelittlepigs.codecool.libraryManager.Entities.Users.Member;
 import com.threelittlepigs.codecool.libraryManager.Enums.Location;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+import java.util.spi.CalendarNameProvider;
+
+
+@NamedQueries({
+        @NamedQuery(
+                name = "getAllBooks",
+                query = "SELECT b FROM books b "),
+
+        @NamedQuery(
+                name = "getRentedBooksByMember",
+                query = "SELECT b FROM books b " +
+                        "WHERE b.rentedByMember = :rentedByMember"
+        ),
+
+        @NamedQuery(
+                name = "findBooks",
+                query = "SELECT b FROM books b " +
+                        "WHERE :columnName = :keyword"
+        )
+})
+
 
 @Entity
 @Table(name = "books")
@@ -13,19 +38,34 @@ public class Book {
     @GeneratedValue
     private int id;
 
+    @Column(nullable = false)
     private String title;
+
+    @Column(nullable = false)
     private String author;
 
     @Column(name = "picture")
     private String picture_url;
 
+    @Column(nullable = false)
     private int year;
+
+    @Column(nullable = false)
     private String description;
+
+    @Column(nullable = false)
     private String publisher;
+
+    @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private Genre genre;
+
+    @Column(nullable = false)
     private Location location;
+
+    @Column(nullable = false)
     private String isbn;
+
     private boolean isAvailable = true;
 
     @ManyToOne
@@ -33,6 +73,15 @@ public class Book {
 
     @ManyToOne
     private Member reservedByMember;
+
+
+    final int daysForRent = 7;
+    private Date currentDate = Calendar.getInstance().getTime();
+    private Date dueDate = getDueDate();
+
+
+    public Book() {
+    }
 
 
     public Book(String title, String author, String picture_url, int year, String description, String publisher,
@@ -46,9 +95,6 @@ public class Book {
         this.genre = genre;
         this.location = location;
         this.isbn = isbn;
-    }
-
-    public Book() {
     }
 
 
@@ -150,5 +196,19 @@ public class Book {
 
     public void setReservedBy(Member reservedByMember) {
         this.reservedByMember = reservedByMember    ;
+    }
+
+    public Date getCurrentDate() {
+        return currentDate;
+    }
+
+    public Date getDueDate() {
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.DAY_OF_YEAR, 7);
+        return calendar.getTime();
+    }
+
+    public void setDueDate(Date dueDate) {
+        this.dueDate = dueDate;
     }
 }
