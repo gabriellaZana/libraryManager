@@ -31,15 +31,13 @@ public class Librarian extends User {
 
     public void rentBook(Book book, Member member){
         book.setRentedBy(member);
-        EntityUtility.mergeEntity(book);
     }
 
     public void returnBook(Book book){
         book.setRentedBy(null);
-        EntityUtility.mergeEntity(book);
     }
 
     public void payFine(Fine fine){
-
+        fine.setStatus(false);
     }
 }

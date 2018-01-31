@@ -15,7 +15,10 @@ public class Library {
         Librarian librarian = new Librarian("amigo", "asdasdasd", "Béla", "Kvács", "bk@gmail.cm", new Date(), "Fixaddress", "0908070605", UserType.LIBRARIAN);
 
         EntityUtility.persistEntity(librarian);
-
         librarian.addBook(book);
+
+        book.setIsbn("Tested");
+        EntityUtility.mergeEntity(book);
+        //librarian.removeBook(book);
     }
 }
