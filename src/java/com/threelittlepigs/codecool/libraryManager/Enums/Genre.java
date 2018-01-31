@@ -1,4 +1,4 @@
-package com.threelittlepigs.codecool.libraryManager.Entities.Genres;
+package com.threelittlepigs.codecool.libraryManager.Enums;
 
 public enum Genre {
     Genre(null),
