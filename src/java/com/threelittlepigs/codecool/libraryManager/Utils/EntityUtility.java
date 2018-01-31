@@ -1,18 +1,23 @@
 package com.threelittlepigs.codecool.libraryManager.Utils;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
 
 public class EntityUtility {
-
     private static EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("libraryPU");
     private static EntityManager entityManager;
     private static EntityTransaction entityTransaction;
 
+    private static final Logger logger = LoggerFactory.getLogger(EntityUtility.class);
+
 
     public static void persistEntity(Object object) {
+        logger.info("");
         createTransaction();
 
         entityTransaction.begin();

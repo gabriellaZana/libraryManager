@@ -1,9 +1,8 @@
-package java.com.threelittlepigs.codecool.libraryManager.Entities;
+package com.threelittlepigs.codecool.libraryManager.Entities;
 
 import com.threelittlepigs.codecool.libraryManager.Enums.Location;
 
 import javax.persistence.*;
-import java.lang.reflect.Member;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -75,6 +74,10 @@ public class Book {
         this.publisher = publisher;
         this.genre = genre;
         this.location = location;
+        this.isbn = isbn;
+    }
+
+    public Book() {
     }
 
 

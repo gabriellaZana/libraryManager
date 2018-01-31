@@ -6,7 +6,7 @@
         <setting name="validation-enabled" value="true" />
         <setting name="provider-name" value="" />
         <datasource-mapping>
-          <factory-entry name="libraryPU" />
+          <factory-entry name="libraryPU" value="2a7fb211-c067-4888-b50e-8a7d72bd841d" />
         </datasource-mapping>
         <deploymentDescriptor name="persistence.xml" url="file://$MODULE_DIR$/src/resources/META-INF/persistence.xml" />
       </configuration>
@@ -18,10 +18,12 @@
     <content url="file://$MODULE_DIR$">
       <sourceFolder url="file://$MODULE_DIR$/src/resources" type="java-resource" />
       <sourceFolder url="file://$MODULE_DIR$/src/java" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/main/resources" type="java-resource" />
       <excludeFolder url="file://$MODULE_DIR$/target" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="Maven: org.slf4j:slf4j-api:1.8.0-beta0" level="project" />
     <orderEntry type="library" name="Maven: org.eclipse.persistence:org.eclipse.persistence.jpa:2.6.2" level="project" />
     <orderEntry type="library" name="Maven: org.eclipse.persistence:javax.persistence:2.1.1" level="project" />
     <orderEntry type="library" name="Maven: org.eclipse.persistence:org.eclipse.persistence.asm:2.6.2" level="project" />
@@ -47,5 +49,7 @@
     <orderEntry type="library" scope="TEST" name="Maven: org.hamcrest:hamcrest-core:1.3" level="project" />
     <orderEntry type="library" name="Maven: org.apache.logging.log4j:log4j-api:2.8.2" level="project" />
     <orderEntry type="library" name="Maven: org.apache.logging.log4j:log4j-core:2.8.2" level="project" />
+    <orderEntry type="library" name="Maven: org.mindrot:jbcrypt:0.3m" level="project" />
+    <orderEntry type="library" name="Maven: org.slf4j:slf4j-api:1.8.0-beta0" level="project" />
   </component>
 </module>
