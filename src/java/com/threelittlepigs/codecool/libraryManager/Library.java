@@ -1,8 +1,8 @@
 package com.threelittlepigs.codecool.libraryManager;
 
 import com.threelittlepigs.codecool.libraryManager.Entities.Book;
-import com.threelittlepigs.codecool.libraryManager.Entities.Librarian;
-import com.threelittlepigs.codecool.libraryManager.Entities.UserType;
+import com.threelittlepigs.codecool.libraryManager.Enums.Genre;
+import com.threelittlepigs.codecool.libraryManager.Entities.Users.Librarian;
 import com.threelittlepigs.codecool.libraryManager.Enums.Location;
 import com.threelittlepigs.codecool.libraryManager.Utils.EntityUtility;
 import spark.Request;

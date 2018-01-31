@@ -1,13 +1,16 @@
 package com.threelittlepigs.codecool.libraryManager.Entities;
 
+import com.threelittlepigs.codecool.libraryManager.Entities.Users.Member;
+import com.threelittlepigs.codecool.libraryManager.Utils.EntityUtility;
+
 import javax.persistence.*;
 import java.util.Date;
 
 @Entity
 @NamedQuery(name = "getFineByMember",
             query = "SELECT f FROM Fine f " +
-                    "WHERE f.member_id = :memberid")
-class Fine {
+                    "WHERE f.member = :memberid")
+public class Fine {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -38,16 +41,13 @@ class Fine {
         return id;
     }
 
-    public void setId(long id) {
-        this.id = id;
-    }
-
     public double getAmount() {
         return amount;
     }
 
     public void setAmount(double amount) {
         this.amount = amount;
+        EntityUtility.mergeEntity(this);
     }
 
     public Date getOccurrence() {
@@ -56,6 +56,7 @@ class Fine {
 
     public void setOccurrence(Date occurrence) {
         this.occurrence = occurrence;
+        EntityUtility.mergeEntity(this);
     }
 
     public Date getDueDate() {
@@ -64,6 +65,7 @@ class Fine {
 
     public void setDueDate(Date dueDate) {
         this.dueDate = dueDate;
+        EntityUtility.mergeEntity(this);
     }
 
     public Member getMember() {
@@ -72,6 +74,7 @@ class Fine {
 
     public void setMember(Member member) {
         this.member = member;
+        EntityUtility.mergeEntity(this);
     }
 
     public boolean isStatus() {
@@ -80,5 +83,6 @@ class Fine {
 
     public void setStatus(boolean status) {
         this.status = status;
+        EntityUtility.mergeEntity(this);
     }
 }

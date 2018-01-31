@@ -1,5 +1,6 @@
-package com.threelittlepigs.codecool.libraryManager.Entities;
+package com.threelittlepigs.codecool.libraryManager.Entities.Users;
 
+import com.threelittlepigs.codecool.libraryManager.Utils.EntityUtility;
 import org.mindrot.jbcrypt.BCrypt;
 
 import javax.persistence.*;
@@ -38,10 +39,8 @@ public abstract class User {
     private Date dateOfBirth;
 
     private String phoneNumber;
-    @Column(nullable = false)
-    private UserType userType;
 
-    public User(String userName, String password, String firstName, String lastName, String email, Date dateOfBirth, String address, String phoneNumber, UserType userType) {
+    public User(String userName, String password, String firstName, String lastName, String email, Date dateOfBirth, String address, String phoneNumber) {
         this.userName = userName;
         this.password = BCrypt.hashpw(password,BCrypt.gensalt());
         this.firstName = firstName;
@@ -50,7 +49,6 @@ public abstract class User {
         this.dateOfBirth = dateOfBirth;
         this.address = address;
         this.phoneNumber = phoneNumber;
-        this.userType = userType;
     }
 
     public User() {
@@ -62,6 +60,7 @@ public abstract class User {
 
     public void setId(long id) {
         this.id = id;
+        EntityUtility.mergeEntity(this);
     }
 
     public String getUserName() {
@@ -70,6 +69,7 @@ public abstract class User {
 
     public void setUserName(String userName) {
         this.userName = userName;
+        EntityUtility.mergeEntity(this);
     }
 
     public String getPassword() {
@@ -78,6 +78,7 @@ public abstract class User {
 
     public void setPassword(String password) {
         this.password = password;
+        EntityUtility.mergeEntity(this);
     }
 
     public String getFirstName() {
@@ -86,6 +87,7 @@ public abstract class User {
 
     public void setFirstName(String firstName) {
         this.firstName = firstName;
+        EntityUtility.mergeEntity(this);
     }
 
     public String getAddress() {
@@ -94,6 +96,7 @@ public abstract class User {
 
     public void setAddress(String address) {
         this.address = address;
+        EntityUtility.mergeEntity(this);
     }
 
     public String getLastName() {
@@ -102,6 +105,7 @@ public abstract class User {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+        EntityUtility.mergeEntity(this);
     }
 
     public String getEmail() {
@@ -110,6 +114,7 @@ public abstract class User {
 
     public void setEmail(String email) {
         this.email = email;
+        EntityUtility.mergeEntity(this);
     }
 
     public Date getDateOfBirth() {
@@ -118,6 +123,7 @@ public abstract class User {
 
     public void setDateOfBirth(Date dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
+        EntityUtility.mergeEntity(this);
     }
 
     public String getPhoneNumber() {
@@ -126,13 +132,6 @@ public abstract class User {
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
-    }
-
-    public UserType getUserType() {
-        return userType;
-    }
-
-    public void setUserType(UserType userType) {
-        this.userType = userType;
+        EntityUtility.mergeEntity(this);
     }
 }
