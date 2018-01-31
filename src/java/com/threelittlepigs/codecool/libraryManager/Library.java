@@ -5,6 +5,7 @@ import com.threelittlepigs.codecool.libraryManager.Entities.Users.Librarian;
 import com.threelittlepigs.codecool.libraryManager.Enums.Genre;
 import com.threelittlepigs.codecool.libraryManager.Enums.Location;
 import com.threelittlepigs.codecool.libraryManager.Utils.EntityUtility;
+import com.threelittlepigs.codecool.libraryManager.Utils.ProductController;
 import spark.Request;
 import spark.Response;
 import spark.template.thymeleaf.ThymeleafTemplateEngine;
@@ -46,7 +47,7 @@ public class Library {
         List<Book> books = EntityUtility.getEntityManager().createNamedQuery("getAllBooks", Book.class).getResultList();
         System.out.println(books);
 
-        List books1 = EntityUtility.find(Book.class, "title", "%malacok");
+        List books1 = EntityUtility.findByOneCriteria(Book.class, "title", "Kis 1");
         System.out.println(books1);
         EntityUtility.mergeEntity(book);
     }

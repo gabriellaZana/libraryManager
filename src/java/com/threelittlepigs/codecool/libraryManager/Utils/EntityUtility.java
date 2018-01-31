@@ -1,6 +1,5 @@
 package com.threelittlepigs.codecool.libraryManager.Utils;
 
-import com.threelittlepigs.codecool.libraryManager.Entities.Book;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -53,12 +52,22 @@ public class EntityUtility {
         entityTransaction = entityManager.getTransaction();
     }
 
-    public static List find(Class c, String columnTitle, String columnValue ) {
+    public static List likeByOneCriteria(Class c, String columnTitle, String columnValue ) {
         CriteriaBuilder cb = EntityUtility.getEntityManager().getCriteriaBuilder();
         CriteriaQuery cq = cb.createQuery(c);
         Root bk = cq.from(c);
         cq.select(bk)
                 .where(cb.like(bk.get(columnTitle), columnValue));
+        TypedQuery query = EntityUtility.getEntityManager().createQuery(cq);
+        return query.getResultList();
+    }
+
+    public static List findByOneCriteria(Class c, String columnTitle, String columnValue ) {
+        CriteriaBuilder cb = EntityUtility.getEntityManager().getCriteriaBuilder();
+        CriteriaQuery cq = cb.createQuery(c);
+        Root bk = cq.from(c);
+        cq.select(bk)
+                .where(cb.equal(bk.get(columnTitle), columnValue));
         TypedQuery query = EntityUtility.getEntityManager().createQuery(cq);
         return query.getResultList();
     }
