@@ -34,18 +34,33 @@ public class Book {
     @GeneratedValue
     private int id;
 
+    @Column(nullable = false)
     private String title;
+
+    @Column(nullable = false)
     private String author;
 
     @Column(name = "picture")
     private String picture_url;
 
+    @Column(nullable = false)
     private int year;
+
+    @Column(nullable = false)
     private String description;
+
+    @Column(nullable = false)
     private String publisher;
+
+    @Column(nullable = false)
     private Genre genre;
+
+    @Column(nullable = false)
     private Location location;
+
+    @Column(nullable = false)
     private String isbn;
+
     private boolean isAvailable = true;
 
     @ManyToOne
@@ -76,10 +91,7 @@ public class Book {
         this.location = location;
         this.isbn = isbn;
     }
-
-    public Book() {
-    }
-
+    
 
     public int getId() {
         return id;
