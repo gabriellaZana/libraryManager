@@ -32,7 +32,17 @@
 <div th:replace="header :: copy"></div>
 
 <div class="container">
-    Here will be Books!
+    <div class="row list-group">
+        <div  class="item col-xs-4 col-lg-4" th:each="book,iterStat : ${books}">
+            <div class="thumbnail">
+                <div class="caption">
+                    <img th:src="${book.picture_url}" width="320" height="250"/>
+                    <p th:text="${book.title}"></p>
+                    <p>Written by <span th:text="${book.author}"></span></p>
+                </div>
+            </div>
+        </div>
+    </div>
 
 </div>
 

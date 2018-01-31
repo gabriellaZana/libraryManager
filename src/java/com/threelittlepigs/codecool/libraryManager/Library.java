@@ -23,6 +23,7 @@ public class Library {
             return new ThymeleafTemplateEngine().render(ProductController.renderProducts(req, res, "index"));
         });
 
+        //populateDB();
         enableDebugScreen();
     }
 }
