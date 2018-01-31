@@ -5,7 +5,9 @@
     <meta name="author" content="Codecool" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Codecool Shop</title>
+    <title>Three Little Pigs Library</title>
+
+    <link rel="icon" href="http://pngimg.com/uploads/book/book_PNG2118.png"/>
 
     <!-- Latest compiled and minified Jquery -->
     <script src="https://code.jquery.com/jquery-3.1.1.min.js"
@@ -38,7 +40,23 @@
                 <div class="caption">
                     <img th:src="${book.picture_url}" width="320" height="250"/>
                     <p th:text="${book.title}"></p>
-                    <p>Written by <span th:text="${book.author}"></span></p>
+                    <p>Written by <a data-toggle="modal" data-target="#myModal" th:text="${book.author}"></a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 class="modal-title" id="exampleModalLabel">Matykó</h2>
+                </div>
+                <div class="modal-body">
+                    <img src="matykó.jpg" width="480" height="600"/>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                 </div>
             </div>
         </div>
