@@ -1,5 +1,6 @@
 package com.threelittlepigs.codecool.libraryManager.Entities;
 
+import com.threelittlepigs.codecool.libraryManager.Entities.Genres.Genre;
 import com.threelittlepigs.codecool.libraryManager.Enums.Location;
 
 import javax.persistence.*;
