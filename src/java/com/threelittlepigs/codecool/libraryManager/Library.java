@@ -5,19 +5,24 @@ import com.threelittlepigs.codecool.libraryManager.Enums.Genre;
 import com.threelittlepigs.codecool.libraryManager.Entities.Users.Librarian;
 import com.threelittlepigs.codecool.libraryManager.Enums.Location;
 import com.threelittlepigs.codecool.libraryManager.Utils.EntityUtility;
-
+import spark.Request;
+import spark.Response;
+import spark.template.thymeleaf.ThymeleafTemplateEngine;
+import static spark.Spark.*;
+import static spark.debug.DebugScreen.enableDebugScreen;
 import java.util.Date;
 
 public class Library {
     public static void main(String[] args) {
-        Book book = new Book("Kis malacok", "György Mátyás", "placeholder", 1997, "Test", "Béla", Genre.Christian, Location.AQUARIUM, "SAD145831");
-        Librarian librarian = new Librarian("amigo", "asdasdasd", "Béla", "Kvács", "bk@gmail.cm", new Date(), "Fixaddress", "0908070605");
 
-        EntityUtility.persistEntity(librarian);
-        librarian.addBook(book);
+        exception(Exception.class, (e, req, res) -> e.printStackTrace());
+        staticFileLocation("static");
+        port(8888);
 
-        book.setIsbn("Tested");
-        EntityUtility.mergeEntity(book);
-        //librarian.removeBook(book);
+        get("/", (Request req, Response res) -> {
+            return new ThymeleafTemplateEngine().render(ProductController.renderProducts(req, res, "index"));
+        });
+
+        enableDebugScreen();
     }
 }
