@@ -1,16 +1,23 @@
 package com.threelittlepigs.codecool.libraryManager.Utils;
 
+import com.threelittlepigs.codecool.libraryManager.Entities.Book;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.EntityTransaction;
-import javax.persistence.Persistence;
+import javax.persistence.*;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
+import java.util.List;
 
 public class EntityUtility {
     private static final Logger logger = LoggerFactory.getLogger(EntityUtility.class);
     private static final EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("libraryPU");
+
+    public static EntityManager getEntityManager() {
+        return entityManager;
+    }
+
     private static final EntityManager entityManager = entityManagerFactory.createEntityManager();
 
     private static EntityTransaction entityTransaction;
@@ -46,7 +53,13 @@ public class EntityUtility {
         entityTransaction = entityManager.getTransaction();
     }
 
-    public static EntityManagerFactory getEntityManagerFactory() {
-        return entityManagerFactory;
+    public static List find(Class c, String columnTitle, String columnValue ) {
+        CriteriaBuilder cb = EntityUtility.getEntityManager().getCriteriaBuilder();
+        CriteriaQuery cq = cb.createQuery(c);
+        Root bk = cq.from(c);
+        cq.select(bk)
+                .where(cb.like(bk.get(columnTitle), columnValue));
+        TypedQuery query = EntityUtility.getEntityManager().createQuery(cq);
+        return query.getResultList();
     }
 }

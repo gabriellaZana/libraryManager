@@ -15,17 +15,17 @@ import java.util.spi.CalendarNameProvider;
 @NamedQueries({
         @NamedQuery(
                 name = "getAllBooks",
-                query = "SELECT b FROM books b "),
+                query = "SELECT b FROM Book b "),
 
         @NamedQuery(
                 name = "getRentedBooksByMember",
-                query = "SELECT b FROM books b " +
+                query = "SELECT b FROM Book b " +
                         "WHERE b.rentedByMember = :rentedByMember"
         ),
 
         @NamedQuery(
                 name = "findBooks",
-                query = "SELECT b FROM books b " +
+                query = "SELECT b FROM Book b " +
                         "WHERE :columnName = :keyword"
         )
 })
