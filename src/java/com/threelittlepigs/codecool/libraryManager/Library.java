@@ -12,7 +12,7 @@ import java.util.Date;
 public class Library {
     public static void main(String[] args) {
         Book book = new Book("Kis malacok", "György Mátyás", "placeholder", 1997, "Test", "Béla", Genre.Christian, Location.AQUARIUM, "SAD145831");
-        Librarian librarian = new Librarian("amigo", "asdasdasd", "Béla", "Kvács", "bk@gmail.cm", new Date(), "Fixaddress", "0907495161", UserType.LIBRARIAN);
+        Librarian librarian = new Librarian("amigo", "asdasdasd", "Béla", "Kvács", "bk@gmail.cm", new Date(), "Fixaddress", "0908070605", UserType.LIBRARIAN);
 
         EntityUtility.persistEntity(librarian);
 
