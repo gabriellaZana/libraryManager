@@ -19,6 +19,12 @@ import java.util.spi.CalendarNameProvider;
                 name = "getRentedBooksByMember",
                 query = "SELECT b FROM books b " +
                         "WHERE b.rentedByMember = :rentedByMember"
+        ),
+
+        @NamedQuery(
+                name = "findBooks",
+                query = "SELECT b FROM books b " +
+                        "WHERE :columnName = :keyword"
         )
 })
 
@@ -44,11 +50,9 @@ public class Book {
     private boolean isAvailable = true;
 
     @ManyToOne
-    @Column(name = "rentedBy")
     private Member rentedByMember;
 
     @ManyToOne
-    @Column(name = "reservedBy")
     private Member reservedByMember;
 
 
@@ -58,10 +62,9 @@ public class Book {
 
 
     public Book() {
-
     }
 
-    
+
     public Book(String title, String author, String picture_url, int year, String description, String publisher,
                 Genre genre, Location location, String isbn) {
         this.title = title;
