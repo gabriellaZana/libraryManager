@@ -32,10 +32,10 @@ public class Library {
     }
 
     public static void populateDB() {
-        Book book = new Book("Kis malacok", "György Mátyás", "placeholder", 1997, "Test", "Béla", Genre.Christian, Location.AQUARIUM, "SAD145831");
-        Book book1 = new Book("Kis 1", "György Mátyás", "placeholder", 1997, "Test", "Béla", Genre.Christian, Location.AQUARIUM, "asd");
-        Book book2 = new Book("Kis 2", "György Mátyás", "placeholder", 1997, "Test", "Béla", Genre.Christian, Location.AQUARIUM, "SAD1asdasda45831");
-        Book book3 = new Book("Kis 3", "György Mátyás", "placeholder", 1997, "Test", "Béla", Genre.Christian, Location.AQUARIUM, "SAD14asdasdasdasdasd5831");
+        Book book = new Book("Kis malacok", "György Mátyás", "https://moly.hu/system/covers/big/covers_262639.jpg?1395465884", 1997, "Test", "Béla", Genre.Christian, Location.AQUARIUM, "SAD145831");
+        Book book1 = new Book("Kis 1", "György Mátyás", "https://www.dramaturg.hu/sites/default/files/default_images/konyv%5B1%5D.png   ", 1997, "Test", "Béla", Genre.Christian, Location.AQUARIUM, "asd");
+        Book book2 = new Book("Kis 2", "György Mátyás", "http://www.innoportal.hu/wp-content/uploads/2012/01/book.png", 1997, "Test", "Béla", Genre.Christian, Location.AQUARIUM, "SAD1asdasda45831");
+        Book book3 = new Book("Kis 3", "György Mátyás", "http://fvmaszk.hu/wp-content/uploads/konyv.jpg", 1997, "Test", "Béla", Genre.Christian, Location.AQUARIUM, "SAD14asdasdasdasdasd5831");
         Librarian librarian = new Librarian("amigo", "asdasdasd", "Béla", "Kvács", "bk@gmail.cm", new Date(), "Fixaddress", "0908070605");
 
         EntityUtility.persistEntity(librarian);
