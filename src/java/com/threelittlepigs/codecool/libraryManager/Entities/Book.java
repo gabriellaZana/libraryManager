@@ -18,12 +18,6 @@ import java.util.Date;
                 name = "getRentedBooksByMember",
                 query = "SELECT b FROM Book b " +
                         "WHERE b.rentedByMember = :rentedByMember"
-        ),
-
-        @NamedQuery(
-                name = "findBooks",
-                query = "SELECT b FROM Book b " +
-                        "WHERE :columnName = :keyword"
         )
 })
 
