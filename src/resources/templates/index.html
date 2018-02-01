@@ -41,6 +41,8 @@
                     <img th:src="${book.picture_url}" width="320" height="250"/>
                     <p th:text="${book.title}"></p>
                     <p>Written by <a data-toggle="modal" data-target="#myModal" th:text="${book.author}"></a></p>
+                    <p th:if="${book.isAvailable()}">Available</p>
+                    <a class="btn btn-primary" th:unless="${book.isAvailable()}">Reserve</a>
                 </div>
             </div>
         </div>
