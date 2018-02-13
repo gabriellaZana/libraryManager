@@ -1,6 +1,7 @@
 package com.threelittlepigs.codecool.libraryManager.Entities.Users;
 
 import com.threelittlepigs.codecool.libraryManager.Entities.Book;
+import com.threelittlepigs.codecool.libraryManager.Entities.Fine;
 
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
@@ -18,6 +19,9 @@ public class Member extends User {
 
     @OneToMany(mappedBy = "reservedByMember")
     List<Book> reservedBooks = new ArrayList<>();
+
+    @OneToMany(mappedBy = "member")
+    List<Fine> fines = new ArrayList<>();
 
     public Member(String userName, String password, String firstName, String lastName, String email, Date dateOfBirth, String address, String phoneNumber){
         super(userName, password, firstName, lastName, email, dateOfBirth, address, phoneNumber);
