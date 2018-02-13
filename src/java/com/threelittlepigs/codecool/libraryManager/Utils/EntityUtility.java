@@ -24,14 +24,8 @@ public class EntityUtility {
     public static EntityManager getEntityManager() {
         return entityManager;
     }
-    public static EntityUtility getInstance() {
-        if (instance == null) {
-            instance = new EntityUtility();
-        }
-        return instance;
-    }
 
-    public void persistEntity(Object object) {
+    public static void persistEntity(Object object) {
         logger.info("Persisting object : " + object.getClass().getSimpleName());
 
         createTransaction();
@@ -40,7 +34,7 @@ public class EntityUtility {
         entityTransaction.commit();
     }
 
-    public void mergeEntity(Object object) {
+    public static void mergeEntity(Object object) {
         logger.info("Merging object : " + object.getClass().getSimpleName());
 
         createTransaction();
@@ -49,7 +43,7 @@ public class EntityUtility {
         entityTransaction.commit();
     }
 
-    public void removeEntity(Object object) {
+    public static void removeEntity(Object object) {
         logger.info("Removing object : " + object.getClass().getSimpleName());
 
         createTransaction();
@@ -58,11 +52,11 @@ public class EntityUtility {
         entityTransaction.commit();
     }
 
-    private void createTransaction() {
+    private static void createTransaction() {
         entityTransaction = entityManager.getTransaction();
     }
 
-    public List likeByOneCriteria(Class c, String columnTitle, String columnValue) {
+    public static List likeByOneCriteria(Class c, String columnTitle, String columnValue) {
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaQuery cq = cb.createQuery(c);
         Root bk = cq.from(c);
@@ -72,7 +66,7 @@ public class EntityUtility {
         return query.getResultList();
     }
 
-    public List findByOneCriteria(Class c, String columnTitle, String columnValue) {
+    public static List findByOneCriteria(Class c, String columnTitle, String columnValue) {
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaQuery cq = cb.createQuery(c);
         Root bk = cq.from(c);
@@ -82,7 +76,7 @@ public class EntityUtility {
         return query.getResultList();
     }
 
-    public Object findByTwoCriteria(Class c, List<String> columnTitles, List<String> columnValues) {
+    public static Object findByTwoCriteria(Class c, List<String> columnTitles, List<String> columnValues) {
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaQuery cq = cb.createQuery(c);
         Root bk = cq.from(c);
