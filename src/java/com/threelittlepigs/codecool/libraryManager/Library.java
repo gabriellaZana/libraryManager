@@ -1,7 +1,9 @@
 package com.threelittlepigs.codecool.libraryManager;
 
 import com.threelittlepigs.codecool.libraryManager.Entities.Book;
+import com.threelittlepigs.codecool.libraryManager.Entities.Fine;
 import com.threelittlepigs.codecool.libraryManager.Entities.Users.Librarian;
+import com.threelittlepigs.codecool.libraryManager.Entities.Users.Member;
 import com.threelittlepigs.codecool.libraryManager.Enums.Genre;
 import com.threelittlepigs.codecool.libraryManager.Enums.Location;
 import com.threelittlepigs.codecool.libraryManager.Utils.EntityUtility;
@@ -27,7 +29,7 @@ public class Library {
             return new ThymeleafTemplateEngine().render(ProductController.renderProducts(req, res, "index"));
         });
 
-        //populateDB();
+        populateDB();
         enableDebugScreen();
     }
 
@@ -37,7 +39,11 @@ public class Library {
         Book book2 = new Book("Kis 2", "György Mátyás", "http://www.innoportal.hu/wp-content/uploads/2012/01/book.png", 1997, "Test", "Béla", Genre.Christian, Location.AQUARIUM, "SAD1asdasda45831");
         Book book3 = new Book("Kis 3", "György Mátyás", "http://fvmaszk.hu/wp-content/uploads/konyv.jpg", 1997, "Test", "Béla", Genre.Christian, Location.AQUARIUM, "SAD14asdasdasdasdasd5831");
         Librarian librarian = new Librarian("amigo", "asdasdasd", "Béla", "Kvács", "bk@gmail.cm", new Date(), "Fixaddress", "0908070605");
+        Member member = new Member("membergo", "asdasdasd", "Béla", "Membertest", "bl@gmail.com", new Date(), "shit", "0908745161");
+        Fine regFee = new Fine(15.0, new Date(), new Date(), member);
 
+        EntityUtility.persistEntity(member);
+        EntityUtility.persistEntity(regFee);
         EntityUtility.persistEntity(librarian);
         librarian.addBook(book);
         librarian.addBook(book1);

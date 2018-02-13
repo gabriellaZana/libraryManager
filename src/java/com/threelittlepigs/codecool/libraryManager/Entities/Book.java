@@ -65,7 +65,9 @@ public class Book {
     @ManyToOne
     private Member reservedByMember;
 
+    @Transient
     final int daysForRent = 7;
+
     @Transient
     private Date currentDate = Calendar.getInstance().getTime();
     private Date dueDate = getDueDate();
