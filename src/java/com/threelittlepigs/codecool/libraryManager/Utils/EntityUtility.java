@@ -53,22 +53,22 @@ public class EntityUtility {
     }
 
     public static List likeByOneCriteria(Class c, String columnTitle, String columnValue ) {
-        CriteriaBuilder cb = EntityUtility.getEntityManager().getCriteriaBuilder();
+        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaQuery cq = cb.createQuery(c);
         Root bk = cq.from(c);
         cq.select(bk)
                 .where(cb.like(bk.get(columnTitle), columnValue));
-        TypedQuery query = EntityUtility.getEntityManager().createQuery(cq);
+        TypedQuery query = entityManager.createQuery(cq);
         return query.getResultList();
     }
 
     public static List findByOneCriteria(Class c, String columnTitle, String columnValue ) {
-        CriteriaBuilder cb = EntityUtility.getEntityManager().getCriteriaBuilder();
+        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaQuery cq = cb.createQuery(c);
         Root bk = cq.from(c);
         cq.select(bk)
                 .where(cb.equal(bk.get(columnTitle), columnValue));
-        TypedQuery query = EntityUtility.getEntityManager().createQuery(cq);
+        TypedQuery query = entityManager.createQuery(cq);
         return query.getResultList();
     }
 }
