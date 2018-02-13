@@ -22,8 +22,12 @@ public class ThymleafBookController implements Controller {
     }
 
     @Override
-    public ModelAndView renderBook(Request req, Response res, String html, int id) {
-        return null;
+    public ModelAndView renderBook(Request req, Response res, String html, String isbn) {
+        List<Book> books = EntityUtility.findByOneCriteria(Book.class,"isbn",isbn);
+
+        Map<String, List> params = new HashMap<>();
+        params.put("books", books);
+        return new ModelAndView(params, html);
     }
 
 }

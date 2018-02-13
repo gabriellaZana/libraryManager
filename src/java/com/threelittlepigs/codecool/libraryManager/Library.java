@@ -16,6 +16,7 @@ import spark.template.thymeleaf.ThymeleafTemplateEngine;
 import java.util.Date;
 import java.util.List;
 
+import static java.lang.Integer.parseInt;
 import static spark.Spark.*;
 import static spark.debug.DebugScreen.enableDebugScreen;
 
@@ -29,6 +30,10 @@ public class Library {
 
         get("/", (Request req, Response res) -> new ThymeleafTemplateEngine().render(controller.renderBooks(req, res, "index")));
 
+        get("/books/:isbn", (Request req, Response res) -> {
+            String isbn = req.params(":isbn");
+            return new ThymeleafTemplateEngine().render(controller.renderBook(req, res, "book",isbn));
+        });
         populateDB();
         enableDebugScreen();
     }
