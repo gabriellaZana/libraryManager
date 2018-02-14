@@ -116,13 +116,10 @@ img {
 }
 
 #reglogbutton {
-    margin: 5px;
-}
-
-#reglogmodal {
     color: black;
+    margin: 10px;
 }
 
-#reglogmodal:hover {
+#reglogbutton:hover {
     text-decoration: none;
 }
