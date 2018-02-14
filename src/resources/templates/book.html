@@ -34,36 +34,28 @@
 <div th:replace="header :: copy"></div>
 
 <div class="container">
-    <div class="row list-group">
-        <div  class="item col-xs-4 col-lg-4" th:each="book,iterStat : ${books}">
-            <div class="thumbnail">
-                <div class="caption">
-                    <img th:src="${book.picture_url}" width="320" height="250"/>
-                    <p th:text="${book.title}"></p>
-                    <p>Written by <a data-toggle="modal" data-target="#myModal" th:text="${book.author}"></a></p>
-                    <p th:if="${book.isAvailable()}">Available</p>
-                    <a class="btn btn-primary" th:href="@{//0.0.0.0:8888/books/{id}(id=${book.isbn})}">More Info</a>
-                </div>
-            </div>
+    <div class="row">
+        <div class="col-lg-4">
+            <img th:src="${books.get(0).getPicture_url()}" width="320" height="250"/>
+        </div>
+        <div class="col-lg-8">
+            <p th:text="${books.get(0).getTitle()}"></p>
+            <p>Written by <span th:text="${books.get(0).author}">Author</span></p>
+            <p th:if="${books.get(0).isAvailable()}">Available</p>
         </div>
     </div>
-
-    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h2 class="modal-title" id="exampleModalLabel">Matykó</h2>
-                </div>
-                <div class="modal-body">
-                    <img src="matykó.jpg" width="480" height="600"/>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                </div>
-            </div>
-        </div>
+    <div class="row">
+        <table class="table">
+            <tr>
+                <th>ISBN</th>
+                <th>Availability</th>
+            </tr>
+            <tr th:each="book,iterStat : ${books}">
+                <td th:text="${book.isbn}">isbn</td>
+                <td th:text="${book.isAvailable()}">Available</td>
+            </tr>
+        </table>
     </div>
-
 </div>
 
 <div th:replace="footer :: copy"></div>
