@@ -18,7 +18,7 @@ public class FineServiceImpl implements FineService{
     @Override
     public void changeOccurrence(Fine fine, Date occurrence) {
         fine.setOccurrence(occurrence);
-        EntityUtility.mergeEntity(this);
+        EntityUtility.mergeEntity(fine);
     }
 
     @Override
@@ -37,7 +37,7 @@ public class FineServiceImpl implements FineService{
     public void changeMember(Fine fine, int id) {
         List<Member> members = EntityUtility.findByOneCriteria(User.class, "id", String.valueOf(id));
         fine.setMember(members.get(0));
-        EntityUtility.mergeEntity(this);
+        EntityUtility.mergeEntity(fine);
     }
 
     @Override
