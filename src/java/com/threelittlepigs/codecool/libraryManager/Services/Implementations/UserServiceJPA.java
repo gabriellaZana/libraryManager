@@ -17,13 +17,14 @@ import java.util.Map;
 
 public class UserServiceJPA implements UserService {
 
-    public void registrateMember(Map<String, String> regData){
+    public User registrateMember(Map<String, String> regData){
         LocalDate localDate = LocalDate.parse(regData.get("birthDate"));
         Date birthDate = Date.from(localDate.atStartOfDay()
                 .atZone(ZoneId.systemDefault())
                 .toInstant());
         Member newUser = new Member(regData.get("userName"),regData.get("password"), regData.get("firstName"), regData.get("lastName"), regData.get("email"), birthDate, regData.get("address"), regData.get("phoneNumber"));
         EntityUtility.persistEntity(newUser);
+        return newUser;
     }
 
     public User loginUser(Map<String, String> loginData){

@@ -101,6 +101,15 @@ class UserServiceJPATest {
 
     @Test
     void testRegistration() {
-
+        Map<String, String> regData = new HashMap<>();
+        regData.put("userName", "TestCase");
+        regData.put("password", "asdasdasd");
+        regData.put("firstName", "Test");
+        regData.put("lastName", "Case");
+        regData.put("email", "tc@gm.com");
+        regData.put("birthDate", "2007-12-03");
+        regData.put("address", "testclown");
+        regData.put("phoneNumber", "0908070605");
+        assertNotNull(us.registrateMember(regData));
     }
 }
