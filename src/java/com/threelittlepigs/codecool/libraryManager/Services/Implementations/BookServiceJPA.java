@@ -1,6 +1,8 @@
 package com.threelittlepigs.codecool.libraryManager.Services.Implementations;
 
 import com.threelittlepigs.codecool.libraryManager.Entities.Book;
+import com.threelittlepigs.codecool.libraryManager.Enums.Genre;
+import com.threelittlepigs.codecool.libraryManager.Enums.Location;
 import com.threelittlepigs.codecool.libraryManager.Services.BookService;
 import com.threelittlepigs.codecool.libraryManager.Utils.EntityUtility;
 
@@ -30,8 +32,10 @@ public class BookServiceJPA implements BookService {
         EntityUtility.mergeEntity(book);
     }
 
-    public void changePicture() {
-
+    public void changePicture(String pic_url, int id) {
+        Book book = getBookById(id);
+        book.setPicture_url(pic_url);
+        EntityUtility.mergeEntity(book);
     }
 
     public void changeYear(int year, int id) {
@@ -40,27 +44,39 @@ public class BookServiceJPA implements BookService {
         EntityUtility.mergeEntity(book);
     }
 
-    public void changeDescription() {
-
+    public void changeDescription(String desc, int id) {
+        Book book = getBookById(id);
+        book.setDescription(desc);
+        EntityUtility.mergeEntity(book);
     }
 
-    public void changePublisher() {
-
+    public void changePublisher(String publisher, int id) {
+        Book book = getBookById(id);
+        book.setPublisher(publisher);
+        EntityUtility.mergeEntity(book);
     }
 
-    public void changeGenre() {
-
+    public void changeGenre(Genre genre, int id) {
+        Book book = getBookById(id);
+        book.setGenre(genre);
+        EntityUtility.mergeEntity(book);
     }
 
-    public void changeLocation() {
-
+    public void changeLocation(Location location, int id) {
+        Book book = getBookById(id);
+        book.setLocation(location);
+        EntityUtility.mergeEntity(book);
     }
 
-    public void changeIsbnNum() {
-
+    public void changeIsbnNum(String isbn, int id) {
+        Book book = getBookById(id);
+        book.setIsbn(isbn);
+        EntityUtility.mergeEntity(book);
     }
 
-    public void changeAvailability() {
-
+    public void changeAvailability(boolean isAvailable, int id) {
+        Book book = getBookById(id);
+        book.setAvailability(isAvailable);
+        EntityUtility.mergeEntity(book);
     }
 }

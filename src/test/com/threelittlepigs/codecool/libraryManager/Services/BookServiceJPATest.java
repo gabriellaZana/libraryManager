@@ -14,4 +14,12 @@ public class BookServiceJPATest {
         assertNotNull(bookS.getBookById(1));
     }
 
+    @Test
+    public void testChangeTitle() {
+        BookServiceJPA bookS = new BookServiceJPA();
+        String title = bookS.getBookById(1).getTitle();
+        bookS.getBookById(1).setTitle("newTitle");
+        assertEquals("newTitle", bookS.getBookById(1).getTitle());
+    }
+
 }
