@@ -18,7 +18,7 @@ public interface FineService {
 
     public void changeStatus(Fine fine, boolean status);
 
-    public void changeMember(Fine fine, int id);
+    public void changeMember(Fine fine, long id);
 
     public List<Fine> getFinesByUserId(int id);
 }

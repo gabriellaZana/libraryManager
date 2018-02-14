@@ -34,7 +34,7 @@ public class FineServiceImpl implements FineService{
     }
 
     @Override
-    public void changeMember(Fine fine, int id) {
+    public void changeMember(Fine fine, long id) {
         List<Member> members = EntityUtility.findByOneCriteria(User.class, "id", String.valueOf(id));
         fine.setMember(members.get(0));
         EntityUtility.mergeEntity(fine);
