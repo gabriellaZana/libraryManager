@@ -1,4 +1,4 @@
-package com.threelittlepigs.codecool.libraryManager.Services.FineService;
+package com.threelittlepigs.codecool.libraryManager.Services;
 
 import com.threelittlepigs.codecool.libraryManager.Entities.Fine;
 import com.threelittlepigs.codecool.libraryManager.Entities.Users.Member;
