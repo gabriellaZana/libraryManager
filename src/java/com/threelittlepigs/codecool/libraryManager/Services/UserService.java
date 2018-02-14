@@ -2,8 +2,10 @@ package com.threelittlepigs.codecool.libraryManager.Services;
 
 import com.threelittlepigs.codecool.libraryManager.Entities.Users.User;
 
+import java.util.Map;
+
 public interface UserService {
-    void registrateUser();
+    void registrateMember(Map<String, String> regData);
     void loginUser();
     User getUserById(int id);
     void getUserByName();
