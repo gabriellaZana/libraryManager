@@ -10,15 +10,17 @@ import java.util.List;
 
 public interface FineService {
 
-    public void changeAmount(Fine fine, double amount);
+    public Fine getFineById(int id);
 
-    public void changeOccurrence(Fine fine, Date occurrence);
+    public void changeAmount(int id, double amount);
 
-    public void changeDueDate(Fine fine, Date dueDate);
+    public void changeOccurrence(int id, Date occurrence);
 
-    public void changeStatus(Fine fine, boolean status);
+    public void changeDueDate(int id, Date dueDate);
 
-    public void changeMember(Fine fine, long id);
+    public void changeStatus(int id, boolean status);
+
+    public void changeMember(int fineId , int memberId);
 
     public List<Fine> getFinesByUserId(int id);
 }

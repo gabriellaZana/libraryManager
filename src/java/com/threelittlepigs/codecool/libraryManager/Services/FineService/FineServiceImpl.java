@@ -9,33 +9,45 @@ import java.util.Date;
 import java.util.List;
 
 public class FineServiceImpl implements FineService{
+
     @Override
-    public void changeAmount(Fine fine, double amount) {
+    public Fine getFineById(int id) {
+        List<Fine> fine = EntityUtility.findByOneCriteria(Fine.class, "id", String.valueOf(id));
+        return fine.get(0) ;
+    }
+
+    @Override
+    public void changeAmount(int id, double amount) {
+        Fine fine = getFineById(id);
         fine.setAmount(amount);
         EntityUtility.mergeEntity(fine);
     }
 
     @Override
-    public void changeOccurrence(Fine fine, Date occurrence) {
+    public void changeOccurrence(int id, Date occurrence) {
+        Fine fine = getFineById(id);
         fine.setOccurrence(occurrence);
         EntityUtility.mergeEntity(fine);
     }
 
     @Override
-    public void changeDueDate(Fine fine, Date dueDate) {
+    public void changeDueDate(int id, Date dueDate) {
+        Fine fine = getFineById(id);
         fine.setDueDate(dueDate);
         EntityUtility.mergeEntity(fine);
     }
 
     @Override
-    public void changeStatus(Fine fine, boolean status) {
+    public void changeStatus(int id, boolean status) {
+        Fine fine = getFineById(id);
         fine.setStatus(status);
         EntityUtility.mergeEntity(fine );
     }
 
     @Override
-    public void changeMember(Fine fine, long id) {
-        List<Member> members = EntityUtility.findByOneCriteria(User.class, "id", String.valueOf(id));
+    public void changeMember(int fineId, int memberId) {
+        Fine fine = getFineById(fineId);
+        List<Member> members = EntityUtility.findByOneCriteria(User.class, "id", String.valueOf(memberId));
         fine.setMember(members.get(0));
         EntityUtility.mergeEntity(fine);
     }
