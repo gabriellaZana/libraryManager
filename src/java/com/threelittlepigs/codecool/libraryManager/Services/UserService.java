@@ -17,5 +17,4 @@ public interface UserService {
     void changePassword(String pw, int id);
     void changePhoneNumber(String phoneNumber, int id);
     void changeUsername(String userName, int id);
-    void ensureUserIsLoggedIn(Request req, Response res);
 }

@@ -93,10 +93,4 @@ public class UserServiceJPA implements UserService {
         currentUser.setUserName(userName);
         EntityUtility.mergeEntity(currentUser);
     }
-
-    public void ensureUserIsLoggedIn(Request req, Response res) {
-        if (req.session().attribute("username") == null) {
-            res.redirect("/login");
-        }
-    }
 }
