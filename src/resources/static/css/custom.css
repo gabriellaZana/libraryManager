@@ -114,3 +114,15 @@ img {
     width: 20%;
 
 }
+
+#reglogbutton {
+    margin: 5px;
+}
+
+#reglogmodal {
+    color: black;
+}
+
+#reglogmodal:hover {
+    text-decoration: none;
+}
