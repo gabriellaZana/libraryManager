@@ -26,7 +26,7 @@ public class Validator {
             boolean validFirstName = validateFirstName(regData.get("firstName"), res);
             boolean validLastName = validateLastName(regData.get("lastName"), res);
             boolean validEmail = validateEMailAddress(regData.get("email"), res);
-            boolean validDate = validateDate(regData.get("date"), res);
+            boolean validDate = validateDate(regData.get("birthDate"), res);
             boolean validPhoneNumber = validatePhoneNumber(regData.get("phoneNumber"), res);
             return validAddress && validDate && validEmail && validFirstName && validLastName && validUserName && validPassword && validPhoneNumber;
          }
@@ -53,7 +53,7 @@ public class Validator {
     }
 
     private boolean validateFirstName(String firstName, Map<String, String> res) {
-        Pattern firstNamePattern = Pattern.compile("^[A-Z]+$");
+        Pattern firstNamePattern = Pattern.compile("^[A-Za-z]+$");
         Matcher firstNameMatcher = firstNamePattern.matcher(firstName);
         if (!firstNameMatcher.find()) {
             res.put("firstName", "Invalid first name.");
@@ -64,7 +64,7 @@ public class Validator {
     }
 
     private boolean validateLastName(String lastName, Map<String, String> res) {
-        Pattern lastNamePattern = Pattern.compile("^[A-Z]+$");
+        Pattern lastNamePattern = Pattern.compile("^[A-Za-z]+$");
         Matcher lastNameMatcher = lastNamePattern.matcher(lastName);
         if (!lastNameMatcher.find()) {
             res.put("lastName", "Invalid last name.");

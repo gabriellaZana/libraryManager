@@ -4,28 +4,29 @@ import com.threelittlepigs.codecool.libraryManager.Entities.Users.Member;
 import com.threelittlepigs.codecool.libraryManager.Entities.Users.User;
 import com.threelittlepigs.codecool.libraryManager.Services.UserService;
 import com.threelittlepigs.codecool.libraryManager.Utils.EntityUtility;
+import com.threelittlepigs.codecool.libraryManager.Utils.Validator;
 import org.mindrot.jbcrypt.BCrypt;
 import spark.Request;
 import spark.Response;
 
 import java.time.LocalDate;
 import java.time.ZoneId;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class UserServiceJPA implements UserService {
 
     @Override
     public User registrateMember(Map<String, String> regData){
-        LocalDate localDate = LocalDate.parse(regData.get("birthDate"));
-        Date birthDate = Date.from(localDate.atStartOfDay()
-                .atZone(ZoneId.systemDefault())
-                .toInstant());
-        Member newUser = new Member(regData.get("userName"),regData.get("password"), regData.get("firstName"), regData.get("lastName"), regData.get("email"), birthDate, regData.get("address"), regData.get("phoneNumber"));
-        EntityUtility.persistEntity(newUser);
-        return newUser;
+        if (Validator.getInstance().validateRegistration(regData, new HashMap<>())) {
+            LocalDate localDate = LocalDate.parse(regData.get("birthDate"));
+            Date birthDate = Date.from(localDate.atStartOfDay()
+                    .atZone(ZoneId.systemDefault())
+                    .toInstant());
+            Member newUser = new Member(regData.get("userName"), regData.get("password"), regData.get("firstName"), regData.get("lastName"), regData.get("email"), birthDate, regData.get("address"), regData.get("phoneNumber"));
+            EntityUtility.persistEntity(newUser);
+            return newUser;
+        }
+        return null;
     }
 
     @Override
