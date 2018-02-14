@@ -27,115 +27,59 @@
         </div>
     </nav>
 
-    <div class="modal fade" id="myLoginModal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+    <div class="modal fade" id="myLoginModal" role="dialog">
         <div class="modal-dialog modal-sm">
             <div class="modal-content">
-                <br></br>
-                <div class="bs-example bs-example-tabs">
-                    <ul id="myTab" class="nav nav-tabs">
-                        <li class="active"><a href="#signin" data-toggle="tab">Sign In</a></li>
-                        <li class=""><a href="#signup" data-toggle="tab">Register</a></li>
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span class="glyphicon glyphicon-remove"></span>
+                    </button>
+                    <ul class="nav nav-tabs">
+                        <li class="active"><a data-toggle="tab" href="#login-form"> Login <span class="glyphicon glyphicon-user"></span></a></li>
+                        <li><a data-toggle="tab" href="#registration-form"> Register <span class="glyphicon glyphicon-pencil"></span></a></li>
                     </ul>
                 </div>
                 <div class="modal-body">
-                    <div id="myTabContent" class="tab-content">
-                        <div class="tab-pane fade active in" id="signin">
-                            <form class="form-horizontal">
-                                <fieldset>
-                                    <!-- Sign In Form -->
-                                    <!-- Text input-->
-                                    <div class="control-group">
-                                        <label class="control-label" for="userid">Alias:</label>
-                                        <div class="controls">
-                                            <input id="userid" name="userid" type="text" class="form-control input-medium" placeholder="JoeSixpack" required=""></input>
-                                        </div>
-                                    </div>
-
-                                    <!-- Password input-->
-                                    <div class="control-group">
-                                        <label class="control-label" for="passwordinput">Password:</label>
-                                        <div class="controls">
-                                            <input required="" id="passwordinput" name="passwordinput" class="form-control input-medium" type="password" placeholder="********"></input>
-                                        </div>
-                                    </div>
-
-                                    <!-- Multiple Checkboxes (inline) -->
-                                    <div class="control-group">
-                                        <label class="control-label"></label>
-                                        <div class="controls">
-                                            <label class="checkbox inline" for="rememberme-0">
-                                                <input type="checkbox" name="rememberme" id="rememberme-0" value="Remember me"></input>
-                                                Remember me
-                                            </label>
-                                        </div>
-                                    </div>
-
-                                    <!-- Button -->
-                                    <div class="control-group">
-                                        <label class="control-label" for="signin"></label>
-                                        <div class="controls">
-                                            <button id="signin2" name="signin" class="btn btn-success">Sign In</button>
-                                        </div>
-                                    </div>
-                                </fieldset>
+                    <div class="tab-content">
+                        <div id="login-form" class="tab-pane fade in active">
+                            <form action="/">
+                                <div class="form-group">
+                                    <label for="email">Email:</label>
+                                    <input type="email" class="form-control" id="email" placeholder="Enter email" name="email"></input>
+                                </div>
+                                <div class="form-group">
+                                    <label for="pwd">Password:</label>
+                                    <input type="password" class="form-control" id="pwd" placeholder="Enter password" name="pwd"></input>
+                                </div>
+                                <div class="checkbox">
+                                    <label><input type="checkbox" name="remember"> Remember me</input></label>
+                                </div>
+                                <button type="submit" class="btn btn-default">Login</button>
                             </form>
                         </div>
-                        <div class="tab-pane fade" id="signup">
-                            <form class="form-horizontal">
-                                <br></br>
-                                <!-- Sign Up Form -->
-                                <!-- Text input-->
-                                <div class="control-group">
-                                    <label class="control-label" for="Email">Email:</label>
-                                    <div class="controls">
-                                        <input id="Email" name="Email" class="form-control input-large" type="text" placeholder="JoeSixpack@sixpacksrus.com" required=""></input>
-                                    </div>
+                        <div id="registration-form" class="tab-pane fade">
+                            <form action="/">
+                                <div class="form-group">
+                                    <label for="name">Your Name:</label>
+                                    <input type="text" class="form-control" id="name" placeholder="Enter your name" name="name"></input>
                                 </div>
-
-                                <!-- Text input-->
-                                <div class="control-group">
-                                    <label class="control-label" for="userid">Alias:</label>
-                                    <div class="controls">
-                                        <input id="userid2" name="userid" class="form-control input-large" type="text" placeholder="JoeSixpack" required=""></input>
-                                    </div>
+                                <div class="form-group">
+                                    <label for="newemail">Email:</label>
+                                    <input type="email" class="form-control" id="newemail" placeholder="Enter new email" name="newemail"></input>
                                 </div>
-
-                                <!-- Password input-->
-                                <div class="control-group">
-                                    <label class="control-label" for="password">Password:</label>
-                                    <div class="controls">
-                                        <input id="password" name="password" class="form-control input-large" type="password" placeholder="********" required=""></input>
-                                        <em>1-8 Characters</em>
-                                    </div>
+                                <div class="form-group">
+                                    <label for="newpwd">Password:</label>
+                                    <input type="password" class="form-control" id="newpwd" placeholder="New password" name="newpwd"></input>
                                 </div>
-
-                                <!-- Text input-->
-                                <div class="control-group">
-                                    <label class="control-label" for="reenterpassword">Re-Enter Password:</label>
-                                    <div class="controls">
-                                        <input id="reenterpassword" class="form-control input-large" name="reenterpassword" type="password" placeholder="********" required=""></input>
-                                    </div>
-                                </div>
-
-                                <!-- Multiple Radios (inline) -->
-                                <br></br>
-
-                                <!-- Button -->
-                                <div class="control-group">
-                                    <label class="control-label" for="confirmsignup"></label>
-                                    <div class="controls">
-                                        <button id="confirmsignup" name="confirmsignup" class="btn btn-success">Sign Up</button>
-                                    </div>
-                                </div>
+                                <button type="submit" class="btn btn-default">Register</button>
                             </form>
                         </div>
+
                     </div>
                 </div>
-                <div class="modal-footer">
-                    <center>
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    </center>
-                </div>
+                <!--                                    <div class="modal-footer">-->
+                <!--                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
+                <!--                                    </div>-->
             </div>
         </div>
     </div>
