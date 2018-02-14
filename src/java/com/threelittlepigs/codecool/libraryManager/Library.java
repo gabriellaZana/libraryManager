@@ -6,8 +6,9 @@ import com.threelittlepigs.codecool.libraryManager.Entities.Users.Librarian;
 import com.threelittlepigs.codecool.libraryManager.Entities.Users.Member;
 import com.threelittlepigs.codecool.libraryManager.Enums.Genre;
 import com.threelittlepigs.codecool.libraryManager.Enums.Location;
+import com.threelittlepigs.codecool.libraryManager.Utils.Controller;
 import com.threelittlepigs.codecool.libraryManager.Utils.EntityUtility;
-import com.threelittlepigs.codecool.libraryManager.Utils.ProductController;
+import com.threelittlepigs.codecool.libraryManager.Utils.ThymleafBookController;
 import spark.Request;
 import spark.Response;
 import spark.template.thymeleaf.ThymeleafTemplateEngine;
@@ -15,20 +16,24 @@ import spark.template.thymeleaf.ThymeleafTemplateEngine;
 import java.util.Date;
 import java.util.List;
 
+import static java.lang.Integer.parseInt;
 import static spark.Spark.*;
 import static spark.debug.DebugScreen.enableDebugScreen;
 
 public class Library {
     public static void main(String[] args) {
 
+        Controller controller = new ThymleafBookController();
         exception(Exception.class, (e, req, res) -> e.printStackTrace());
         staticFileLocation("static");
         port(8888);
 
-        get("/", (Request req, Response res) -> {
-            return new ThymeleafTemplateEngine().render(ProductController.renderProducts(req, res, "index"));
-        });
+        get("/", (Request req, Response res) -> new ThymeleafTemplateEngine().render(controller.renderBooks(req, res, "index")));
 
+        get("/books/:isbn", (Request req, Response res) -> {
+            String isbn = req.params(":isbn");
+            return new ThymeleafTemplateEngine().render(controller.renderBook(req, res, "book",isbn));
+        });
         populateDB();
         enableDebugScreen();
     }
