@@ -11,6 +11,7 @@ public interface UserService {
     User loginUser(Map<String, String> loginData);
     User getUserById(int id);
     User getUserByName(String firstName, String lastName);
+    User getUserByEmailAddress(String email);
     void changeEmailAddress(String email, int id);
     void changeAddress(String address, int id);
     void changePassword(String pw, int id);

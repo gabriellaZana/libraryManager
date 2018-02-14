@@ -44,12 +44,22 @@ public class UserServiceJPA implements UserService {
     public User getUserByName(String firstName, String lastName){
         List<String> columns = Arrays.asList("firstName", "lastName");
         List<String> values = Arrays.asList(firstName, lastName);
-        List<User> users = EntityUtility.findByTwoCriteria(User.class, columns, values);
+        List<User> users = EntityUtility.findByCriterias(User.class, columns, values);
         if (!users.isEmpty()) {
             return users.get(0);
         }
         return null;
     }
+
+    @Override
+    public User getUserByEmailAddress(String email) {
+        List<User> users = EntityUtility.findByOneCriteria(User.class, "email", email);
+        if (users.isEmpty()) {
+            return null;
+        }
+        return users.get(0);   // Error handling needed here, when the users list is empty it throws an error
+    }
+
 
     public void changeEmailAddress(String email, int id) {
         User currentUser = getUserById(id);

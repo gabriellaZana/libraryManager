@@ -23,7 +23,7 @@ class UserServiceJPATest {
     }
 
     @Test
-    void changeEmailAddress() {
+    void testChangeEmailAddress() {
         UserServiceJPA us = new UserServiceJPA();
         String prev_email = us.getUserById(1).getEmail();
         us.changeEmailAddress(prev_email + " changed", 1);
@@ -37,5 +37,22 @@ class UserServiceJPATest {
         loginData.put("userName", "membergo");
         loginData.put("password", "asdasdasd");
         assertNotNull(us.loginUser(loginData));
+    }
+
+    @Test
+    void testGetUserByName() {
+        UserService us = new UserServiceJPA();
+        assertNotNull(us.getUserByName("Bla", "kv"));
+    }
+
+    @Test
+    void testGetUserByEmail() {
+        UserService us = new UserServiceJPA();
+        assertEquals(us.getUserByEmailAddress("bk@gmail.cm").getEmail(), "bk@gmail.cm");
+    }
+
+    @Test
+    void testRegistration() {
+
     }
 }
