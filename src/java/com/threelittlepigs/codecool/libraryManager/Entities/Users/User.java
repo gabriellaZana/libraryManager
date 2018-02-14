@@ -64,7 +64,6 @@ public abstract class User {
 
     public void setUserName(String userName) {
         this.userName = userName;
-        EntityUtility.mergeEntity(this);
     }
 
     public String getPassword() {
@@ -73,16 +72,10 @@ public abstract class User {
 
     public void setPassword(String password) {
         this.password = password;
-        EntityUtility.mergeEntity(this);
     }
 
     public String getFirstName() {
         return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-        EntityUtility.mergeEntity(this);
     }
 
     public String getAddress() {
@@ -91,16 +84,10 @@ public abstract class User {
 
     public void setAddress(String address) {
         this.address = address;
-        EntityUtility.mergeEntity(this);
     }
 
     public String getLastName() {
         return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-        EntityUtility.mergeEntity(this);
     }
 
     public String getEmail() {
@@ -113,11 +100,6 @@ public abstract class User {
 
     public Date getDateOfBirth() {
         return dateOfBirth;
-    }
-
-    public void setDateOfBirth(Date dateOfBirth) {
-        this.dateOfBirth = dateOfBirth;
-        EntityUtility.mergeEntity(this);
     }
 
     public String getPhoneNumber() {

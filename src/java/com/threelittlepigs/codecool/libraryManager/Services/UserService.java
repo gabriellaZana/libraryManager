@@ -1,15 +1,20 @@
 package com.threelittlepigs.codecool.libraryManager.Services;
 
 import com.threelittlepigs.codecool.libraryManager.Entities.Users.User;
+import spark.Request;
+import spark.Response;
+
+import java.util.Map;
 
 public interface UserService {
-    void registrateUser();
-    void loginUser();
+    User registrateMember(Map<String, String> regData);
+    User loginUser(Map<String, String> loginData);
     User getUserById(int id);
-    void getUserByName();
+    User getUserByName(String firstName, String lastName);
+    User getUserByEmailAddress(String email);
     void changeEmailAddress(String email, int id);
-    void changeAddress();
-    void changePassword();
-    void changePhoneNumber();
-    void changeUsername();
+    void changeAddress(String address, int id);
+    void changePassword(String pw, int id);
+    void changePhoneNumber(String phoneNumber, int id);
+    void changeUsername(String userName, int id);
 }

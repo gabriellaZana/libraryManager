@@ -6,13 +6,12 @@ import org.slf4j.LoggerFactory;
 import javax.persistence.*;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 public class EntityUtility {
-
-    private static EntityUtility instance = null;
 
     private static final Logger logger = LoggerFactory.getLogger(EntityUtility.class);
     private static final EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("libraryPU");
@@ -66,6 +65,7 @@ public class EntityUtility {
         return query.getResultList();
     }
 
+    @Deprecated
     public static List findByOneCriteria(Class c, String columnTitle, String columnValue) {
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaQuery cq = cb.createQuery(c);
@@ -76,13 +76,19 @@ public class EntityUtility {
         return query.getResultList();
     }
 
-    public static Object findByTwoCriteria(Class c, List<String> columnTitles, List<String> columnValues) {
+    public static List findByCriterias(Class c, List<String> columnTitles, List<String> columnValues) {
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaQuery cq = cb.createQuery(c);
+        List<Predicate> predicates = new ArrayList<>();
         Root bk = cq.from(c);
-        cq.select(bk)
-                .where(cb.and(cb.equal(bk.get(columnTitles.get(0)), columnTitles.get(0)),cb.equal(bk.get(columnTitles.get(1)), columnValues.get(1))));
-        TypedQuery query = entityManager.createQuery(cq);
-        return query.getSingleResult();
+        if (columnTitles.size() == columnValues.size()) {
+            for (int i = 0; i < columnTitles.size(); i++) {
+                predicates.add(cb.equal(bk.get(columnTitles.get(i)), columnValues.get(i)));
+            }
+        }
+        cq.select(bk).where(cb.and(predicates.toArray(new Predicate[]{})));
+        Query query = entityManager.createQuery(cq);
+        System.out.println(query.getResultList());
+        return query.getResultList();
     }
 }

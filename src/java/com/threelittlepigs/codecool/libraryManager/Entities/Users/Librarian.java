@@ -17,7 +17,6 @@ public class Librarian extends User {
     }
 
     public Librarian() {
-        super();
     }
 
     public void addBook(Book book){
