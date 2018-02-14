@@ -1,13 +1,6 @@
 package com.threelittlepigs.codecool.libraryManager;
 
-import com.threelittlepigs.codecool.libraryManager.Entities.Book;
-import com.threelittlepigs.codecool.libraryManager.Entities.Fine;
-import com.threelittlepigs.codecool.libraryManager.Entities.Users.Librarian;
-import com.threelittlepigs.codecool.libraryManager.Entities.Users.Member;
-import com.threelittlepigs.codecool.libraryManager.Enums.Genre;
-import com.threelittlepigs.codecool.libraryManager.Enums.Location;
 import com.threelittlepigs.codecool.libraryManager.Utils.Controller;
-import com.threelittlepigs.codecool.libraryManager.Utils.EntityUtility;
 import com.threelittlepigs.codecool.libraryManager.Utils.ThymleafBookController;
 import spark.Request;
 import spark.Response;
@@ -34,8 +27,9 @@ public class Library {
             String isbn = req.params(":isbn");
             return new ThymeleafTemplateEngine().render(controller.renderBook(req, res, "book",isbn));
         });
-        populateDB();
+        //populateDB();
         enableDebugScreen();
+        /*populateDB();
     }
 
     public static void populateDB() {
@@ -61,5 +55,6 @@ public class Library {
         List books1 = EntityUtility.findByOneCriteria(Book.class, "title", "Kis 1");
         System.out.println(books1);
         EntityUtility.mergeEntity(book);
+    }*/
     }
 }
