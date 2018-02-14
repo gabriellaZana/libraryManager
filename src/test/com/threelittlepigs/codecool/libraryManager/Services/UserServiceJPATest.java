@@ -12,7 +12,7 @@ class UserServiceJPATest {
 
     @Test
     void testGetUserById() {
-        UserServiceJPA us = new UserServiceJPA();
+        UserService us = new UserServiceJPA();
         assertNotNull(us.getUserById(1));
     }
 
@@ -24,7 +24,7 @@ class UserServiceJPATest {
 
     @Test
     void testChangeEmailAddress() {
-        UserServiceJPA us = new UserServiceJPA();
+        UserService us = new UserServiceJPA();
         String prev_email = us.getUserById(1).getEmail();
         us.changeEmailAddress(prev_email + " changed", 1);
         assertNotEquals(prev_email, us.getUserById(1).getEmail());
@@ -42,13 +42,45 @@ class UserServiceJPATest {
     @Test
     void testGetUserByName() {
         UserService us = new UserServiceJPA();
-        assertNotNull(us.getUserByName("Bla", "kv"));
+        assertNotNull(us.getUserByName("Béla", "Kvács"));
     }
 
     @Test
     void testGetUserByEmail() {
         UserService us = new UserServiceJPA();
         assertEquals(us.getUserByEmailAddress("bk@gmail.cm").getEmail(), "bk@gmail.cm");
+    }
+
+    @Test
+    void testChangeUsername() {
+        UserService us = new UserServiceJPA();
+        String prevUsername = us.getUserById(2).getUserName();
+        us.changeUsername(prevUsername + " changed", 2);
+        assertNotEquals(prevUsername, us.getUserById(2).getUserName());
+    }
+
+    @Test
+    void testChangeAddress() {
+        UserService us = new UserServiceJPA();
+        String prevAddress = us.getUserById(2).getAddress();
+        us.changeAddress(prevAddress + " changed", 2);
+        assertNotEquals(prevAddress, us.getUserById(2).getAddress());
+    }
+
+    @Test
+    void testChangePassword() {
+        UserService us = new UserServiceJPA();
+        String prevPassword = us.getUserById(2).getPassword();
+        us.changePassword(prevPassword + " changed", 2);
+        assertNotEquals(prevPassword, us.getUserById(2).getPassword());
+    }
+
+    @Test
+    void testChangePhoneNumber() {
+        UserService us = new UserServiceJPA();
+        String prevPhoneNumber = us.getUserById(2).getPhoneNumber();
+        us.changePhoneNumber(prevPhoneNumber + " changed", 2);
+        assertNotEquals(prevPhoneNumber, us.getUserById(2).getPhoneNumber());
     }
 
     @Test
