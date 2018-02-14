@@ -17,6 +17,7 @@ import java.util.Map;
 
 public class UserServiceJPA implements UserService {
 
+    @Override
     public User registrateMember(Map<String, String> regData){
         LocalDate localDate = LocalDate.parse(regData.get("birthDate"));
         Date birthDate = Date.from(localDate.atStartOfDay()
@@ -27,6 +28,7 @@ public class UserServiceJPA implements UserService {
         return newUser;
     }
 
+    @Override
     public User loginUser(Map<String, String> loginData){
         List<User> user = EntityUtility.findByOneCriteria(User.class, "userName", loginData.get("userName"));
         if (!user.isEmpty()) {
@@ -37,6 +39,7 @@ public class UserServiceJPA implements UserService {
         return null;
     }
 
+    @Override
     public User getUserById(int id){
         List<User> users = EntityUtility.findByOneCriteria(User.class, "id", String.valueOf(id));
         if (users.isEmpty()) {
@@ -64,30 +67,35 @@ public class UserServiceJPA implements UserService {
     }
 
 
+    @Override
     public void changeEmailAddress(String email, int id) {
         User currentUser = getUserById(id);
         currentUser.setEmail(email);
         EntityUtility.mergeEntity(currentUser);
     }
 
+    @Override
     public void changeAddress(String address, int id){
         User currentUser = getUserById(id);
         currentUser.setAddress(address);
         EntityUtility.mergeEntity(currentUser);
     }
 
+    @Override
     public void changePassword(String pw, int id){
         User currentUser = getUserById(id);
         currentUser.setPassword(BCrypt.hashpw(pw, BCrypt.gensalt()));
         EntityUtility.mergeEntity(currentUser);
     }
 
+    @Override
     public void changePhoneNumber(String phoneNumber, int id){
         User currentUser = getUserById(id);
         currentUser.setPhoneNumber(phoneNumber);
         EntityUtility.mergeEntity(currentUser);
     }
 
+    @Override
     public void changeUsername(String userName, int id){
         User currentUser = getUserById(id);
         currentUser.setUserName(userName);
