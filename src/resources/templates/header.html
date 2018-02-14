@@ -93,7 +93,8 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="newpwd2">Your Password again:</label>
-                                    <input type="text" class="form-control" id="newpwd2" placeholder="Your password again" name="newpwd2"></input>
+                                    <input type="password" class="form-control" id="newpwd2" onkeyup="checkPass(); return false;" placeholder="Your password again" name="newpwd2"></input>
+                                    <span id="confirmMessage" class="confirmMessage"></span>
                                 </div>
                                 <button type="submit" class="btn btn-default">Register</button>
                             </form>
