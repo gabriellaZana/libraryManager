@@ -19,11 +19,59 @@ public class Validator {
     }
 
     public boolean validateRegistration(Map<String, String> regData, Map<String, String> res) {
-        return regData != null && validateUsername(regData.get("name"), res) && validatePassword(regData.get("password"), res) && validateEMailAddress(regData.get("email"), res);
+        if (regData != null) {
+            boolean validUserName = validateUsername(regData.get("userName"), res);
+            boolean validPassword = validatePassword(regData.get("password"), res);
+            boolean validAddress = validateAddress(regData.get("address"), res);
+            boolean validFirstName = validateFirstName(regData.get("firstName"), res);
+            boolean validLastName = validateLastName(regData.get("lastName"), res);
+            boolean validEmail = validateEMailAddress(regData.get("email"), res);
+            boolean validDate = validateDate(regData.get("date"), res);
+            boolean validPhoneNumber = validatePhoneNumber(regData.get("phoneNumber"), res);
+            return validAddress && validDate && validEmail && validFirstName && validLastName && validUserName && validPassword && validPhoneNumber;
+         }
+         return false;
     }
 
     public boolean validateLogin(Map<String, String> loginData, Map<String, String> res) {
-        return loginData != null && validateUsername(loginData.get("name"), res) && validatePassword(loginData.get("password"), res);
+        if (loginData != null) {
+            boolean validUserName = validateUsername(loginData.get("userName"), res);
+            boolean validPassword = validatePassword(loginData.get("password"), res);
+        }
+        return false;
+    }
+
+    private boolean validateDate(String date, Map<String, String> res) {
+        Pattern datePattern = Pattern.compile("((19|20)\\d\\d)-(0?[1-9]|1[012])-(0?[1-9]|[12][0-9]|3[01])");
+        Matcher dateMatcher = datePattern.matcher(date);
+        if (!dateMatcher.find()) {
+            res.put("date", "Invalid date.");
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    private boolean validateFirstName(String firstName, Map<String, String> res) {
+        Pattern firstNamePattern = Pattern.compile("^[A-Z]+$");
+        Matcher firstNameMatcher = firstNamePattern.matcher(firstName);
+        if (!firstNameMatcher.find()) {
+            res.put("firstName", "Invalid first name.");
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    private boolean validateLastName(String lastName, Map<String, String> res) {
+        Pattern lastNamePattern = Pattern.compile("^[A-Z]+$");
+        Matcher lastNameMatcher = lastNamePattern.matcher(lastName);
+        if (!lastNameMatcher.find()) {
+            res.put("lastName", "Invalid last name.");
+            return false;
+        } else {
+            return true;
+        }
     }
 
     private boolean validateUsername(String username, Map<String, String> res) {
