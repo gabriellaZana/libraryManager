@@ -9,4 +9,6 @@ public interface Controller {
     ModelAndView renderBooks(Request req, Response res, String html);
 
     ModelAndView renderBook(Request req, Response res, String html, String isbn);
+
+    ModelAndView renderUserInfo(Request req, Response res, String html);
 }

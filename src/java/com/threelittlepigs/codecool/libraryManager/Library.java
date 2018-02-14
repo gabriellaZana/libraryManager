@@ -27,6 +27,10 @@ public class Library {
             String isbn = req.params(":isbn");
             return new ThymeleafTemplateEngine().render(controller.renderBook(req, res, "book",isbn));
         });
+
+        get("/userprofile/:id", (Request req, Response res) ->
+                new ThymeleafTemplateEngine().render(controller.renderUserInfo(req, res, "userinfo")));
+
         //populateDB();
         enableDebugScreen();
         /*populateDB();
