@@ -13,7 +13,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class ThymeleafUserController implements UserController{
+public class UserControllerImpl implements UserController{
 
     @Override
     public ModelAndView renderUserInfo(Request req, Response res, String html) {

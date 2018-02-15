@@ -2,14 +2,11 @@ package com.threelittlepigs.codecool.libraryManager;
 
 import com.threelittlepigs.codecool.libraryManager.Utils.Controller;
 import com.threelittlepigs.codecool.libraryManager.Utils.ThymleafBookController;
-import com.threelittlepigs.codecool.libraryManager.Utils.userController.ThymeleafUserController;
+import com.threelittlepigs.codecool.libraryManager.Utils.userController.UserControllerImpl;
 import com.threelittlepigs.codecool.libraryManager.Utils.userController.UserController;
 import spark.Request;
 import spark.Response;
 import spark.template.thymeleaf.ThymeleafTemplateEngine;
-
-import java.util.Date;
-import java.util.List;
 
 import static java.lang.Integer.parseInt;
 import static spark.Spark.*;
@@ -19,7 +16,7 @@ public class Library {
     public static void main(String[] args) {
 
         Controller controller = new ThymleafBookController();
-        UserController userController = new ThymeleafUserController();
+        UserController userController = new UserControllerImpl();
         exception(Exception.class, (e, req, res) -> e.printStackTrace());
         staticFileLocation("static");
         port(8888);
