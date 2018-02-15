@@ -75,13 +75,13 @@
                             </tr>
                             </thead>
                             <tbody id="items">
-                            <tr data-toggle="collapse" data-target="#demo1" class="accordion-toggle ">
-                                <td>2018-02-14</td>
-                                <td>2018-02-18</td>
-                                <td>Author</td>
-                                <td>Title</td>
-                                <td>Genre</td>
-                                <td>ISBN</td>
+                            <tr data-toggle="collapse" data-target="#demo1" class="accordion-toggle " th:each="book,iterStat : ${rentedBooks}">
+                                <td th:text="${book.getCurrentDate()}">2018-02-14</td>
+                                <td th:text="${book.getDueDate()}">2018-02-18</td>
+                                <td th:text="${book.getAuthor()}">Author</td>
+                                <td th:text="${book.getTitle()}">Title</td>
+                                <td th:text="${book.getGenre()}">Genre</td>
+                                <td th:text="${book.getIsbn()}">ISBN</td>
                             </tr>
                             </tbody>
                         </table>
@@ -108,12 +108,12 @@
                             </tr>
                             </thead>
                             <tbody id="items">
-                            <tr data-toggle="collapse" data-target="#demo1" class="accordion-toggle ">
+                            <tr data-toggle="collapse" data-target="#demo1" class="accordion-toggle " th:each="book,iterStat : ${reservedBooks}">
                                 <td>2018-02-14</td>
-                                <td>Author</td>
-                                <td>Title</td>
-                                <td>Genre</td>
-                                <td>ISBN</td>
+                                <td th:text="${book.getAuthor()}">Author</td>
+                                <td th:text="${book.getTitle()}">Title</td>
+                                <td th:text="${book.getGenre()}">Genre</td>
+                                <td th:text="${book.getIsbn()}">ISBN</td>
                             </tr>
                             </tbody>
                         </table>
