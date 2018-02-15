@@ -29,12 +29,12 @@ public class Librarian extends User {
 
     public void rentBook(Book book, Member member){
         book.setRentedBy(member);
-        book.setAvailable(false);
+        book.setAvailability(false);
     }
 
     public void returnBook(Book book){
         book.setRentedBy(null);
-        book.setAvailable(true); // redundant, we could calculate this from setRentedBy Not null value
+        book.setAvailability(true); // redundant, we could calculate this from setRentedBy Not null value
     }
 
     public void payFine(Fine fine){

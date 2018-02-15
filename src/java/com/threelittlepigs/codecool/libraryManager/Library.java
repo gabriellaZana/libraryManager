@@ -1,12 +1,24 @@
 package com.threelittlepigs.codecool.libraryManager;
 
+import com.threelittlepigs.codecool.libraryManager.Entities.Book;
+import com.threelittlepigs.codecool.libraryManager.Entities.Fine;
+import com.threelittlepigs.codecool.libraryManager.Entities.Users.Librarian;
+import com.threelittlepigs.codecool.libraryManager.Entities.Users.Member;
+import com.threelittlepigs.codecool.libraryManager.Enums.Genre;
+import com.threelittlepigs.codecool.libraryManager.Enums.Location;
+import com.threelittlepigs.codecool.libraryManager.Utils.EntityUtility;
 import com.threelittlepigs.codecool.libraryManager.Controllers.UserController;
 import com.threelittlepigs.codecool.libraryManager.Controllers.Implementations.UserControllerImpl;
 import com.threelittlepigs.codecool.libraryManager.Controllers.BookController;
 import com.threelittlepigs.codecool.libraryManager.Controllers.Implementations.BookControllerImpl;
+import com.threelittlepigs.codecool.libraryManager.Utils.JSONUtils;
+
 import spark.Request;
 import spark.Response;
 import spark.template.thymeleaf.ThymeleafTemplateEngine;
+
+import java.util.Map;
+
 
 import static java.lang.Integer.parseInt;
 import static spark.Spark.*;
@@ -14,6 +26,7 @@ import static spark.debug.DebugScreen.enableDebugScreen;
 
 public class Library {
     public static void main(String[] args) {
+
 
         BookController bookController = new BookControllerImpl();
         UserController userController = new UserControllerImpl();
@@ -32,11 +45,18 @@ public class Library {
             return new ThymeleafTemplateEngine().render(bookController.renderBook(req, res, "book", isbn));
         });
 
+
+        get("/userprofile/:id", (Request req, Response res) ->
+                new ThymeleafTemplateEngine().render(userController.renderUserInfo(req, res, "userinfo")));
+
+        //populateDB();
+
         post("/register", userController::registration);
 
         post("/login", userController::login);
 
         post("/logout", userController::logout);
+
         enableDebugScreen();
         /*populateDB();
     }
@@ -64,6 +84,7 @@ public class Library {
         List books1 = EntityUtility.findByOneCriteria(Book.class, "title", "Kis 1");
         System.out.println(books1);
         EntityUtility.mergeEntity(book);
+
     }*/
     }
 }

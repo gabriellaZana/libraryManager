@@ -18,7 +18,14 @@ import java.util.Date;
                 name = "getRentedBooksByMember",
                 query = "SELECT b FROM Book b " +
                         "WHERE b.rentedByMember = :rentedByMember"
+        ),
+
+        @NamedQuery(
+                name = "getReservedBooksByMember",
+                query = "SELECT b FROM Book b " +
+                        "WHERE b.reservedByMember = :reservedByMember"
         )
+
 })
 
 
@@ -171,7 +178,7 @@ public class Book {
         return isAvailable;
     }
 
-    public void setAvailable(boolean available) {
+    public void setAvailability(boolean available) {
         isAvailable = available;
     }
 

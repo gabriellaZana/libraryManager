@@ -15,13 +15,14 @@ import java.util.Map;
 public class BookControllerImpl implements BookController {
 
     @Override
+
     public ModelAndView renderBooks(Request req, Response res, String html, boolean isLoggedIn) {
 
         List<Book> books = EntityUtility.getEntityManager().createNamedQuery("getAllBooks", Book.class).getResultList();
-
         Map<String, List> params = new HashMap<>();
         params.put("books", books);
         params.put("isLoggedIn", Collections.singletonList(isLoggedIn));
+        params.put("user_id", req.session().attribute("user_id"));
         return new ModelAndView(params, html);
     }
 
