@@ -47,7 +47,6 @@ public class Fine {
 
     public void setAmount(double amount) {
         this.amount = amount;
-        EntityUtility.mergeEntity(this);
     }
 
     public Date getOccurrence() {
@@ -56,7 +55,6 @@ public class Fine {
 
     public void setOccurrence(Date occurrence) {
         this.occurrence = occurrence;
-        EntityUtility.mergeEntity(this);
     }
 
     public Date getDueDate() {
@@ -65,7 +63,6 @@ public class Fine {
 
     public void setDueDate(Date dueDate) {
         this.dueDate = dueDate;
-        EntityUtility.mergeEntity(this);
     }
 
     public Member getMember() {
@@ -74,7 +71,6 @@ public class Fine {
 
     public void setMember(Member member) {
         this.member = member;
-        EntityUtility.mergeEntity(this);
     }
 
     public boolean isStatus() {
@@ -83,6 +79,5 @@ public class Fine {
 
     public void setStatus(boolean status) {
         this.status = status;
-        EntityUtility.mergeEntity(this);
     }
 }

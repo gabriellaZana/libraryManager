@@ -1,22 +1,21 @@
 package com.threelittlepigs.codecool.libraryManager.Services;
 
 import com.threelittlepigs.codecool.libraryManager.Entities.Users.User;
-import com.threelittlepigs.codecool.libraryManager.Utils.EntityUtility;
+import spark.Request;
+import spark.Response;
 
-import java.util.List;
+import java.util.Map;
 
-public class UserService {
-    void registrateUser(){}
-    void loginUser(){}
-    public User getUserById(String id){
-        List<User> user = EntityUtility.findByOneCriteria(User.class, "id", id);
-        System.out.println(user);
-        return user.get(0);
-    }
-    void getUserByName(){}
-    void changeEmailAddress(){}
-    void changeAddress(){}
-    void changePassword(){}
-    void changePhoneNumber(){}
-    void changeUsername(){}
+public interface UserService {
+    boolean registrateMember(Map<String, String> regData);
+    boolean loginUser(Map<String, String> loginData);
+    User getUserById(int id);
+    User getUserByName(String firstName, String lastName);
+    User getUserByEmailAddress(String email);
+    void changeEmailAddress(String email, int id);
+    void changeAddress(String address, int id);
+    void changePassword(String pw, int id);
+    void changePhoneNumber(String phoneNumber, int id);
+    void changeUsername(String userName, int id);
+    User getUserByUsername(String username);
 }

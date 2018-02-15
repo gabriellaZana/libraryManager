@@ -1,12 +1,19 @@
 package com.threelittlepigs.codecool.libraryManager;
 
-import com.threelittlepigs.codecool.libraryManager.Utils.Controller;
-import com.threelittlepigs.codecool.libraryManager.Utils.ThymleafBookController;
-import com.threelittlepigs.codecool.libraryManager.Utils.userController.UserControllerImpl;
-import com.threelittlepigs.codecool.libraryManager.Utils.userController.UserController;
+import com.threelittlepigs.codecool.libraryManager.Controllers.UserController;
+import com.threelittlepigs.codecool.libraryManager.Controllers.UserControllerImpl;
+import com.threelittlepigs.codecool.libraryManager.Services.Implementations.UserServiceJPA;
+import com.threelittlepigs.codecool.libraryManager.Services.UserService;
+import com.threelittlepigs.codecool.libraryManager.Controllers.BookController;
+import com.threelittlepigs.codecool.libraryManager.Utils.JSONUtils;
+import com.threelittlepigs.codecool.libraryManager.Controllers.BookControllerImpl;
+
 import spark.Request;
 import spark.Response;
 import spark.template.thymeleaf.ThymeleafTemplateEngine;
+
+import java.util.Map;
+
 
 import static java.lang.Integer.parseInt;
 import static spark.Spark.*;
@@ -15,23 +22,36 @@ import static spark.debug.DebugScreen.enableDebugScreen;
 public class Library {
     public static void main(String[] args) {
 
-        Controller controller = new ThymleafBookController();
+
+        BookController bookController = new BookControllerImpl();
         UserController userController = new UserControllerImpl();
         exception(Exception.class, (e, req, res) -> e.printStackTrace());
         staticFileLocation("static");
         port(8888);
 
-        get("/", (Request req, Response res) -> new ThymeleafTemplateEngine().render(controller.renderBooks(req, res, "index")));
+        get("/", (Request req, Response res) ->
+            {
+                System.out.println((String) req.session().attribute("userName"));
+                return new ThymeleafTemplateEngine().render(bookController.renderBooks(req, res, "index", userController.ensureUserIsLoggedIn(req, res)));
+            });
 
         get("/books/:isbn", (Request req, Response res) -> {
             String isbn = req.params(":isbn");
-            return new ThymeleafTemplateEngine().render(controller.renderBook(req, res, "book",isbn));
+            return new ThymeleafTemplateEngine().render(bookController.renderBook(req, res, "book", isbn));
         });
+
 
         get("/userprofile/:id", (Request req, Response res) ->
                 new ThymeleafTemplateEngine().render(userController.renderUserInfo(req, res, "userinfo")));
 
         //populateDB();
+
+        post("/register", userController::registration);
+
+        post("/login", userController::login);
+
+        post("/logout", userController::logout);
+
         enableDebugScreen();
         /*populateDB();
     }
