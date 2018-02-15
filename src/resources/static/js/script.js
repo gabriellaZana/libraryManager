@@ -19,23 +19,24 @@ function checkPass() {
 function register(){
     $('#register').on('submit', function (event) {
         event.preventDefault();
-        var userData = new Map();
-
-        userData.set("username", $("#username").val());
-        userData.set("firstname", $("#firstname").val());
-        userData.set("lastname", $("#lastname").val());
-        userData.set("address", $("#address").val());
-        userData.set("email", $("#newemail").val());
-        userData.set("phonenum", $("#phonenum").val());
-        userData.set("dateofbirth", $("#dateOfBirth").val());
-        userData.set("password", $("#newpwd").val());
+        let regData = {
+            "username": $("#username").val(),
+            "firstname": $("#firstname").val(),
+            "lastname": $("#lastname").val(),
+            "address": $("#address").val(),
+            "email": $("#newemail").val(),
+            "phonenum": $("#phonenum").val(),
+            "dateofbirth": $("#dateOfBirth").val(),
+            "password": $("#newpwd").val()
+        };
 
         $.ajax({
             url:'/register',
             type: 'POST',
             contentType: 'application/json; charset=UTF-8',
-            data:JSON.stringify(userData),
+            data: JSON.stringify(regData),
             success: function (response) {
+                console.log(response);
                 if(response == '"failure"'){
                     alert("Email is already in use!");
                     $("#newpwd").val("");
