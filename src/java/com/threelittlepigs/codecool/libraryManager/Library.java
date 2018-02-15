@@ -68,6 +68,7 @@ public class Library {
         Book book3 = new Book("Kis 3", "György Mátyás", "http://fvmaszk.hu/wp-content/uploads/konyv.jpg", 1997, "Test", "Béla", Genre.Christian, Location.AQUARIUM, "SAD14asdasdasdasdasd5831");
         Librarian librarian = new Librarian("amigo", "asdasdasd", "Béla", "Kvács", "bk@gmail.cm", new Date(), "Fixaddress", "0908070605");
         Member member = new Member("membergo", "asdasdasd", "Béla", "Membertest", "bl@gmail.com", new Date(), "shit", "0908745161");
+        Member testMember = new Member("test", "asdasdasd", "Mr", "Test", "mt@gmail.com", new Date(), "shit", "0908745161");
         Fine regFee = new Fine(15.0, new Date(), new Date(), member);
 
         EntityUtility.persistEntity(member);
