@@ -4,15 +4,18 @@ function checkPass() {
     var message = document.getElementById('confirmMessage');
     var goodColor = "#66cc66";
     var badColor = "#ff6666";
+    var registerButton = document.getElementById('register-button');
 
-    if(pass1.value == pass2.value){
+    if(pass1.value === pass2.value){
         pass2.style.backgroundColor = goodColor;
         message.style.color = goodColor;
         message.innerHTML = "Passwords Match!"
+        $("#register-button").show();
     }else{
         pass2.style.backgroundColor = badColor;
         message.style.color = badColor;
         message.innerHTML = "Passwords Do Not Match!"
+        $("#register-button").hide();
     }
 }
 
@@ -20,13 +23,13 @@ function register(){
     $('#register').on('submit', function (event) {
         event.preventDefault();
         let regData = {
-            "username": $("#username").val(),
-            "firstname": $("#firstname").val(),
-            "lastname": $("#lastname").val(),
+            "userName": $("#username").val(),
+            "firstName": $("#firstname").val(),
+            "lastName": $("#lastname").val(),
             "address": $("#address").val(),
             "email": $("#newemail").val(),
-            "phonenum": $("#phonenum").val(),
-            "dateofbirth": $("#dateOfBirth").val(),
+            "phoneNumber": $("#phonenum").val(),
+            "dateOfBirth": $("#dateOfBirth").val(),
             "password": $("#newpwd").val()
         };
 
@@ -37,13 +40,14 @@ function register(){
             data: JSON.stringify(regData),
             success: function (response) {
                 console.log(response);
-                if(response == '"failure"'){
+                if(response === "failure"){
                     alert("Email is already in use!");
                     $("#newpwd").val("");
                     $("#newpwd2").val("");
                     $("#newemail").val("");
                 } else {
                     $("#myLoginModal").hide();
+                    $(".modal-backdrop fade in").hide();
                     alert("Thank you for registering!");
                     $(function () {
                         $('#myLoginModal').modal('toggle');
