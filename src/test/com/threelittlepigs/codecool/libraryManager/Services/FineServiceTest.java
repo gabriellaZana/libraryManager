@@ -72,7 +72,7 @@ class FineServiceTest {
     @Test
     void getFinesByUserIdTest() {
         List<Fine> userFines = EntityUtility.getEntityManager().createNamedQuery("getFineByMember", Fine.class).setParameter("memberid", member.getId()).getResultList();
-        assertEquals(2, userFines.size());
+        assertEquals(1, userFines.size());
     }
 
     @Test

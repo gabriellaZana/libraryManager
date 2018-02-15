@@ -34,6 +34,7 @@ public class UserControllerImpl implements UserController {
     @Override
     public String logout(Request request, Response response) {
         request.session().removeAttribute("userName");
+        request.session().removeAttribute("user_id");
         response.redirect("/");
         return "";
     }
@@ -56,8 +57,10 @@ public class UserControllerImpl implements UserController {
     public ModelAndView renderUserInfo(Request req, Response res, String html) {
 
         UserService us = new UserServiceJPA();
-        int id = req.session().attribute("user_id");
-        System.out.println("idddd: " + id);
+        Integer id = req.session().attribute("user_id");
+        if (id == null) {
+            res.redirect("/");
+        }
         User user = us.getUserById(id);
         List<Book> rentedBooks = EntityUtility.getEntityManager().createNamedQuery("getRentedBooksByMember", Book.class).setParameter("rentedByMember", user).getResultList();
         List<Book> reservedBooks = EntityUtility.getEntityManager().createNamedQuery("getReservedBooksByMember", Book.class).setParameter("reservedByMember", user).getResultList();
@@ -68,6 +71,9 @@ public class UserControllerImpl implements UserController {
         params.put("rentedBooks", rentedBooks);
         params.put("reservedBooks", reservedBooks);
         params.put("fines", fines);
+        params.put("user_id", id);
+        params.put("userName", req.session().attribute("userName"));
+
         return new ModelAndView(params, html);
     }
 }
