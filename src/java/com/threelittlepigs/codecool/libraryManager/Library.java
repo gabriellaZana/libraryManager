@@ -1,5 +1,12 @@
 package com.threelittlepigs.codecool.libraryManager;
 
+import com.threelittlepigs.codecool.libraryManager.Entities.Book;
+import com.threelittlepigs.codecool.libraryManager.Entities.Fine;
+import com.threelittlepigs.codecool.libraryManager.Entities.Users.Librarian;
+import com.threelittlepigs.codecool.libraryManager.Entities.Users.Member;
+import com.threelittlepigs.codecool.libraryManager.Enums.Genre;
+import com.threelittlepigs.codecool.libraryManager.Enums.Location;
+import com.threelittlepigs.codecool.libraryManager.Utils.EntityUtility;
 import com.threelittlepigs.codecool.libraryManager.Controllers.UserController;
 import com.threelittlepigs.codecool.libraryManager.Controllers.UserControllerImpl;
 import com.threelittlepigs.codecool.libraryManager.Services.Implementations.UserServiceJPA;
@@ -79,6 +86,7 @@ public class Library {
         List books1 = EntityUtility.findByOneCriteria(Book.class, "title", "Kis 1");
         System.out.println(books1);
         EntityUtility.mergeEntity(book);
+
     }*/
     }
 }
