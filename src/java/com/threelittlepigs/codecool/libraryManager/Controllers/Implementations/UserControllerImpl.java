@@ -1,5 +1,6 @@
-package com.threelittlepigs.codecool.libraryManager.Controllers;
+package com.threelittlepigs.codecool.libraryManager.Controllers.Implementations;
 
+import com.threelittlepigs.codecool.libraryManager.Controllers.UserController;
 import com.threelittlepigs.codecool.libraryManager.Entities.Book;
 import com.threelittlepigs.codecool.libraryManager.Entities.Fine;
 import com.threelittlepigs.codecool.libraryManager.Entities.Users.User;
@@ -15,7 +16,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class UserControllerImpl implements UserController{
+public class UserControllerImpl implements UserController {
 
     @Override
     public String login(Request request, Response response) {
