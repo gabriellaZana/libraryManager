@@ -68,6 +68,45 @@ function register(){
 }
 
 
+function login(){
+    $('#login').on('submit', function (event) {
+        event.preventDefault();
+        let logData = {
+            "logUserName" : $("#logusername").val(),
+            "password" : $("#pwd").val()
+        }
+
+        $.ajax({
+            url:'/login',
+            type: 'POST',
+            contentType: 'application/json; charset=UTF-8',
+            data: JSON.stringify(logData),
+            success: function (response) {
+                console.log(response)
+                if(response === "failure"){
+                    alert("Incorrect password or username!");
+                    $("#logusername").val("");
+                    $("#pwd").val("");
+                } else {
+                    alert("Logged in, welcome:)");
+                    $(function () {
+                        $('#myLoginModal').modal('toggle');
+                    });
+                    $("#logusername").val("");
+                    $("#pwd").val("");
+                    $("#reglogbutton").hide();
+
+                    $("#reglogbutton").attr("id", "logout");
+                    $("#logout").html('<a id="log-out" href="/logout">Logout</a>');
+                    $("#logout").wrap('<strong></strong>');
+                }
+            }
+        })
+    })
+}
+
+
 $(document).ready(function () {
+    login();
     register();
 });
