@@ -7,7 +7,7 @@ import spark.Response;
 import java.util.Map;
 
 public interface UserService {
-    User registrateMember(Map<String, String> regData);
+    boolean registrateMember(Map<String, String> regData);
     User loginUser(Map<String, String> loginData);
     User getUserById(int id);
     User getUserByName(String firstName, String lastName);

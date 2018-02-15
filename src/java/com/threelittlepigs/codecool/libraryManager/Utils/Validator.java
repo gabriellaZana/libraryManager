@@ -26,7 +26,7 @@ public class Validator {
             boolean validFirstName = validateFirstName(regData.get("firstName"), res);
             boolean validLastName = validateLastName(regData.get("lastName"), res);
             boolean validEmail = validateEMailAddress(regData.get("email"), res);
-            boolean validDate = validateDate(regData.get("birthDate"), res);
+            boolean validDate = validateDate(regData.get("dateOfBirth"), res);
             boolean validPhoneNumber = validatePhoneNumber(regData.get("phoneNumber"), res);
             return validAddress && validDate && validEmail && validFirstName && validLastName && validUserName && validPassword && validPhoneNumber;
          }

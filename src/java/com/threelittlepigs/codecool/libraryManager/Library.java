@@ -1,6 +1,9 @@
 package com.threelittlepigs.codecool.libraryManager;
 
+import com.threelittlepigs.codecool.libraryManager.Services.Implementations.UserServiceJPA;
+import com.threelittlepigs.codecool.libraryManager.Services.UserService;
 import com.threelittlepigs.codecool.libraryManager.Utils.Controller;
+import com.threelittlepigs.codecool.libraryManager.Utils.JSONUtils;
 import com.threelittlepigs.codecool.libraryManager.Utils.ThymleafBookController;
 import spark.Request;
 import spark.Response;
@@ -8,6 +11,7 @@ import spark.template.thymeleaf.ThymeleafTemplateEngine;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import static java.lang.Integer.parseInt;
 import static spark.Spark.*;
@@ -27,7 +31,15 @@ public class Library {
             String isbn = req.params(":isbn");
             return new ThymeleafTemplateEngine().render(controller.renderBook(req, res, "book",isbn));
         });
-        //populateDB();
+
+        post("/register", (Request request, Response response) -> {
+            Map<String, String> regData = JSONUtils.parseJson(request);
+            UserService us = new UserServiceJPA();
+            if (us.registrateMember(regData)) {
+                return "";
+            }
+            return "failure";
+        });
         enableDebugScreen();
         /*populateDB();
     }

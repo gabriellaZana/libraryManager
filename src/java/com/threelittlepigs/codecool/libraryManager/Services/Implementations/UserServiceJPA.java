@@ -16,17 +16,17 @@ import java.util.*;
 public class UserServiceJPA implements UserService {
 
     @Override
-    public User registrateMember(Map<String, String> regData){
+    public boolean registrateMember(Map<String, String> regData){
         if (Validator.getInstance().validateRegistration(regData, new HashMap<>())) {
-            LocalDate localDate = LocalDate.parse(regData.get("birthDate"));
+            LocalDate localDate = LocalDate.parse(regData.get("dateOfBirth"));
             Date birthDate = Date.from(localDate.atStartOfDay()
                     .atZone(ZoneId.systemDefault())
                     .toInstant());
             Member newUser = new Member(regData.get("userName"), regData.get("password"), regData.get("firstName"), regData.get("lastName"), regData.get("email"), birthDate, regData.get("address"), regData.get("phoneNumber"));
             EntityUtility.persistEntity(newUser);
-            return newUser;
+            return true;
         }
-        return null;
+        return false;
     }
 
     @Override
