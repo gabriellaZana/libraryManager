@@ -48,6 +48,8 @@ public class UserServiceJPA implements UserService {
         }
         return users.get(0);   // Error handling needed here, when the users list is empty it throws an error
     }
+
+    @Override
     public User getUserByName(String firstName, String lastName){
         List<String> columns = Arrays.asList("firstName", "lastName");
         List<String> values = Arrays.asList(firstName, lastName);
@@ -56,6 +58,15 @@ public class UserServiceJPA implements UserService {
             return users.get(0);
         }
         return null;
+    }
+
+    @Override
+    public User getUserByUsername(String username) {
+        List<User> users = EntityUtility.findByOneCriteria(User.class, "userName", username);
+        if (users.isEmpty()) {
+            return null;
+        }
+        return users.get(0);   // Error handling needed here, when the users list is empty it throws an error
     }
 
     @Override
