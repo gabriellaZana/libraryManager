@@ -1,14 +1,15 @@
-package com.threelittlepigs.codecool.libraryManager.Services.FineService;
+package com.threelittlepigs.codecool.libraryManager.Services.Implementations;
 
 import com.threelittlepigs.codecool.libraryManager.Entities.Fine;
 import com.threelittlepigs.codecool.libraryManager.Entities.Users.Member;
 import com.threelittlepigs.codecool.libraryManager.Entities.Users.User;
+import com.threelittlepigs.codecool.libraryManager.Services.FineService;
 import com.threelittlepigs.codecool.libraryManager.Utils.EntityUtility;
 
 import java.util.Date;
 import java.util.List;
 
-public class FineServiceImpl implements FineService{
+public class FineServiceJPA implements FineService {
 
     @Override
     public Fine getFineById(int id) {
