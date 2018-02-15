@@ -4,7 +4,6 @@ function checkPass() {
     var message = document.getElementById('confirmMessage');
     var goodColor = "#66cc66";
     var badColor = "#ff6666";
-    var registerButton = document.getElementById('register-button');
 
     if(pass1.value === pass2.value){
         pass2.style.backgroundColor = goodColor;
@@ -95,6 +94,7 @@ function login(){
                     $("#logusername").val("");
                     $("#pwd").val("");
                     $("#reglogbutton").hide();
+                    $("#logoutbutton").show();
 
                     $("#reglogbutton").attr("id", "logout");
                     $("#logout").html('<a id="log-out" href="/logout">Logout</a>');
@@ -105,8 +105,13 @@ function login(){
     })
 }
 
+function getCookie() {
+    console.log(document.cookie);
+}
+
 
 $(document).ready(function () {
+    getCookie();
     login();
     register();
 });

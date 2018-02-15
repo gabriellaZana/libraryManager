@@ -115,12 +115,12 @@ img {
 
 }
 
-#reglogbutton {
+#reglogbutton, #logoutbutton {
     color: black;
     margin: 10px;
 }
 
-#reglogbutton:hover {
+#reglogbutton:hover, #logoutbutton:hover {
     text-decoration: none;
 }
 
