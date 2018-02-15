@@ -1,7 +1,9 @@
-package com.threelittlepigs.codecool.libraryManager.Services.FineService;
+package com.threelittlepigs.codecool.libraryManager.Services;
 
 import com.threelittlepigs.codecool.libraryManager.Entities.Fine;
 import com.threelittlepigs.codecool.libraryManager.Entities.Users.Member;
+import com.threelittlepigs.codecool.libraryManager.Services.FineService;
+import com.threelittlepigs.codecool.libraryManager.Services.Implementations.FineServiceJPA;
 import com.threelittlepigs.codecool.libraryManager.Utils.EntityUtility;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -14,7 +16,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-class FineServiceImplTest {
+class FineServiceTest {
 
     private FineService fineService;
     private Fine fine;
@@ -22,7 +24,7 @@ class FineServiceImplTest {
 
     @BeforeAll
     void init() {
-        fineService = new FineServiceImpl();
+        fineService = new FineServiceJPA();
         fine = fineService.getFineById(1);
         member = mock(Member.class);
         when(member.getId()).thenReturn(2L);

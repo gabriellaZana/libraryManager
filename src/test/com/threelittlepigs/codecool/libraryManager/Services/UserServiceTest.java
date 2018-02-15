@@ -11,7 +11,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class UserServiceTest {
 
-    static UserService us;
+    private static UserService us;
 
     @BeforeAll
     static void init(){
@@ -38,9 +38,9 @@ class UserServiceTest {
     @Test
     void testLogin() {
         Map<String, String> loginData = new HashMap<>();
-        loginData.put("userName", "membergo");
+        loginData.put("logUserName", "membergo");
         loginData.put("password", "asdasdasd");
-        assertNotNull(us.loginUser(loginData));
+        assertTrue(us.loginUser(loginData));
     }
 
     @Test
@@ -48,12 +48,12 @@ class UserServiceTest {
         Map<String, String> loginData = new HashMap<>();
         loginData.put("userName", "");
         loginData.put("password", "");
-        assertNull(us.loginUser(loginData));
+        assertFalse(us.loginUser(loginData));
     }
 
     @Test
     void testGetUserByName() {
-        assertNotNull(us.getUserByName("Béla", "Kvács"));
+        assertNotNull(us.getUserByName("Béla", "Membertest"));
     }
 
     @Test
@@ -112,9 +112,9 @@ class UserServiceTest {
         regData.put("firstName", "Test");
         regData.put("lastName", "Case");
         regData.put("email", "tc@gm.com");
-        regData.put("birthDate", "2007-12-03");
+        regData.put("dateOfBirth", "2007-12-03");
         regData.put("address", "testclown");
         regData.put("phoneNumber", "0908070605");
-        assertNotNull(us.registrateMember(regData));
+        assertTrue(us.registrateMember(regData));
     }
 }
