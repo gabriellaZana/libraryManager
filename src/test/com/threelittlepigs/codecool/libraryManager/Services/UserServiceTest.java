@@ -72,6 +72,11 @@ class UserServiceTest {
     }
 
     @Test
+    void testGetUserByUsername() {
+        assertNotNull(us.getUserByUsername("membergo"));
+    }
+
+    @Test
     void testChangeUsername() {
         String prevUsername = us.getUserById(2).getUserName();
         us.changeUsername(prevUsername + " changed", 2);

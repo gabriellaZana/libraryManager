@@ -7,8 +7,8 @@ import spark.Response;
 import java.util.Map;
 
 public interface UserService {
-    User registrateMember(Map<String, String> regData);
-    User loginUser(Map<String, String> loginData);
+    boolean registrateMember(Map<String, String> regData);
+    boolean loginUser(Map<String, String> loginData);
     User getUserById(int id);
     User getUserByName(String firstName, String lastName);
     User getUserByEmailAddress(String email);
@@ -17,4 +17,5 @@ public interface UserService {
     void changePassword(String pw, int id);
     void changePhoneNumber(String phoneNumber, int id);
     void changeUsername(String userName, int id);
+    User getUserByUsername(String username);
 }

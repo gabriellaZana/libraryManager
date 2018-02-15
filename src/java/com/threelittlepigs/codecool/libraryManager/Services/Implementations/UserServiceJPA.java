@@ -4,39 +4,42 @@ import com.threelittlepigs.codecool.libraryManager.Entities.Users.Member;
 import com.threelittlepigs.codecool.libraryManager.Entities.Users.User;
 import com.threelittlepigs.codecool.libraryManager.Services.UserService;
 import com.threelittlepigs.codecool.libraryManager.Utils.EntityUtility;
+import com.threelittlepigs.codecool.libraryManager.Utils.Validator;
 import org.mindrot.jbcrypt.BCrypt;
 import spark.Request;
 import spark.Response;
 
 import java.time.LocalDate;
 import java.time.ZoneId;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class UserServiceJPA implements UserService {
 
     @Override
-    public User registrateMember(Map<String, String> regData){
-        LocalDate localDate = LocalDate.parse(regData.get("birthDate"));
-        Date birthDate = Date.from(localDate.atStartOfDay()
-                .atZone(ZoneId.systemDefault())
-                .toInstant());
-        Member newUser = new Member(regData.get("userName"),regData.get("password"), regData.get("firstName"), regData.get("lastName"), regData.get("email"), birthDate, regData.get("address"), regData.get("phoneNumber"));
-        EntityUtility.persistEntity(newUser);
-        return newUser;
+    public boolean registrateMember(Map<String, String> regData){
+        if (getUserByUsername(regData.get("userName")) == null) {
+            if (Validator.getInstance().validateRegistration(regData, new HashMap<>())) {
+                LocalDate localDate = LocalDate.parse(regData.get("dateOfBirth"));
+                Date birthDate = Date.from(localDate.atStartOfDay()
+                        .atZone(ZoneId.systemDefault())
+                        .toInstant());
+                Member newUser = new Member(regData.get("userName"), regData.get("password"), regData.get("firstName"), regData.get("lastName"), regData.get("email"), birthDate, regData.get("address"), regData.get("phoneNumber"));
+                EntityUtility.persistEntity(newUser);
+                return true;
+            }
+        }
+        return false;
     }
 
     @Override
-    public User loginUser(Map<String, String> loginData){
-        List<User> user = EntityUtility.findByOneCriteria(User.class, "userName", loginData.get("userName"));
+    public boolean loginUser(Map<String, String> loginData){
+        List<User> user = EntityUtility.findByOneCriteria(User.class, "userName", loginData.get("logUserName"));
         if (!user.isEmpty()) {
             if (BCrypt.checkpw(loginData.get("password"), user.get(0).getPassword())) {
-                return user.get(0);
+                return true;
             }
         }
-        return null;
+        return false;
     }
 
     @Override
@@ -47,6 +50,8 @@ public class UserServiceJPA implements UserService {
         }
         return users.get(0);   // Error handling needed here, when the users list is empty it throws an error
     }
+
+    @Override
     public User getUserByName(String firstName, String lastName){
         List<String> columns = Arrays.asList("firstName", "lastName");
         List<String> values = Arrays.asList(firstName, lastName);
@@ -55,6 +60,15 @@ public class UserServiceJPA implements UserService {
             return users.get(0);
         }
         return null;
+    }
+
+    @Override
+    public User getUserByUsername(String username) {
+        List<User> users = EntityUtility.findByOneCriteria(User.class, "userName", username);
+        if (users.isEmpty()) {
+            return null;
+        }
+        return users.get(0);   // Error handling needed here, when the users list is empty it throws an error
     }
 
     @Override
