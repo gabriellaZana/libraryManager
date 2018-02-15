@@ -33,18 +33,121 @@
 
 <div th:replace="header :: copy"></div>
 
-<div class="container">
+<div class="container bootstrap snippet">
     <div class="row">
-        <div class="col-lg-8">
-            <p th:text="${user.getFirstName()}"></p>
-            <p th:text="${user.getLastName()}"></p>
-            <p>Addrress: <span th:text="${user.getAddress()}">Address</span></p>
-        </div>
+        <div class="col-sm-10"><h1 th:text="${user.getFirstName() + ' ' + user.getLastName()}">Mate Bedok</h1></div>
+        <div class="col-sm-2"><a href="/#" class="pull-right"><img title="profile image" class="img-circle img-responsive" src="matykó.jpg"/></a></div>
     </div>
     <div class="row">
+        <div class="col-sm-3">
+
+            <ul class="list-group">
+                <li class="list-group-item text-muted">Profile<button class="pull-right">edit</button></li>
+                <li class="list-group-item text-right"><span class="pull-left"><strong>User name:</strong></span><div th:text="${user.getUserName()}">Mate66</div></li>
+                <li class="list-group-item text-right"><span class="pull-left"><strong>Email:</strong></span><div th:text="${user.getEmail()}">email@email.email</div></li>
+                <li class="list-group-item text-right"><span class="pull-left"><strong>Phone no.:</strong></span><div th:text="${user.getPhoneNumber()}">+36303025689</div></li>
+                <li class="list-group-item text-right"><span class="pull-left"><strong>Date of birth:</strong></span><div th:text="${user.getDateOfBirth()}">1992-01-26</div></li>
+                <li class="list-group-item text-right"><span class="pull-left"><strong>Address:</strong></span><div th:text="${user.getAddress()}">address</div></li>
+            </ul>
+
+
+        </div>
+        <div class="col-sm-9">
+
+            <ul class="nav nav-tabs" id="myTab">
+                <li class="active"><a href="#rented_books" data-toggle="tab">Rented book(s)</a></li>
+                <li><a href="#reserved_books" data-toggle="tab">Reserved book(s)</a></li>
+                <li><a href="#fines" data-toggle="tab">Fine(s)</a></li>
+            </ul>
+
+            <div class="tab-content">
+                <div class="tab-pane active" id="rented_books">
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                            <tr>
+                                <th>Date of rent</th>
+                                <th>Due date</th>
+                                <th>Author</th>
+                                <th>Title</th>
+                                <th>Genre</th>
+                                <th>ISBN</th>
+                            </tr>
+                            </thead>
+                            <tbody id="items">
+                            <tr data-toggle="collapse" data-target="#demo1" class="accordion-toggle ">
+                                <td>2018-02-14</td>
+                                <td>2018-02-18</td>
+                                <td>Author</td>
+                                <td>Title</td>
+                                <td>Genre</td>
+                                <td>ISBN</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <hr/>
+                        <div class="row">
+                            <div class="col-md-6 col-md-offset-4 text-center">
+                                <ul class="pagination" id="myPager"></ul>
+                            </div>
+                        </div>
+                    </div><!--/table-resp-->
+                    <hr/>
+
+                </div><!--/tab-pane-->
+                <div class="tab-pane" id="reserved_books">
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                            <tr>
+                                <th>Date of reservation</th>
+                                <th>Author</th>
+                                <th>Title</th>
+                                <th>Genre</th>
+                                <th>ISBN</th>
+                            </tr>
+                            </thead>
+                            <tbody id="items">
+                            <tr data-toggle="collapse" data-target="#demo1" class="accordion-toggle ">
+                                <td>2018-02-14</td>
+                                <td>Author</td>
+                                <td>Title</td>
+                                <td>Genre</td>
+                                <td>ISBN</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div><!--/tab-pane-->
+                <div class="tab-pane" id="fines">
+                    <table class="table table-hover">
+                        <thead>
+                        <tr>
+                            <th>Issue date</th>
+                            <th>Due date</th>
+                            <th>Amount</th>
+                            <th>Status</th>
+                        </tr>
+                        </thead>
+                        <tbody id="items">
+                        <tr data-toggle="collapse" data-target="#demo1" class="accordion-toggle ">
+                            <td>2018-02-02</td>
+                            <td>2018-02-05</td>
+                            <td>Amount</td>
+                            <td>active/payed</td>
+                            <td><button type="button" data-toggle="modal" data-target="#edit" data-uid="1" class="update btn btn-warning btn-sm">PAY</button></td>
+                        </tr>
+                        </tbody>
+                    </table>
+
+                </div>
+
+            </div>
+        </div>
+
     </div>
 </div>
-
 <div th:replace="footer :: copy"></div>
 
 </body>
