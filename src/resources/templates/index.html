@@ -42,7 +42,8 @@
                 <div class="caption">
                     <img th:src="${book.picture_url}" width="320" height="250"/>
                     <p th:text="${book.title}"></p>
-                    <p>Written by <a data-toggle="modal" data-target="#myModal" th:text="${book.author}"></a></p>
+                    <!--<p>Written by <a data-toggle="modal" data-target="#myModal" th:text="${book.author}"></a></p>-->
+                    <p>Written by <a data-toggle="modal" data-target="#myModal">Buczkó Bence</a></p>
                     <p th:if="${book.isAvailable()}">Available</p>
                     <a class="btn btn-primary" th:href="@{//0.0.0.0:8888/books/{id}(id=${book.isbn})}">More Info</a>
                 </div>
@@ -54,10 +55,10 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h2 class="modal-title" id="exampleModalLabel">Matykó</h2>
+                    <h2 class="modal-title" id="exampleModalLabel">Benkó</h2>
                 </div>
                 <div class="modal-body">
-                    <img src="matykó.jpg" width="480" height="600"/>
+                    <img src="/pictures/benkó.jpeg" width="480" height="600"/>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

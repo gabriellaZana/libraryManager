@@ -8,12 +8,10 @@ import com.threelittlepigs.codecool.libraryManager.Enums.Genre;
 import com.threelittlepigs.codecool.libraryManager.Enums.Location;
 import com.threelittlepigs.codecool.libraryManager.Utils.EntityUtility;
 import com.threelittlepigs.codecool.libraryManager.Controllers.UserController;
-import com.threelittlepigs.codecool.libraryManager.Controllers.UserControllerImpl;
-import com.threelittlepigs.codecool.libraryManager.Services.Implementations.UserServiceJPA;
-import com.threelittlepigs.codecool.libraryManager.Services.UserService;
+import com.threelittlepigs.codecool.libraryManager.Controllers.Implementations.UserControllerImpl;
 import com.threelittlepigs.codecool.libraryManager.Controllers.BookController;
+import com.threelittlepigs.codecool.libraryManager.Controllers.Implementations.BookControllerImpl;
 import com.threelittlepigs.codecool.libraryManager.Utils.JSONUtils;
-import com.threelittlepigs.codecool.libraryManager.Controllers.BookControllerImpl;
 
 import spark.Request;
 import spark.Response;

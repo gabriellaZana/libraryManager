@@ -40,17 +40,16 @@ function register(){
             success: function (response) {
                 console.log(response);
                 if(response === "failure"){
-                    alert("Email is already in use!");
+                    alert("Something is not quite right! :)");
                     $("#newpwd").val("");
                     $("#newpwd2").val("");
                     $("#newemail").val("");
                 } else {
-                    $("#myLoginModal").hide();
-                    $(".modal-backdrop fade in").hide();
                     alert("Thank you for registering!");
                     $(function () {
                         $('#myLoginModal').modal('toggle');
                     });
+                    $('.modal-backdrop').remove();
                     $("#username").val("");
                     $("#firstname").val("");
                     $("#lastname").val("");
@@ -91,6 +90,7 @@ function login(){
                     $(function () {
                         $('#myLoginModal').modal('toggle');
                     });
+                    $('.modal-backdrop').remove();
                     $("#logusername").val("");
                     $("#pwd").val("");
                     $("#reglogbutton").hide();
@@ -104,6 +104,7 @@ function login(){
         })
     })
 }
+
 
 function getCookie() {
     console.log(document.cookie);
