@@ -9,7 +9,7 @@ import java.util.Date;
 @Entity
 @NamedQuery(name = "getFineByMember",
             query = "SELECT f FROM Fine f " +
-                    "WHERE f.member = :memberid")
+                    "WHERE f.member.id = :memberid")
 public class Fine {
 
     @Id
