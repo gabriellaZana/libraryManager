@@ -8,7 +8,7 @@ import java.util.Map;
 
 public interface UserService {
     boolean registrateMember(Map<String, String> regData);
-    User loginUser(Map<String, String> loginData);
+    boolean loginUser(Map<String, String> loginData);
     User getUserById(int id);
     User getUserByName(String firstName, String lastName);
     User getUserByEmailAddress(String email);

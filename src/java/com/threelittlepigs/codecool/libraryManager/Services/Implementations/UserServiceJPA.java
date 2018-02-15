@@ -32,14 +32,14 @@ public class UserServiceJPA implements UserService {
     }
 
     @Override
-    public User loginUser(Map<String, String> loginData){
-        List<User> user = EntityUtility.findByOneCriteria(User.class, "userName", loginData.get("userName"));
+    public boolean loginUser(Map<String, String> loginData){
+        List<User> user = EntityUtility.findByOneCriteria(User.class, "userName", loginData.get("logUserName"));
         if (!user.isEmpty()) {
             if (BCrypt.checkpw(loginData.get("password"), user.get(0).getPassword())) {
-                return user.get(0);
+                return true;
             }
         }
-        return null;
+        return false;
     }
 
     @Override

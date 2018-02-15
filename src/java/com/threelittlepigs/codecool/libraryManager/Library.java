@@ -1,16 +1,16 @@
 package com.threelittlepigs.codecool.libraryManager;
 
+import com.threelittlepigs.codecool.libraryManager.Controllers.UserController;
+import com.threelittlepigs.codecool.libraryManager.Controllers.UserControllerImpl;
 import com.threelittlepigs.codecool.libraryManager.Services.Implementations.UserServiceJPA;
 import com.threelittlepigs.codecool.libraryManager.Services.UserService;
-import com.threelittlepigs.codecool.libraryManager.Utils.Controller;
+import com.threelittlepigs.codecool.libraryManager.Controllers.BookController;
 import com.threelittlepigs.codecool.libraryManager.Utils.JSONUtils;
-import com.threelittlepigs.codecool.libraryManager.Utils.ThymleafBookController;
+import com.threelittlepigs.codecool.libraryManager.Controllers.BookControllerImpl;
 import spark.Request;
 import spark.Response;
 import spark.template.thymeleaf.ThymeleafTemplateEngine;
 
-import java.util.Date;
-import java.util.List;
 import java.util.Map;
 
 import static java.lang.Integer.parseInt;
@@ -20,26 +20,24 @@ import static spark.debug.DebugScreen.enableDebugScreen;
 public class Library {
     public static void main(String[] args) {
 
-        Controller controller = new ThymleafBookController();
+        BookController bookController = new BookControllerImpl();
+        UserController userController = new UserControllerImpl();
         exception(Exception.class, (e, req, res) -> e.printStackTrace());
         staticFileLocation("static");
         port(8888);
 
-        get("/", (Request req, Response res) -> new ThymeleafTemplateEngine().render(controller.renderBooks(req, res, "index")));
+        get("/", (Request req, Response res) -> new ThymeleafTemplateEngine().render(bookController.renderBooks(req, res, "index")));
 
         get("/books/:isbn", (Request req, Response res) -> {
             String isbn = req.params(":isbn");
-            return new ThymeleafTemplateEngine().render(controller.renderBook(req, res, "book",isbn));
+            return new ThymeleafTemplateEngine().render(bookController.renderBook(req, res, "book", isbn));
         });
 
-        post("/register", (Request request, Response response) -> {
-            Map<String, String> regData = JSONUtils.parseJson(request);
-            UserService us = new UserServiceJPA();
-            if (us.registrateMember(regData)) {
-                return "";
-            }
-            return "failure";
-        });
+        post("/register", userController::registration);
+
+        post("/login", userController::login);
+
+        post("/logout", userController::logout);
         enableDebugScreen();
         /*populateDB();
     }
