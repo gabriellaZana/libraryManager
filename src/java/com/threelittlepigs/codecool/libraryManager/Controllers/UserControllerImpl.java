@@ -15,6 +15,7 @@ public class UserControllerImpl implements UserController{
         Map<String, String> loginData = JSONUtils.parseJson(request);
         UserService us = new UserServiceJPA();
         if (us.loginUser(loginData)) {
+            request.session(true);
             request.session().attribute("userName", loginData.get("logUserName"));
             System.out.println((String) request.session().attribute("userName"));
             return "";
@@ -37,5 +38,9 @@ public class UserControllerImpl implements UserController{
             return "";
         }
         return "failure";
+    }
+
+    public boolean ensureUserIsLoggedIn(Request req, Response res) {
+        return req.session().attribute("userName") != null;
     }
 }

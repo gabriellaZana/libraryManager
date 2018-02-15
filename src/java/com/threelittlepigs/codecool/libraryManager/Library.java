@@ -26,7 +26,11 @@ public class Library {
         staticFileLocation("static");
         port(8888);
 
-        get("/", (Request req, Response res) -> new ThymeleafTemplateEngine().render(bookController.renderBooks(req, res, "index")));
+        get("/", (Request req, Response res) ->
+            {
+                System.out.println((String) req.session().attribute("userName"));
+                return new ThymeleafTemplateEngine().render(bookController.renderBooks(req, res, "index", userController.ensureUserIsLoggedIn(req, res)));
+            });
 
         get("/books/:isbn", (Request req, Response res) -> {
             String isbn = req.params(":isbn");
