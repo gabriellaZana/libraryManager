@@ -1,5 +1,12 @@
 package com.threelittlepigs.codecool.libraryManager;
 
+import com.threelittlepigs.codecool.libraryManager.Entities.Book;
+import com.threelittlepigs.codecool.libraryManager.Entities.Fine;
+import com.threelittlepigs.codecool.libraryManager.Entities.Users.Librarian;
+import com.threelittlepigs.codecool.libraryManager.Entities.Users.Member;
+import com.threelittlepigs.codecool.libraryManager.Enums.Genre;
+import com.threelittlepigs.codecool.libraryManager.Enums.Location;
+import com.threelittlepigs.codecool.libraryManager.Utils.EntityUtility;
 import com.threelittlepigs.codecool.libraryManager.Controllers.UserController;
 import com.threelittlepigs.codecool.libraryManager.Controllers.UserControllerImpl;
 import com.threelittlepigs.codecool.libraryManager.Services.Implementations.UserServiceJPA;
@@ -7,6 +14,7 @@ import com.threelittlepigs.codecool.libraryManager.Services.UserService;
 import com.threelittlepigs.codecool.libraryManager.Controllers.BookController;
 import com.threelittlepigs.codecool.libraryManager.Utils.JSONUtils;
 import com.threelittlepigs.codecool.libraryManager.Controllers.BookControllerImpl;
+
 import spark.Request;
 import spark.Response;
 import spark.template.thymeleaf.ThymeleafTemplateEngine;
@@ -69,6 +77,7 @@ public class Library {
         List books1 = EntityUtility.findByOneCriteria(Book.class, "title", "Kis 1");
         System.out.println(books1);
         EntityUtility.mergeEntity(book);
+
     }*/
     }
 }
