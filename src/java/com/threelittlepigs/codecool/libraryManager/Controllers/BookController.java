@@ -1,10 +1,10 @@
-package com.threelittlepigs.codecool.libraryManager.Utils;
+package com.threelittlepigs.codecool.libraryManager.Controllers;
 
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
 
-public interface Controller {
+public interface BookController {
 
     ModelAndView renderBooks(Request req, Response res, String html);
 

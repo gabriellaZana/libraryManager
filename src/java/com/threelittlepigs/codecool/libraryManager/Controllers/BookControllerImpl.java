@@ -1,6 +1,8 @@
-package com.threelittlepigs.codecool.libraryManager.Utils;
+package com.threelittlepigs.codecool.libraryManager.Controllers;
 
+import com.threelittlepigs.codecool.libraryManager.Controllers.BookController;
 import com.threelittlepigs.codecool.libraryManager.Entities.Book;
+import com.threelittlepigs.codecool.libraryManager.Utils.EntityUtility;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
@@ -9,7 +11,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class ThymleafBookController implements Controller {
+public class BookControllerImpl implements BookController {
 
     @Override
     public ModelAndView renderBooks(Request req, Response res, String html) {
