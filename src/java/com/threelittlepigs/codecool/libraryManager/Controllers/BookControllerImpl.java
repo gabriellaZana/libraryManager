@@ -2,6 +2,7 @@ package com.threelittlepigs.codecool.libraryManager.Controllers;
 
 import com.threelittlepigs.codecool.libraryManager.Entities.Book;
 import com.threelittlepigs.codecool.libraryManager.Utils.EntityUtility;
+import com.threelittlepigs.codecool.libraryManager.Utils.JSONUtils;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
@@ -16,12 +17,12 @@ public class BookControllerImpl implements BookController {
     @Override
 
     public ModelAndView renderBooks(Request req, Response res, String html, boolean isLoggedIn) {
-
         List<Book> books = EntityUtility.getEntityManager().createNamedQuery("getAllBooks", Book.class).getResultList();
         Map<String, List> params = new HashMap<>();
         params.put("books", books);
         params.put("isLoggedIn", Collections.singletonList(isLoggedIn));
         params.put("user_id", req.session().attribute("user_id"));
+        params.put("userName", req.session().attribute("userName"));
         return new ModelAndView(params, html);
     }
 
@@ -31,6 +32,8 @@ public class BookControllerImpl implements BookController {
 
         Map<String, List> params = new HashMap<>();
         params.put("books", books);
+        params.put("user_id", req.session().attribute("user_id"));
+        params.put("userName", req.session().attribute("userName"));
         return new ModelAndView(params, html);
     }
 
