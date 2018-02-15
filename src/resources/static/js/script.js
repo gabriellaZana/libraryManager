@@ -95,6 +95,7 @@ function login(){
                     $("#pwd").val("");
                     $("#reglogbutton").hide();
                     $("#logoutbutton").show();
+                    $("#user").text(logData.logUserName);
 
                     $("#reglogbutton").attr("id", "logout");
                     $("#logout").html('<a id="log-out" href="/logout">Logout</a>');
