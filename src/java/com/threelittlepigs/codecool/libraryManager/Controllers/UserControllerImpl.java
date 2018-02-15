@@ -1,11 +1,18 @@
 package com.threelittlepigs.codecool.libraryManager.Controllers;
 
+import com.threelittlepigs.codecool.libraryManager.Entities.Book;
+import com.threelittlepigs.codecool.libraryManager.Entities.Fine;
+import com.threelittlepigs.codecool.libraryManager.Entities.Users.User;
 import com.threelittlepigs.codecool.libraryManager.Services.Implementations.UserServiceJPA;
 import com.threelittlepigs.codecool.libraryManager.Services.UserService;
+import com.threelittlepigs.codecool.libraryManager.Utils.EntityUtility;
 import com.threelittlepigs.codecool.libraryManager.Utils.JSONUtils;
+import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
 
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class UserControllerImpl implements UserController{
@@ -17,7 +24,7 @@ public class UserControllerImpl implements UserController{
         if (us.loginUser(loginData)) {
             request.session(true);
             request.session().attribute("userName", loginData.get("logUserName"));
-            System.out.println((String) request.session().attribute("userName"));
+            request.session().attribute("user_id", (int) us.getUserByUsername(loginData.get("logUserName")).getId());
             return "";
         }
         return "failure";
@@ -42,5 +49,24 @@ public class UserControllerImpl implements UserController{
 
     public boolean ensureUserIsLoggedIn(Request req, Response res) {
         return req.session().attribute("userName") != null;
+    }
+
+    @Override
+    public ModelAndView renderUserInfo(Request req, Response res, String html) {
+
+        UserService us = new UserServiceJPA();
+        int id = req.session().attribute("user_id");
+        System.out.println("idddd: " + id);
+        User user = us.getUserById(id);
+        List<Book> rentedBooks = EntityUtility.getEntityManager().createNamedQuery("getRentedBooksByMember", Book.class).setParameter("rentedByMember", user).getResultList();
+        List<Book> reservedBooks = EntityUtility.getEntityManager().createNamedQuery("getReservedBooksByMember", Book.class).setParameter("reservedByMember", user).getResultList();
+        List<Fine> fines = EntityUtility.getEntityManager().createNamedQuery("getFineByMember", Fine.class).setParameter("memberid", user.getId()).getResultList();
+
+        Map params = new HashMap<>();
+        params.put("user", user);
+        params.put("rentedBooks", rentedBooks);
+        params.put("reservedBooks", reservedBooks);
+        params.put("fines", fines);
+        return new ModelAndView(params, html);
     }
 }

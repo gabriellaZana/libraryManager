@@ -21,12 +21,14 @@ import spark.template.thymeleaf.ThymeleafTemplateEngine;
 
 import java.util.Map;
 
+
 import static java.lang.Integer.parseInt;
 import static spark.Spark.*;
 import static spark.debug.DebugScreen.enableDebugScreen;
 
 public class Library {
     public static void main(String[] args) {
+
 
         BookController bookController = new BookControllerImpl();
         UserController userController = new UserControllerImpl();
@@ -45,11 +47,18 @@ public class Library {
             return new ThymeleafTemplateEngine().render(bookController.renderBook(req, res, "book", isbn));
         });
 
+
+        get("/userprofile/:id", (Request req, Response res) ->
+                new ThymeleafTemplateEngine().render(userController.renderUserInfo(req, res, "userinfo")));
+
+        //populateDB();
+
         post("/register", userController::registration);
 
         post("/login", userController::login);
 
         post("/logout", userController::logout);
+
         enableDebugScreen();
         /*populateDB();
     }
