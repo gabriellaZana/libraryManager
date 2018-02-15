@@ -10,5 +10,4 @@ public interface Controller {
 
     ModelAndView renderBook(Request req, Response res, String html, String isbn);
 
-    ModelAndView renderUserInfo(Request req, Response res, String html);
 }

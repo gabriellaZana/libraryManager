@@ -2,6 +2,8 @@ package com.threelittlepigs.codecool.libraryManager;
 
 import com.threelittlepigs.codecool.libraryManager.Utils.Controller;
 import com.threelittlepigs.codecool.libraryManager.Utils.ThymleafBookController;
+import com.threelittlepigs.codecool.libraryManager.Utils.userController.ThymeleafUserController;
+import com.threelittlepigs.codecool.libraryManager.Utils.userController.UserController;
 import spark.Request;
 import spark.Response;
 import spark.template.thymeleaf.ThymeleafTemplateEngine;
@@ -17,6 +19,7 @@ public class Library {
     public static void main(String[] args) {
 
         Controller controller = new ThymleafBookController();
+        UserController userController = new ThymeleafUserController();
         exception(Exception.class, (e, req, res) -> e.printStackTrace());
         staticFileLocation("static");
         port(8888);
@@ -29,7 +32,7 @@ public class Library {
         });
 
         get("/userprofile/:id", (Request req, Response res) ->
-                new ThymeleafTemplateEngine().render(controller.renderUserInfo(req, res, "userinfo")));
+                new ThymeleafTemplateEngine().render(userController.renderUserInfo(req, res, "userinfo")));
 
         //populateDB();
         enableDebugScreen();
