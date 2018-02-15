@@ -1,17 +1,12 @@
 package com.threelittlepigs.codecool.libraryManager;
 
 import com.threelittlepigs.codecool.libraryManager.Controllers.UserController;
-import com.threelittlepigs.codecool.libraryManager.Controllers.UserControllerImpl;
-import com.threelittlepigs.codecool.libraryManager.Services.Implementations.UserServiceJPA;
-import com.threelittlepigs.codecool.libraryManager.Services.UserService;
+import com.threelittlepigs.codecool.libraryManager.Controllers.Implementations.UserControllerImpl;
 import com.threelittlepigs.codecool.libraryManager.Controllers.BookController;
-import com.threelittlepigs.codecool.libraryManager.Utils.JSONUtils;
-import com.threelittlepigs.codecool.libraryManager.Controllers.BookControllerImpl;
+import com.threelittlepigs.codecool.libraryManager.Controllers.Implementations.BookControllerImpl;
 import spark.Request;
 import spark.Response;
 import spark.template.thymeleaf.ThymeleafTemplateEngine;
-
-import java.util.Map;
 
 import static java.lang.Integer.parseInt;
 import static spark.Spark.*;

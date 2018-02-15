@@ -1,5 +1,6 @@
-package com.threelittlepigs.codecool.libraryManager.Controllers;
+package com.threelittlepigs.codecool.libraryManager.Controllers.Implementations;
 
+import com.threelittlepigs.codecool.libraryManager.Controllers.UserController;
 import com.threelittlepigs.codecool.libraryManager.Services.Implementations.UserServiceJPA;
 import com.threelittlepigs.codecool.libraryManager.Services.UserService;
 import com.threelittlepigs.codecool.libraryManager.Utils.JSONUtils;
@@ -8,7 +9,7 @@ import spark.Response;
 
 import java.util.Map;
 
-public class UserControllerImpl implements UserController{
+public class UserControllerImpl implements UserController {
 
     @Override
     public String login(Request request, Response response) {
