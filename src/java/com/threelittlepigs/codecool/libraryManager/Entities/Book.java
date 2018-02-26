@@ -1,6 +1,7 @@
 package com.threelittlepigs.codecool.libraryManager.Entities;
 
 import com.threelittlepigs.codecool.libraryManager.Entities.Users.Member;
+import com.threelittlepigs.codecool.libraryManager.Entities.Users.User;
 import com.threelittlepigs.codecool.libraryManager.Enums.Genre;
 import com.threelittlepigs.codecool.libraryManager.Enums.Location;
 
@@ -67,10 +68,10 @@ public class Book {
     private boolean isAvailable = true;
 
     @ManyToOne
-    private Member rentedByMember;
+    private User rentedByMember;
 
     @ManyToOne
-    private Member reservedByMember;
+    private User reservedByMember;
 
     @Transient
     final int daysForRent = 7;
@@ -182,7 +183,7 @@ public class Book {
         isAvailable = available;
     }
 
-    public Member getRentedBy() {
+    public User getRentedBy() {
         return rentedByMember;
     }
 
@@ -190,7 +191,7 @@ public class Book {
         this.rentedByMember = rentedByMember;
     }
 
-    public Member getReservedBy() {
+    public User getReservedBy() {
         return reservedByMember;
     }
 
