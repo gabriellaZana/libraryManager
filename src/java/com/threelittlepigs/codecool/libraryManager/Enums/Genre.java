@@ -17,6 +17,7 @@ public enum Genre {
     Chronicles(History),
     Encyclopedias(Educational),
     Programming(Educational),
+    Fantasy(Tales)
     ;
     private Genre parent = null;
 

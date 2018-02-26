@@ -11,6 +11,7 @@ import javax.persistence.criteria.Root;
 import java.util.ArrayList;
 import java.util.List;
 
+@Deprecated
 public class EntityUtility {
 
     private static final Logger logger = LoggerFactory.getLogger(EntityUtility.class);
