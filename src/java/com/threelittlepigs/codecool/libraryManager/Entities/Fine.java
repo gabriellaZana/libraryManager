@@ -1,7 +1,6 @@
 package com.threelittlepigs.codecool.libraryManager.Entities;
 
 import com.threelittlepigs.codecool.libraryManager.Entities.Users.Member;
-import com.threelittlepigs.codecool.libraryManager.Utils.EntityUtility;
 
 import javax.persistence.*;
 import java.util.Date;

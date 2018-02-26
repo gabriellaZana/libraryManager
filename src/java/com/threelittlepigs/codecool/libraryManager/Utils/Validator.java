@@ -1,46 +1,41 @@
 package com.threelittlepigs.codecool.libraryManager.Utils;
 
+import com.threelittlepigs.codecool.libraryManager.Entities.Users.User;
+import org.springframework.stereotype.Component;
+
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+@Component
 public class Validator {
-
-    private static Validator ourInstance = null;
 
     private Validator() {
     }
 
-    public static Validator getInstance() {
-        if (ourInstance == null) {
-            ourInstance = new Validator();
-        }
-        return ourInstance;
-    }
-
-    public boolean validateRegistration(Map<String, String> regData, Map<String, String> res) {
+    public boolean validateRegistration(User regData, Map<String, String> res) {
         if (regData != null) {
-            boolean validUserName = validateUsername(regData.get("userName"), res);
-            boolean validPassword = validatePassword(regData.get("password"), res);
-            boolean validAddress = validateAddress(regData.get("address"), res);
-            boolean validFirstName = validateFirstName(regData.get("firstName"), res);
-            boolean validLastName = validateLastName(regData.get("lastName"), res);
-            boolean validEmail = validateEMailAddress(regData.get("email"), res);
-            boolean validDate = validateDate(regData.get("dateOfBirth"), res);
-            boolean validPhoneNumber = validatePhoneNumber(regData.get("phoneNumber"), res);
-            return validAddress && validDate && validEmail && validFirstName && validLastName && validUserName && validPassword && validPhoneNumber;
+            boolean validUserName = validateUsername(regData.getUserName(), res);
+            boolean validPassword = validatePassword(regData.getPassword(), res);
+            boolean validAddress = validateAddress(regData.getAddress(), res);
+            boolean validFirstName = validateFirstName(regData.getFirstName(), res);
+            boolean validLastName = validateLastName(regData.getLastName(), res);
+            boolean validEmail = validateEMailAddress(regData.getEmail(), res);
+            boolean validPhoneNumber = validatePhoneNumber(regData.getPhoneNumber(), res);
+            return validAddress && validEmail && validFirstName && validLastName && validUserName && validPassword && validPhoneNumber;
          }
          return false;
     }
 
-    public boolean validateLogin(Map<String, String> loginData, Map<String, String> res) {
+    public boolean validateLogin(User loginData, Map<String, String> res) {
         if (loginData != null) {
-            boolean validUserName = validateUsername(loginData.get("userName"), res);
-            boolean validPassword = validatePassword(loginData.get("password"), res);
+            boolean validUserName = validateUsername(loginData.getUserName(), res);
+            boolean validPassword = validatePassword(loginData.getPassword(), res);
         }
         return false;
     }
 
+    @Deprecated
     private boolean validateDate(String date, Map<String, String> res) {
         Pattern datePattern = Pattern.compile("((19|20)\\d\\d)-(0?[1-9]|1[012])-(0?[1-9]|[12][0-9]|3[01])");
         Matcher dateMatcher = datePattern.matcher(date);

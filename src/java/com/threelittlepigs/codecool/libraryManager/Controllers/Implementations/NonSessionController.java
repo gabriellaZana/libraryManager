@@ -1,35 +1,8 @@
 package com.threelittlepigs.codecool.libraryManager.Controllers.Implementations;
 
-import com.threelittlepigs.codecool.libraryManager.Controllers.UserController;
-import com.threelittlepigs.codecool.libraryManager.Entities.Book;
-import com.threelittlepigs.codecool.libraryManager.Entities.Fine;
-import com.threelittlepigs.codecool.libraryManager.Entities.Users.User;
-import com.threelittlepigs.codecool.libraryManager.Services.Implementations.UserServiceJPA;
-import com.threelittlepigs.codecool.libraryManager.Services.UserService;
-import com.threelittlepigs.codecool.libraryManager.Utils.EntityUtility;
-import com.threelittlepigs.codecool.libraryManager.Utils.JSONUtils;
-import spark.ModelAndView;
-import spark.Request;
-import spark.Response;
+public class NonSessionController {
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-public class UserControllerImpl implements UserController {
-
-    @Override
-    public String login(Request request, Response response) {
-        Map<String, String> loginData = JSONUtils.parseJson(request);
-        UserService us = new UserServiceJPA();
-        if (us.loginUser(loginData)) {
-            request.session(true);
-            request.session().attribute("userName", loginData.get("logUserName"));
-            request.session().attribute("user_id", (int) us.getUserByUsername(loginData.get("logUserName")).getId());
-            return "";
-        }
-        return "failure";
-    }
+/*
 
     @Override
     public String logout(Request request, Response response) {
@@ -76,4 +49,6 @@ public class UserControllerImpl implements UserController {
 
         return new ModelAndView(params, html);
     }
+
+    */
 }

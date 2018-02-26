@@ -39,10 +39,10 @@
                 <div></div>
             </form>
 
-            <div class="navbar-right" th:if="${!user_id}">
+            <div class="navbar-right" th:if="${user_id == 0}">
                 <button class="btn btn-default" id="reglogbutton" data-toggle="modal" data-target="#myLoginModal">Register / Login</button>
             </div>
-            <div class="navbar-right" id="reglogbutton" th:unless="${!user_id}">
+            <div class="navbar-right" id="reglogbutton" th:unless="${user_id == 0}">
                 <form action="/logout" method="post">
                     <button class="btn btn-default">Logout</button>
                 </form>

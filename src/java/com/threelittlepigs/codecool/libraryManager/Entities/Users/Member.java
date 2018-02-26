@@ -23,7 +23,7 @@ public class Member extends User {
     @OneToMany(mappedBy = "member")
     List<Fine> fines = new ArrayList<>();
 
-    public Member(String userName, String password, String firstName, String lastName, String email, Date dateOfBirth, String address, String phoneNumber){
+    public Member(String userName, String password, String firstName, String lastName, String email, String dateOfBirth, String address, String phoneNumber){
         super(userName, password, firstName, lastName, email, dateOfBirth, address, phoneNumber);
     }
 

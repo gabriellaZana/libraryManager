@@ -9,27 +9,6 @@ import javax.persistence.*;
 import java.util.Calendar;
 import java.util.Date;
 
-
-@NamedQueries({
-        @NamedQuery(
-                name = "getAllBooks",
-                query = "SELECT b FROM Book b "),
-
-        @NamedQuery(
-                name = "getRentedBooksByMember",
-                query = "SELECT b FROM Book b " +
-                        "WHERE b.rentedByMember = :rentedByMember"
-        ),
-
-        @NamedQuery(
-                name = "getReservedBooksByMember",
-                query = "SELECT b FROM Book b " +
-                        "WHERE b.reservedByMember = :reservedByMember"
-        )
-
-})
-
-
 @Entity
 @Table(name = "books")
 public class Book {
