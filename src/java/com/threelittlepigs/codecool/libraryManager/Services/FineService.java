@@ -23,6 +23,10 @@ public class FineService {
         fine.setAmount(amount);
     }
 
+    public void saveFine(Fine fine) {
+        fineRepository.save(fine);
+    }
+
     public void changeOccurrence(int id, Date occurrence) {
         Fine fine = getFineById(id);
         fine.setOccurrence(occurrence);

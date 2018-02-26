@@ -24,6 +24,10 @@ public class BookService {
         return book;
     }
 
+    public void saveBook(Book book) {
+        bookRepository.save(book);
+    }
+
     public List<Book> getBooksByIsbn(String isbn) {
         /*return bookRepository.getBooksByIsbn(isbn);*/
         return null;

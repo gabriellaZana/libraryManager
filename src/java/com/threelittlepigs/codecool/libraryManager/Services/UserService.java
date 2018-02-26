@@ -24,7 +24,12 @@ public class UserService {
     @Autowired
     Validator validator;
 
-    User registrateMember(User newUser) {
+
+    public void saveUser(User user) {
+        userRepository.save(user);
+    }
+
+    public User registrateMember(User newUser) {
         User currentUser = userRepository.getUserByUserName(newUser.getUserName());
         if (currentUser == null) {
             if (validator.validateRegistration(newUser, new HashMap<>())) {
