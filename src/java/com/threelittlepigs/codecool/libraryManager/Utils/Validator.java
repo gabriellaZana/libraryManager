@@ -27,10 +27,10 @@ public class Validator {
          return false;
     }
 
-    public boolean validateLogin(User loginData, Map<String, String> res) {
+    public boolean validateLogin(Map<String, String> loginData, Map<String, String> res) {
         if (loginData != null) {
-            boolean validUserName = validateUsername(loginData.getUserName(), res);
-            boolean validPassword = validatePassword(loginData.getPassword(), res);
+            boolean validUserName = validateUsername(loginData.get("logUserName"), res);
+            boolean validPassword = validatePassword(loginData.get("password"), res);
         }
         return false;
     }

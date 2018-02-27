@@ -4,6 +4,7 @@ import com.threelittlepigs.codecool.libraryManager.Entities.Book;
 import com.threelittlepigs.codecool.libraryManager.Entities.Users.User;
 import com.threelittlepigs.codecool.libraryManager.Services.BookService;
 import com.threelittlepigs.codecool.libraryManager.Services.UserService;
+import com.threelittlepigs.codecool.libraryManager.Utils.JSONUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.http.MediaType;
@@ -11,6 +12,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,6 +27,9 @@ public class SessionController {
 
     @Autowired
     private BookService bookService;
+
+    @Autowired
+    JSONUtil jsonUtil;
 
     private User currentUser = null;
 
@@ -45,12 +51,26 @@ public class SessionController {
         return "book";
     }
 
-    @RequestMapping(value = "/login", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-    public String login(@ModelAttribute User user, Model model) {
-        if (userService.loginUser(user) != null) {
-            currentUser = userService.loginUser(user);
+    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    @ResponseBody
+    public String login(@RequestBody Map<String, String> logData, Model model, HttpServletResponse response) {
+        if (userService.loginUser(logData) != null) {
+            currentUser = userService.loginUser(logData);
+            response.setStatus(HttpServletResponse.SC_OK);
+            return jsonUtil.toJson(userService.generateUserData(currentUser));
+        }
+        response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+        return "failure";
+    }
+
+    @RequestMapping(value = "/registration", method = RequestMethod.POST)
+    @ResponseBody
+    public String registration(@RequestBody Map<String, Object> regData, Model model) {
+        /*if (userService.registrateMember(user) != null) {
+            currentUser = userService.registrateMember(user);
             return "success";
         }
-        return "failure";
+        return "failure";*/
+        return null;
     }
 }

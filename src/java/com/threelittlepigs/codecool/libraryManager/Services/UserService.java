@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
+import java.util.Map;
 
 @Service
 public class UserService {
@@ -34,11 +35,11 @@ public class UserService {
         return null;
     }
 
-    public User loginUser(User logUser) {
-        validator.validateLogin(logUser, new HashMap<>());
-        User currentUser = userRepository.getUserByUserName(logUser.getUserName());
+    public User loginUser(Map<String, String> logData) {
+        validator.validateLogin(logData, new HashMap<>());
+        User currentUser = userRepository.getUserByUserName(logData.get("logUserName"));
         if (currentUser != null) {
-            if (BCrypt.checkpw(logUser.getPassword(), currentUser.getPassword())){
+            if (BCrypt.checkpw(logData.get("password"), currentUser.getPassword())){
                 return currentUser;
             }
         }
@@ -88,6 +89,13 @@ public class UserService {
         User currentUser = userRepository.findOne((long) id);
         currentUser.setUserName(userName);
         userRepository.save(currentUser);
+    }
+
+    public Map<String, String> generateUserData(User currentUser) {
+        Map<String, String> userData = new HashMap<>();
+        userData.put("userName", currentUser.getUserName());
+        userData.put("id", String.valueOf(currentUser.getId()));
+        return userData;
     }
 
 }
