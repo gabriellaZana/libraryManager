@@ -71,6 +71,12 @@ public class SessionController {
         return jsonUtil.toJson(error);
     }
 
+    @RequestMapping(value = "/logout", method = RequestMethod.POST)
+    public String logout() {
+        currentUser = null;
+        return "redirect:/";
+    }
+
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     @ResponseBody
     public String registration(@RequestBody Map<String, String> regData, ModelMap model, HttpServletResponse response) {
