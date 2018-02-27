@@ -21,7 +21,6 @@ import java.util.List;
 import java.util.Map;
 
 @Controller
-@SessionAttributes({"id", "name"})
 @Scope("session")
 public class SessionController {
 
@@ -89,12 +88,12 @@ public class SessionController {
 
     @RequestMapping(value = "/userprofile/{id}", method = RequestMethod.GET)
     public String renderUserInfo(@PathVariable("id") String id, Model model) {
-
         List<Book> rentedBooks = bookService.getBookByRentedByMemberId(currentUser);
         List<Book> reservedBooks = bookService.getBookByReservedByMemberId(currentUser);
         List<Fine> fines = fineService.getFinesByMemberId(Long.valueOf(id));
-
         model.addAttribute("user", currentUser);
+        model.addAttribute("user_id", currentUser != null ? currentUser.getId() : 0 );
+        model.addAttribute("userName", currentUser != null ? currentUser.getUserName() : "");
         model.addAttribute("rentedBooks", rentedBooks);
         model.addAttribute("reservedBooks", reservedBooks);
         model.addAttribute("fines", fines);
