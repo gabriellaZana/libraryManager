@@ -28,15 +28,12 @@ public class BookService {
         bookRepository.save(book);
     }
 
-    public List<Book> getBooksByIsbn(String isbn) {
-        /*return bookRepository.getBooksByIsbn(isbn);*/
-        return null;
+    public List<Book> getBooksByTitle(String title) {
+        return bookRepository.getBooksByTitle(title);
     }
 
-    public Book getBookByTitle(String title) {
-        /*List<Book> books = EntityUtility.findByOneCriteria(Book.class, "title", title);
-        return books.get(0);*/
-        return null;
+    public Book getBookByIsbn(String isbn) {
+        return bookRepository.getBookByIsbn(isbn);
     }
 
 

@@ -42,10 +42,8 @@
                 <div class="caption">
                     <img th:src="${book.picture_url}" width="320" height="250"/>
                     <p th:text="${book.title}"></p>
-                    <!--<p>Written by <a data-toggle="modal" data-target="#myModal" th:text="${book.author}"></a></p>-->
-                    <p>Written by <a data-toggle="modal" data-target="#myModal">Buczkó Bence</a></p>
-                    <p th:if="${book.isAvailable()}">Available</p>
-                    <a class="btn btn-primary" th:href="@{//0.0.0.0:8888/books/{id}(id=${book.isbn})}">More Info</a>
+                    <p>Written by <a data-toggle="modal" data-target="#myModal" th:text="${book.author}"></a></p>
+                    <a class="btn btn-primary" th:href="@{//0.0.0.0:8080/books/{title}(title=${book.title})}">More Info</a>
                 </div>
             </div>
         </div>

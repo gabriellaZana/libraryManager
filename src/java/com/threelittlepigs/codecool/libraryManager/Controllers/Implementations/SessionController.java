@@ -1,6 +1,7 @@
 package com.threelittlepigs.codecool.libraryManager.Controllers.Implementations;
 
 import com.threelittlepigs.codecool.libraryManager.Entities.Book;
+import com.threelittlepigs.codecool.libraryManager.Entities.Users.Member;
 import com.threelittlepigs.codecool.libraryManager.Entities.Users.User;
 import com.threelittlepigs.codecool.libraryManager.Services.BookService;
 import com.threelittlepigs.codecool.libraryManager.Services.UserService;
@@ -42,13 +43,22 @@ public class SessionController {
         return "index";
     }
 
-    @RequestMapping(value = "/books/{isbn}", method = RequestMethod.GET)
-    public String renderBook(@PathVariable("isbn") String isbn, Model model) {
-        List<Book> books = bookService.getBooksByIsbn(isbn);
+    @RequestMapping(value = "/books/{title}", method = RequestMethod.GET)
+    public String renderBook(@PathVariable("title") String title, Model model) {
+        List<Book> books = bookService.getBooksByTitle(title);
         model.addAttribute("books", books);
-        model.addAttribute("user_id", currentUser.getId());
-        model.addAttribute("userName", currentUser.getUserName());
+        model.addAttribute("user_id", currentUser != null ? currentUser.getId() : 0 );
+        model.addAttribute("userName", currentUser != null ? currentUser.getUserName() : "");
         return "book";
+    }
+
+    @RequestMapping(value = "/reserve/{isbn}", method = RequestMethod.GET)
+    public String reserveBook(@PathVariable("isbn") String isbn, Model model){
+        Book book = bookService.getBookByIsbn(isbn);
+        book.setReservedBy((Member)currentUser);
+        book.setAvailability(false);
+        bookService.saveBook(book);
+        return "redirect:/books/" + book.getTitle();
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
