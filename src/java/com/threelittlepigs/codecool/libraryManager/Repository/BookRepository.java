@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 // This is how you define basic CRUD operations on the Customer entity
+@Repository
 public interface BookRepository extends JpaRepository<Book, Long> {
 
     List<Book> getBooksByIsbn(String isbn);

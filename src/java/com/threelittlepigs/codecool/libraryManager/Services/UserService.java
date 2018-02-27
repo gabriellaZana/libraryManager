@@ -1,19 +1,13 @@
 package com.threelittlepigs.codecool.libraryManager.Services;
 
-import com.threelittlepigs.codecool.libraryManager.Entities.Users.Member;
 import com.threelittlepigs.codecool.libraryManager.Entities.Users.User;
 import com.threelittlepigs.codecool.libraryManager.Repository.UserRepository;
 import com.threelittlepigs.codecool.libraryManager.Utils.Validator;
-import org.apache.tomcat.jni.Local;
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
-import java.time.ZoneId;
-import java.util.Date;
 import java.util.HashMap;
-import java.util.Map;
 
 @Service
 public class UserService {
