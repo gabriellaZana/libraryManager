@@ -1,5 +1,6 @@
 package com.threelittlepigs.codecool.libraryManager.Services;
 
+import com.threelittlepigs.codecool.libraryManager.Entities.Users.Member;
 import com.threelittlepigs.codecool.libraryManager.Entities.Users.User;
 import com.threelittlepigs.codecool.libraryManager.Repository.UserRepository;
 import com.threelittlepigs.codecool.libraryManager.Utils.Validator;
@@ -24,10 +25,11 @@ public class UserService {
         userRepository.save(user);
     }
 
-    public User registrateMember(User newUser) {
-        User currentUser = userRepository.getUserByUserName(newUser.getUserName());
+    public User registrateMember(Map<String, String> regData, Map<String, String> error) {
+        User currentUser = userRepository.getUserByUserName(regData.get("userName"));
         if (currentUser == null) {
-            if (validator.validateRegistration(newUser, new HashMap<>())) {
+            if (validator.validateRegistration(regData, error)) {
+                User newUser = createUserFromData(regData);
                 userRepository.save(newUser);
                 return newUser;
             }
@@ -35,8 +37,21 @@ public class UserService {
         return null;
     }
 
-    public User loginUser(Map<String, String> logData) {
-        validator.validateLogin(logData, new HashMap<>());
+    private User createUserFromData(Map<String, String> regData) {
+        return new Member(
+                        regData.get("userName"),
+                        regData.get("password"),
+                        regData.get("firstName"),
+                        regData.get("lastName"),
+                        regData.get("email"),
+                        regData.get("dateOfBirth"),
+                        regData.get("address"),
+                        regData.get("phoneNumber")
+        );
+    }
+
+    public User loginUser(Map<String, String> logData, Map<String, String> error) {
+        validator.validateLogin(logData, error);
         User currentUser = userRepository.getUserByUserName(logData.get("logUserName"));
         if (currentUser != null) {
             if (BCrypt.checkpw(logData.get("password"), currentUser.getPassword())){

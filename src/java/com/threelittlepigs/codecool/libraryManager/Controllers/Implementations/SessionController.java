@@ -7,18 +7,18 @@ import com.threelittlepigs.codecool.libraryManager.Services.UserService;
 import com.threelittlepigs.codecool.libraryManager.Utils.JSONUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 @Controller
+@SessionAttributes({"id", "name"})
 @Scope("session")
 public class SessionController {
 
@@ -53,24 +53,31 @@ public class SessionController {
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     @ResponseBody
-    public String login(@RequestBody Map<String, String> logData, Model model, HttpServletResponse response) {
-        if (userService.loginUser(logData) != null) {
-            currentUser = userService.loginUser(logData);
-            response.setStatus(HttpServletResponse.SC_OK);
-            return jsonUtil.toJson(userService.generateUserData(currentUser));
-        }
+    public String login(@RequestBody Map<String, String> logData, ModelMap model, HttpServletResponse response) {
+        Map<String, String> error = new HashMap<>();
+        currentUser = userService.loginUser(logData, error);
+        if (succeededToCreateUser(model, response)) return jsonUtil.toJson(userService.generateUserData(currentUser));
         response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-        return "failure";
+        return jsonUtil.toJson(error);
     }
 
-    @RequestMapping(value = "/registration", method = RequestMethod.POST)
+    @RequestMapping(value = "/register", method = RequestMethod.POST)
     @ResponseBody
-    public String registration(@RequestBody Map<String, Object> regData, Model model) {
-        /*if (userService.registrateMember(user) != null) {
-            currentUser = userService.registrateMember(user);
-            return "success";
+    public String registration(@RequestBody Map<String, String> regData, ModelMap model, HttpServletResponse response) {
+        Map<String, String> error = new HashMap<>();
+        currentUser = userService.registrateMember(regData, error);
+        if (succeededToCreateUser(model, response)) return jsonUtil.toJson(userService.generateUserData(currentUser));
+        response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+        return jsonUtil.toJson(error);
+    }
+
+    private boolean succeededToCreateUser(ModelMap model, HttpServletResponse response) {
+        if (currentUser != null) {
+            response.setStatus(HttpServletResponse.SC_OK);
+            model.put("userName", currentUser.getUserName());
+            model.put("id", currentUser.getId());
+            return true;
         }
-        return "failure";*/
-        return null;
+        return false;
     }
 }
