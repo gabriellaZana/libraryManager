@@ -18,6 +18,64 @@ function checkPass() {
     }
 }
 
+
+const responseHandler = {
+    login : {
+        errorLogin: function (response) {
+            alert("Incorrect password or username!");
+            $("#logusername").val("");
+            $("#pwd").val("");
+        },
+
+        successLogin: function (response) {
+            console.log(response)
+            alert("Logged in, welcome:)");
+            $(function () {
+                $('#myLoginModal').modal('toggle');
+            });
+            $('.modal-backdrop').remove();
+            $("#logusername").val("");
+            $("#pwd").val("");
+            $("#reglogbutton").hide();
+            $("#logoutbutton").show();
+            $("#user").text(logData.logUserName);
+
+            $("#reglogbutton").attr("id", "logout");
+            $("#logout").html('<a id="log-out" href="/logout">Logout</a>');
+            $("#logout").wrap('<strong></strong>');
+        },
+
+    registration : {
+            errorRegistration: function (response) {
+                alert("Something is not quite right! :)");
+                $("#newpwd").val("");
+                $("#newpwd2").val("");
+                $("#newemail").val("");
+            },
+
+            successRegistration: function (response) {
+                alert("Thank you for registering!");
+                $(function () {
+                    $('#myLoginModal').modal('toggle');
+                });
+                $('.modal-backdrop').remove();
+                $("#username").val("");
+                $("#firstname").val("");
+                $("#lastname").val("");
+                $("#address").val("");
+                $("#newemail").val("");
+                $("#phonenum").val("");
+                $("#dateOfBirth").val("");
+                $("#newpwd").val("");
+                $("#newpwd2").val("");
+            }
+        }
+},
+
+
+
+};
+
 function register(){
     $('#register').on('submit', function (event) {
         event.preventDefault();
@@ -37,30 +95,8 @@ function register(){
             type: 'POST',
             contentType: 'application/json; charset=UTF-8',
             data: JSON.stringify(regData),
-            success: function (response) {
-                console.log(response);
-                if(response === "failure"){
-                    alert("Something is not quite right! :)");
-                    $("#newpwd").val("");
-                    $("#newpwd2").val("");
-                    $("#newemail").val("");
-                } else {
-                    alert("Thank you for registering!");
-                    $(function () {
-                        $('#myLoginModal').modal('toggle');
-                    });
-                    $('.modal-backdrop').remove();
-                    $("#username").val("");
-                    $("#firstname").val("");
-                    $("#lastname").val("");
-                    $("#address").val("");
-                    $("#newemail").val("");
-                    $("#phonenum").val("");
-                    $("#dateOfBirth").val("");
-                    $("#newpwd").val("");
-                    $("#newpwd2").val("");
-                }
-            }
+            success: responseHandler.registration.successRegistration,
+            error: responseHandler.registration.errorRegistration
         })
     })
 }
@@ -79,29 +115,8 @@ function login(){
             type: 'POST',
             contentType: 'application/json; charset=UTF-8',
             data: JSON.stringify(logData),
-            success: function (response) {
-                console.log(response)
-                if(response === "failure"){
-                    alert("Incorrect password or username!");
-                    $("#logusername").val("");
-                    $("#pwd").val("");
-                } else {
-                    alert("Logged in, welcome:)");
-                    $(function () {
-                        $('#myLoginModal').modal('toggle');
-                    });
-                    $('.modal-backdrop').remove();
-                    $("#logusername").val("");
-                    $("#pwd").val("");
-                    $("#reglogbutton").hide();
-                    $("#logoutbutton").show();
-                    $("#user").text(logData.logUserName);
-
-                    $("#reglogbutton").attr("id", "logout");
-                    $("#logout").html('<a id="log-out" href="/logout">Logout</a>');
-                    $("#logout").wrap('<strong></strong>');
-                }
-            }
+            success: responseHandler.login.successLogin,
+            error: responseHandler.login.errorLogin
         })
     })
 }
