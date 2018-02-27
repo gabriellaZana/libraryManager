@@ -20,7 +20,6 @@ function checkPass() {
 
 
 const responseHandler = {
-    login : {
         errorLogin: function (response) {
             alert("Incorrect password or username!");
             $("#logusername").val("");
@@ -45,36 +44,54 @@ const responseHandler = {
             $("#logout").wrap('<strong></strong>');
         },
 
-    registration : {
-            errorRegistration: function (response) {
-                alert("Something is not quite right! :)");
-                $("#newpwd").val("");
-                $("#newpwd2").val("");
-                $("#newemail").val("");
-            },
-
-            successRegistration: function (response) {
-                alert("Thank you for registering!");
-                $(function () {
-                    $('#myLoginModal').modal('toggle');
-                });
-                $('.modal-backdrop').remove();
+        errorRegistration: function (response) {
+            console.log(response);
+            let res = JSON.parse(response.responseText)
+            alert("The emptied fields were wrong!");
+            if (res.userName) {
                 $("#username").val("");
+            }
+            if (res.firstName) {
                 $("#firstname").val("");
+            }
+            if (res.lastName) {
                 $("#lastname").val("");
+            }
+            if (res.address) {
                 $("#address").val("");
+            }
+            if (res.email) {
                 $("#newemail").val("");
+            }
+            if (res.phoneNumber) {
                 $("#phonenum").val("");
+            }
+            if (res.dateOfBirth) {
                 $("#dateOfBirth").val("");
+            }
+            if (res.password) {
                 $("#newpwd").val("");
                 $("#newpwd2").val("");
             }
+        },
+
+        successRegistration: function (response) {
+            alert("Thank you for registering!");
+            $(function () {
+                $('#myLoginModal').modal('toggle');
+            });
+            $('.modal-backdrop').remove();
+            $("#username").val("");
+            $("#firstname").val("");
+            $("#lastname").val("");
+            $("#address").val("");
+            $("#newemail").val("");
+            $("#phonenum").val("");
+            $("#dateOfBirth").val("");
+            $("#newpwd").val("");
+            $("#newpwd2").val("");
         }
-},
-
-
-
-};
+    }
 
 function register(){
     $('#register').on('submit', function (event) {
@@ -95,8 +112,8 @@ function register(){
             type: 'POST',
             contentType: 'application/json; charset=UTF-8',
             data: JSON.stringify(regData),
-            success: responseHandler.registration.successRegistration,
-            error: responseHandler.registration.errorRegistration
+            success: responseHandler.successRegistration,
+            error: responseHandler.errorRegistration
         })
     })
 }
@@ -115,8 +132,8 @@ function login(){
             type: 'POST',
             contentType: 'application/json; charset=UTF-8',
             data: JSON.stringify(logData),
-            success: responseHandler.login.successLogin,
-            error: responseHandler.login.errorLogin
+            success: responseHandler.successLogin,
+            error: responseHandler.errorLogin
         })
     })
 }
