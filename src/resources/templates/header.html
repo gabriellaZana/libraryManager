@@ -17,16 +17,16 @@
             <!--user name, guest user -->
 
             <ul class="nav navbar-nav navbar-right">
-                <li class="dropdown" th:if="${user_id}">
-                    <a href="#" th:href="@{//0.0.0.0:8888/userprofile/{id}(id=${user_id})}">
+                <li class="dropdown" th:if="${user}">
+                    <a id="refToUserInfo" href="#" th:href="@{//0.0.0.0:8080/userprofile/{id}(id=${user.getId()})}">
                         <span class="glyphicon glyphicon-user"></span> 
-                        <strong id="user" th:text="${userName}">Hello, user!</strong>
+                        <strong id="displayUserName" th:text="${user.getUserName()}">Hello, user!</strong>
                     </a>
                 </li>
-                <li class="dropdown" th:unless="${user_id}">
-                    <a href="/">
+                <li class="dropdown" th:unless="${user}">
+                    <a id="refToUserInfo" href="/">
                         <span class="glyphicon glyphicon-user"></span> 
-                        <span id="user">Hello, Guest!</span>
+                        <span id="displayUserName">Hello, Guest!</span>
                     </a>
                 </li>
             </ul>

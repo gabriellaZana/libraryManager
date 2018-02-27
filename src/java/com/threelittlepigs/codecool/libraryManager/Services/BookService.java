@@ -1,6 +1,7 @@
 package com.threelittlepigs.codecool.libraryManager.Services;
 
 import com.threelittlepigs.codecool.libraryManager.Entities.Book;
+import com.threelittlepigs.codecool.libraryManager.Entities.Users.User;
 import com.threelittlepigs.codecool.libraryManager.Enums.Genre;
 import com.threelittlepigs.codecool.libraryManager.Enums.Location;
 import com.threelittlepigs.codecool.libraryManager.Repository.BookRepository;
@@ -88,5 +89,13 @@ public class BookService {
     public void changeAvailability(boolean isAvailable, int id) {
         Book book = getBookById(id);
         book.setAvailability(isAvailable);
+    }
+
+    public List<Book> getBookByRentedByMemberId(User user) {
+        return bookRepository.getAllByReservedByMember(user);
+    }
+
+    public List<Book> getBookByReservedByMemberId(User user) {
+        return bookRepository.getAllByRentedByMember(user);
     }
 }

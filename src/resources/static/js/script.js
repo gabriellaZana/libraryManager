@@ -38,7 +38,10 @@ const responseHandler = {
             $("#pwd").val("");
             $("#reglogbutton").hide();
             $("#logoutbutton").show();
-            $("#user").text(logData.logUserName);
+            console.log((JSON.parse(response)).userName);
+            $("#displayUserName").text((JSON.parse(response)).userName);
+            console.log((JSON.parse(response)).id)
+            $("#refToUserInfo").attr('href', '/userprofile/'+(JSON.parse(response)).id);
 
             $("#reglogbutton").attr("id", "logout");
             $("#logout").html('<a id="log-out" href="/logout">Logout</a>');
