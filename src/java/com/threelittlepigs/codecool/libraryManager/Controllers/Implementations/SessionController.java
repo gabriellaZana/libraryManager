@@ -7,6 +7,7 @@ import com.threelittlepigs.codecool.libraryManager.Entities.Users.User;
 import com.threelittlepigs.codecool.libraryManager.Services.BookService;
 import com.threelittlepigs.codecool.libraryManager.Services.FineService;
 import com.threelittlepigs.codecool.libraryManager.Services.UserService;
+import com.threelittlepigs.codecool.libraryManager.Utils.FileStorage.StorageService;
 import com.threelittlepigs.codecool.libraryManager.Utils.JSONUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -14,6 +15,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
@@ -32,6 +35,9 @@ public class SessionController {
 
     @Autowired
     private FineService fineService;
+
+    @Autowired
+    private StorageService storageService;
 
     @Autowired
     JSONUtil jsonUtil;
@@ -113,5 +119,11 @@ public class SessionController {
         model.addAttribute("reservedBooks", reservedBooks);
         model.addAttribute("fines", fines);
         return "userinfo";
+    }
+
+    @RequestMapping(value = "/uploadFile", method = RequestMethod.POST)
+    public String handleFileUpload(@RequestParam("file") MultipartFile file) {
+        storageService.store(file);
+        return "redirect:/userprofile/" + currentUser.getId();
     }
 }
