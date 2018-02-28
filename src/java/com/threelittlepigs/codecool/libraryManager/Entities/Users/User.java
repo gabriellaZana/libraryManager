@@ -1,9 +1,10 @@
 package com.threelittlepigs.codecool.libraryManager.Entities.Users;
 
-import com.threelittlepigs.codecool.libraryManager.Utils.EntityUtility;
 import org.mindrot.jbcrypt.BCrypt;
 
 import javax.persistence.*;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.Date;
 
 @Entity
@@ -40,15 +41,23 @@ public abstract class User {
 
     private String phoneNumber;
 
-    public User(String userName, String password, String firstName, String lastName, String email, Date dateOfBirth, String address, String phoneNumber) {
+    public User(String userName, String password, String firstName, String lastName, String email, String dateOfBirth, String address, String phoneNumber) {
         this.userName = userName;
         this.password = BCrypt.hashpw(password,BCrypt.gensalt());
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
-        this.dateOfBirth = dateOfBirth;
+        LocalDate localDate = LocalDate.parse(dateOfBirth);
+        this.dateOfBirth = Date.from(localDate.atStartOfDay()
+                .atZone(ZoneId.systemDefault())
+                .toInstant());
         this.address = address;
         this.phoneNumber = phoneNumber;
+    }
+
+    public User(String userName, String password) {
+        this.userName = userName;
+        this.password = password;
     }
 
     public User() {
@@ -108,6 +117,5 @@ public abstract class User {
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
-        EntityUtility.mergeEntity(this);
     }
 }

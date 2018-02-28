@@ -1,21 +1,16 @@
 package com.threelittlepigs.codecool.libraryManager.Utils;
 
+import com.threelittlepigs.codecool.libraryManager.Entities.Users.User;
+import org.springframework.stereotype.Component;
+
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+@Component
 public class Validator {
 
-    private static Validator ourInstance = null;
-
     private Validator() {
-    }
-
-    public static Validator getInstance() {
-        if (ourInstance == null) {
-            ourInstance = new Validator();
-        }
-        return ourInstance;
     }
 
     public boolean validateRegistration(Map<String, String> regData, Map<String, String> res) {
@@ -35,8 +30,9 @@ public class Validator {
 
     public boolean validateLogin(Map<String, String> loginData, Map<String, String> res) {
         if (loginData != null) {
-            boolean validUserName = validateUsername(loginData.get("userName"), res);
+            boolean validUserName = validateUsername(loginData.get("logUserName"), res);
             boolean validPassword = validatePassword(loginData.get("password"), res);
+            return validPassword && validUserName;
         }
         return false;
     }

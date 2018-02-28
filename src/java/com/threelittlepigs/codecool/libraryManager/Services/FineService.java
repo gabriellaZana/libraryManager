@@ -2,25 +2,54 @@ package com.threelittlepigs.codecool.libraryManager.Services;
 
 import com.threelittlepigs.codecool.libraryManager.Entities.Fine;
 import com.threelittlepigs.codecool.libraryManager.Entities.Users.Member;
-import com.threelittlepigs.codecool.libraryManager.Entities.Users.User;
-import com.threelittlepigs.codecool.libraryManager.Utils.EntityUtility;
+import com.threelittlepigs.codecool.libraryManager.Repository.FineRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
 
-public interface FineService {
+@Service
+public class FineService {
 
-    public Fine getFineById(int id);
+    @Autowired
+    FineRepository fineRepository;
 
-    public void changeAmount(int id, double amount);
+    public Fine getFineById(int id) {
+        return fineRepository.findOne((long) id);
+    }
 
-    public void changeOccurrence(int id, Date occurrence);
+    public void changeAmount(int id, double amount) {
+        Fine fine = getFineById(id);
+        fine.setAmount(amount);
+    }
 
-    public void changeDueDate(int id, Date dueDate);
+    public void saveFine(Fine fine) {
+        fineRepository.save(fine);
+    }
 
-    public void changeStatus(int id, boolean status);
+    public void changeOccurrence(int id, Date occurrence) {
+        Fine fine = getFineById(id);
+        fine.setOccurrence(occurrence);
+    }
 
-    public void changeMember(int fineId , int memberId);
+    public void changeDueDate(int id, Date dueDate) {
+        Fine fine = getFineById(id);
+        fine.setDueDate(dueDate);
+    }
 
-    public List<Fine> getFinesByUserId(int id);
+    public void changeStatus(int id, boolean status) {
+        Fine fine = getFineById(id);
+        fine.setStatus(status);
+    }
+
+    public void changeMember(int fineId, int memberId) {
+        Fine fine = getFineById(fineId);
+        /*List<Member> members = EntityUtility.findByOneCriteria(User.class, "id", String.valueOf(memberId));
+        fine.setMember(members.get(0));*/
+    }
+
+    public List<Fine> getFinesByMemberId(long member) {
+        return fineRepository.getFinesByMemberId(member);
+    }
 }

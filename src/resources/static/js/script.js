@@ -18,6 +18,84 @@ function checkPass() {
     }
 }
 
+
+const responseHandler = {
+        errorLogin: function (response) {
+            alert("Incorrect password or username!");
+            $("#logusername").val("");
+            $("#pwd").val("");
+        },
+
+        successLogin: function (response) {
+            console.log(response)
+            alert("Logged in, welcome:)");
+            $(function () {
+                $('#myLoginModal').modal('toggle');
+            });
+            $('.modal-backdrop').remove();
+            $("#logusername").val("");
+            $("#pwd").val("");
+            $("#reglogbutton").hide();
+            $("#logoutbutton").show();
+            console.log((JSON.parse(response)).userName);
+            $("#displayUserName").text((JSON.parse(response)).userName);
+            console.log((JSON.parse(response)).id)
+            $("#refToUserInfo").attr('href', '/userprofile/'+(JSON.parse(response)).id);
+
+            $("#reglogbutton").attr("id", "logout");
+            $("#logout").html('<a id="log-out" href="/logout">Logout</a>');
+            $("#logout").wrap('<strong></strong>');
+        },
+
+        errorRegistration: function (response) {
+            console.log(response);
+            let res = JSON.parse(response.responseText)
+            alert("The emptied fields were wrong!");
+            if (res.userName) {
+                $("#username").val("");
+            }
+            if (res.firstName) {
+                $("#firstname").val("");
+            }
+            if (res.lastName) {
+                $("#lastname").val("");
+            }
+            if (res.address) {
+                $("#address").val("");
+            }
+            if (res.email) {
+                $("#newemail").val("");
+            }
+            if (res.phoneNumber) {
+                $("#phonenum").val("");
+            }
+            if (res.dateOfBirth) {
+                $("#dateOfBirth").val("");
+            }
+            if (res.password) {
+                $("#newpwd").val("");
+                $("#newpwd2").val("");
+            }
+        },
+
+        successRegistration: function (response) {
+            alert("Thank you for registering!");
+            $(function () {
+                $('#myLoginModal').modal('toggle');
+            });
+            $('.modal-backdrop').remove();
+            $("#username").val("");
+            $("#firstname").val("");
+            $("#lastname").val("");
+            $("#address").val("");
+            $("#newemail").val("");
+            $("#phonenum").val("");
+            $("#dateOfBirth").val("");
+            $("#newpwd").val("");
+            $("#newpwd2").val("");
+        }
+    }
+
 function register(){
     $('#register').on('submit', function (event) {
         event.preventDefault();
@@ -37,30 +115,8 @@ function register(){
             type: 'POST',
             contentType: 'application/json; charset=UTF-8',
             data: JSON.stringify(regData),
-            success: function (response) {
-                console.log(response);
-                if(response === "failure"){
-                    alert("Something is not quite right! :)");
-                    $("#newpwd").val("");
-                    $("#newpwd2").val("");
-                    $("#newemail").val("");
-                } else {
-                    alert("Thank you for registering!");
-                    $(function () {
-                        $('#myLoginModal').modal('toggle');
-                    });
-                    $('.modal-backdrop').remove();
-                    $("#username").val("");
-                    $("#firstname").val("");
-                    $("#lastname").val("");
-                    $("#address").val("");
-                    $("#newemail").val("");
-                    $("#phonenum").val("");
-                    $("#dateOfBirth").val("");
-                    $("#newpwd").val("");
-                    $("#newpwd2").val("");
-                }
-            }
+            success: responseHandler.successRegistration,
+            error: responseHandler.errorRegistration
         })
     })
 }
@@ -79,29 +135,8 @@ function login(){
             type: 'POST',
             contentType: 'application/json; charset=UTF-8',
             data: JSON.stringify(logData),
-            success: function (response) {
-                console.log(response)
-                if(response === "failure"){
-                    alert("Incorrect password or username!");
-                    $("#logusername").val("");
-                    $("#pwd").val("");
-                } else {
-                    alert("Logged in, welcome:)");
-                    $(function () {
-                        $('#myLoginModal').modal('toggle');
-                    });
-                    $('.modal-backdrop').remove();
-                    $("#logusername").val("");
-                    $("#pwd").val("");
-                    $("#reglogbutton").hide();
-                    $("#logoutbutton").show();
-                    $("#user").text(logData.logUserName);
-
-                    $("#reglogbutton").attr("id", "logout");
-                    $("#logout").html('<a id="log-out" href="/logout">Logout</a>');
-                    $("#logout").wrap('<strong></strong>');
-                }
-            }
+            success: responseHandler.successLogin,
+            error: responseHandler.errorLogin
         })
     })
 }

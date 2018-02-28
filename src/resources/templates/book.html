@@ -41,8 +41,11 @@
         <div class="col-lg-8">
             <p th:text="${books.get(0).getTitle()}"></p>
             <p>Written by <span th:text="${books.get(0).author}">Author</span></p>
-            <p th:if="${books.get(0).isAvailable()}">Available</p>
+            <p th:text="${books.get(0).getDescription()}">Description</p>
         </div>
+    </div><br/>
+    <div>
+        <p><span th:text="${books.size() + ' '}">Number of books</span>present in the library</p>
     </div>
     <div class="row">
         <table class="table">
@@ -52,9 +55,14 @@
             </tr>
             <tr th:each="book,iterStat : ${books}">
                 <td th:text="${book.isbn}">isbn</td>
-                <td th:text="${book.isAvailable()}">Available</td>
+                <td th:if="${book.isAvailable() and user_id != 0}"><a th:href="@{//0.0.0.0:8080/reserve/{isbn}(isbn=${book.isbn})}" class="btn btn-secondary">Reserve</a></td>
+                <td th:if="${book.isAvailable() and user_id == 0}">Available, log in to reserve</td>
+                <td th:unless="${book.isAvailable()}">Not available</td>
             </tr>
         </table>
+        <div>
+            <a class="btn btn-primary" href="/">Back</a>
+        </div>
     </div>
 </div>
 
