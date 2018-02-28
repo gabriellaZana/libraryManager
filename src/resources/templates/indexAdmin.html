@@ -46,7 +46,7 @@
         </tr>
 
         <tr th:each="book, iterStat : ${books}">
-            <td th:text="${book.getIsbn()}"></td>
+            <td><a th:href="@{~/adminBookView/{isbn} (isbn = ${book.getIsbn()})}" th:text="${book.getIsbn()}"></a></td>
             <td th:text="${book.getTitle()}"></td>
             <td th:if="${book.getRentedBy() != null}" th:text="${book.getRentedBy().getFirstName() + ' ' + book.getRentedBy().getLastName()}"></td>
             <td th:if="${book.getRentedBy() == null}">Isn't rented out!</td>
