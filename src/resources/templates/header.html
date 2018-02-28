@@ -72,7 +72,7 @@
                 <div class="modal-body">
                     <div class="tab-content">
                         <div id="login-form" class="tab-pane fade in active">
-                            <form name="login" method="post" id="login">
+                            <form name="login" action="/login" method="post" id="login">
                                 <div class="form-group">
                                     <label for="logusername">Username:</label>
                                     <input type="text" class="form-control" id="logusername" placeholder="Enter username" name="logusername" required="required"></input>
@@ -81,7 +81,7 @@
                                     <label for="pwd">Password:</label>
                                     <input type="password" class="form-control" id="pwd" placeholder="Enter password" name="pwd" required="required"></input>
                                 </div>
-                                <button id="loginButton" type="submit" class="btn btn-default">Login</button>
+                                <button id="loginButton" type="button" class="btn btn-default">Login</button>
                             </form>
                         </div>
                         <div id="registration-form" class="tab-pane fade">
@@ -123,7 +123,7 @@
                                     <input type="password" class="form-control" id="newpwd2" onkeyup="checkPass(); return false;" placeholder="Your password again" name="newpwd2"></input>
                                     <span id="confirmMessage" class="confirmMessage"></span>
                                 </div>
-                                <button id="register-button" type="submit" name="register" class="register btn btn-default" style="display: none">Register</button>
+                                <button id="register-button" type="button" name="register" class="register btn btn-default" style="display: none">Register</button>
                             </form>
                         </div>
 

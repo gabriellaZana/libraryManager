@@ -37,15 +37,13 @@ const responseHandler = {
             $("#pwd").val("");
             $("#reglogbutton").hide();
             $("#logoutbutton").show();
-            console.log((JSON.parse(response)).userName);
             $("#displayUserName").text((JSON.parse(response)).userName);
-            console.log((JSON.parse(response)).id)
             $("#refToUserInfo").attr('href', '/userprofile/'+(JSON.parse(response)).id);
-
             $("#reglogbutton").attr("id", "logout");
             $("#logout").html('<a id="log-out" href="/logout">Logout</a>');
             $("#logout").wrap('<strong></strong>');
-        },
+            location.reload(true);
+            },
 
         errorRegistration: function (response) {
             console.log(response);
@@ -97,7 +95,7 @@ const responseHandler = {
     }
 
 function register(){
-    $('#register').on('submit', function (event) {
+    $('#register-button').on('click', function (event) {
         event.preventDefault();
         let regData = {
             "userName": $("#username").val(),
@@ -123,8 +121,7 @@ function register(){
 
 
 function login(){
-    $('#login').on('submit', function (event) {
-        event.preventDefault();
+    $('#loginButton').on('click', function (event) {
         let logData = {
             "logUserName" : $("#logusername").val(),
             "password" : $("#pwd").val()
