@@ -109,6 +109,10 @@ public class SessionController {
 
     @RequestMapping(value = "/userprofile/{id}", method = RequestMethod.GET)
     public String renderUserInfo(@PathVariable("id") String id, Model model) {
+        if (!String.valueOf(currentUser != null ? currentUser.getId() : 0).equals(id)) {
+            return "redirect:/";
+        }
+        System.out.println(currentUser.getPicture());
         List<Book> rentedBooks = bookService.getBookByRentedByMemberId(currentUser);
         List<Book> reservedBooks = bookService.getBookByReservedByMemberId(currentUser);
         List<Fine> fines = fineService.getFinesByMemberId(Long.valueOf(id));
@@ -124,6 +128,7 @@ public class SessionController {
     @RequestMapping(value = "/uploadFile", method = RequestMethod.POST)
     public String handleFileUpload(@RequestParam("file") MultipartFile file) {
         storageService.store(file);
+        currentUser.setPicture(file.getOriginalFilename());
         return "redirect:/userprofile/" + currentUser.getId();
     }
 }
