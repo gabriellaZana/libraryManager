@@ -11,6 +11,7 @@ import com.threelittlepigs.codecool.libraryManager.Services.UserService;
 import com.threelittlepigs.codecool.libraryManager.Utils.JSONUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -144,6 +145,9 @@ public class SessionController {
 
     @RequestMapping(value = "/adminBookView/{isbn}", method = RequestMethod.GET)
     public String renderEditBookInfo(@PathVariable  String isbn ,Model model) {
+        if (!(currentUser instanceof Librarian)) {
+            return "redirect:/";
+        }
         Book book = bookService.getBookByIsbn(isbn);
         User userRentedBy = book.getRentedBy();
         User userReservedBy = book.getReservedBy();
@@ -152,27 +156,22 @@ public class SessionController {
         model.addAttribute("userName", currentUser != null ? currentUser.getUserName() : "");
         model.addAttribute("reservedByName", userReservedBy != null ? userReservedBy.getUserName() : null);
         model.addAttribute("rentedByName", userRentedBy != null ? userRentedBy.getUserName() : null);
+        model.addAttribute("reservedById", userReservedBy != null ? userReservedBy.getId() : null);
+        model.addAttribute("rentedById", userRentedBy != null ? userRentedBy.getId() : null);
         return "adminbookview";
     }
 
-    @RequestMapping(value = "/returnBook", method = RequestMethod.POST)
-    public String returnBook(@RequestParam  Map<String, String> bookData) {
-        String isbn = bookData.get("isbn");
-        bookService.adminBookReturnCancelUpdate(bookData);
-        return "redirect:/adminBookView/" + isbn;
-    }
-
     @RequestMapping(value = "/rentBook", method = RequestMethod.POST)
-    public String rentBook(@RequestParam  Map<String, String> bookData) {
-        String isbn = bookData.get("isbn");
+    @ResponseBody
+    public String rentBook(@RequestBody Map<String, String> bookData) {
         bookService.adminRentBook(bookData, userService);
-        return "redirect:/adminBookView/" + isbn;
+        return "Success";
     }
 
-    @RequestMapping(value = "/cancelReservation", method = RequestMethod.POST)
-    public String cancelReservation(@RequestParam  Map<String, String> bookData) {
-        String isbn = bookData.get("isbn");
+    @RequestMapping(value={"/cancelReservation", "/returnBook"}, method = RequestMethod.POST)
+    @ResponseBody
+    public String cancelReservation(@RequestBody Map<String, String> bookData) {
         bookService.adminBookReturnCancelUpdate(bookData);
-        return "redirect:/adminBookView/" + isbn;
+        return "Success";
     }
 }
