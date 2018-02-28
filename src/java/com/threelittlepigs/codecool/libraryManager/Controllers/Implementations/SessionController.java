@@ -138,4 +138,38 @@ public class SessionController {
         }
         return "redirect:books/" + title;
     }
+
+    @RequestMapping(value = "/adminBookView/{isbn}", method = RequestMethod.GET)
+    public String renderEditBookInfo(@PathVariable  String isbn ,Model model) {
+        Book book = bookService.getBookByIsbn(isbn);
+        User userRentedBy = book.getRentedBy();
+        User userReservedBy = book.getReservedBy();
+        model.addAttribute("book", book);
+        model.addAttribute("reservedByName", userReservedBy != null ? userReservedBy.getUserName() : null);
+        model.addAttribute("rentedByName", userRentedBy != null ? userRentedBy.getUserName() : null);
+       // model.addAttribute("reservedById", userReservedBy.getId());
+        //model.addAttribute("rentedById", userRentedBy.getId());
+        return "adminbookview";
+    }
+
+    @RequestMapping(value = "/returnBook", method = RequestMethod.POST)
+    public String returnBook(@RequestParam  Map<String, String> bookData) {
+        String isbn = bookData.get("isbn");
+        bookService.adminBookReturnCancelUpdate(bookData);
+        return "redirect:/adminBookView/" + isbn;
+    }
+
+    @RequestMapping(value = "/rentBook", method = RequestMethod.POST)
+    public String rentBook(@RequestParam  Map<String, String> bookData) {
+        String isbn = bookData.get("isbn");
+        bookService.adminRentBook(bookData, userService);
+        return "redirect:/adminBookView/" + isbn;
+    }
+
+    @RequestMapping(value = "/cancelReservation", method = RequestMethod.POST)
+    public String cancelReservation(@RequestParam  Map<String, String> bookData) {
+        String isbn = bookData.get("isbn");
+        bookService.adminBookReturnCancelUpdate(bookData);
+        return "redirect:/adminBookView/" + isbn;
+    }
 }
