@@ -16,5 +16,7 @@ public interface BookRepository extends JpaRepository<Book, Long> {
     List<Book> getAllByRentedByMemberOrderByIsbn(User rentedById);
     List<Book> getBooksByTitleOrderByIsbn(String title);
     Book getBookByIsbnOrderByIsbn(String isbn);
+    List<Book> getBooksByTitle(String title);
+    Book getBookByIsbn(String isbn);
 
 }
