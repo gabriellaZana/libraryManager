@@ -44,7 +44,7 @@
         </form>
         <hr/>
         <div class="col-lg-4">
-            <img th:src="${book.getPicture_url()}" class="avatar img-rounded"/>
+            <img th:src="${book.getPicture_url()}" class="avatar img-rounded" alt="avatar"/>
         </div>
         <div class="col-lg-8">
             <p th:text="${book.getTitle()}"></p>
@@ -53,60 +53,97 @@
         </div>
     </div><br/>
     <div>
-        <p><span>Number of books</span>present in the library</p>
+        <br/>
     </div>
-    <div class="row">
+
+
+
+
+
+
+
+
+    <div class="row col-lg-6">
         <table class="table">
             <tr>
                 <th>Reserved By</th>
-                <th>Rented By</th>
+                <th>
+                        <div>
+                            <form action="/rentBook" method="post">
+                                <input type="hidden" name="isbn" th:value="${book.getIsbn()}"/>
+                                <div th:if="${book.getReservedBy() != null and book.getRentedBy() == null}  ">
+                                    <input type="hidden" name="id" th:value="${book.getReservedBy().getId()}"/>
+                                    <input type="submit" name="rent" class="btn btn-default" value="Rent book" />
+                                </div>
+                                <div th:unless="${book.getReservedBy() != null and book.getRentedBy() == null}">
+                                    <input type="submit" name="rent" class="btn btn-default" value="Rent book" disabled="disabled"/>
+                                </div>
+                            </form>
+                        </div>
+                </th>
+                <th>
+                        <form action="/cancelReservation" method="post">
+                            <input type="hidden" name="isbn" th:value="${book.getIsbn()}"/>
+                            <input type="hidden" name="cancel" value="cancel"/>
+                            <div th:if="${book.getReservedBy() != null}">
+                                <input type="hidden" name="id" th:value="${book.getReservedBy().getId()}"/>
+                                <input type="submit" name="cancel" class="btn btn-default" value="Cancel reservation" />
+                            </div>
+                            <div th:unless="${book.getReservedBy() != null}">
+                                <input type="submit" name="cancel" class="btn btn-default" value="Cancel reservation" disabled="disabled"/>
+                            </div>
+                        </form>
+                </th>
             </tr>
             <tr>
                 <td th:text="${reservedByName}">reserved by</td>
+            </tr>
+
+        <br/>
+        </table>
+        <table class="table">
+            <tr>
+                <th>Rented By</th>
+                <th>
+                        <form action="/returnBook" method="post">
+                            <input type="hidden" name="isbn" th:value="${book.getIsbn()}"/>
+                            <div th:if="${book.getRentedBy() != null}">
+                                <input type="hidden" name="id" th:value="${book.getRentedBy().getId()}"/>
+                                <input type="submit" name="return" class="btn btn-default" value="Return book" />
+
+                            </div>
+                            <div th:unless="${book.getRentedBy() != null}">
+                                <input type="submit" name="return" class="btn btn-default" value="Return book" disabled="disabled"/>
+                            </div>
+                        </form>
+                </th>
+                <th></th>
+            </tr>
+            <tr>
                 <td th:text="${rentedByName}">rented by</td>
             </tr>
         </table>
-        <div>
-            <a class="btn btn-primary" href="/">Back</a>
-        </div>
-        <div>
-            <form action="/returnBook" method="post">
-                <input type="hidden" name="isbn" th:value="${book.getIsbn()}"/>
-                <div th:if="${book.getRentedBy() != null}">
-                    <input type="hidden" name="id" th:value="${book.getRentedBy().getId()}"/>
-                    <input type="submit" name="return" class="btn btn-primary" value="Return book" />
 
+        <tr>
+            <td>
+                <div>
+                    <a class="btn btn-primary" href="/">Back</a>
                 </div>
-                <div th:unless="${book.getRentedBy() != null}">
-                    <input type="submit" name="return" class="btn btn-primary" value="Return book" disabled="disabled"/>
-                </div>
-                </form>
-        </div>
-        <div>
-            <form action="/rentBook" method="post">
-                <input type="hidden" name="isbn" th:value="${book.getIsbn()}"/>
-                <div th:if="${book.getReservedBy() != null and book.getRentedBy() == null}  ">
-                    <input type="hidden" name="id" th:value="${book.getReservedBy().getId()}"/>
-                    <input type="submit" name="rent" class="btn btn-primary" value="Rent book" />
-                </div>
-                <div th:unless="${book.getReservedBy() != null and book.getRentedBy() == null}">
-                    <input type="submit" name="rent" class="btn btn-primary" value="Rent book" disabled="disabled"/>
-                </div>
-            </form>
-        </div>
-        <div>
-            <form action="/cancelReservation" method="post">
-                <input type="hidden" name="isbn" th:value="${book.getIsbn()}"/>
-                <input type="hidden" name="cancel" value="cancel"/>
-                <div th:if="${book.getReservedBy() != null}">
-                    <input type="hidden" name="id" th:value="${book.getReservedBy().getId()}"/>
-                    <input type="submit" name="cancel" class="btn btn-primary" value="Cancel reservation" />
-                </div>
-                <div th:unless="${book.getReservedBy() != null}">
-                    <input type="submit" name="cancel" class="btn btn-primary" value="Cancel reservation" disabled="disabled"/>
-                </div>
-                </form>
-        </div>
+            </td>
+        </tr>
+
+
+
+
+
+
+
+
+
+
+
+
+
     </div>
 </div>
 
