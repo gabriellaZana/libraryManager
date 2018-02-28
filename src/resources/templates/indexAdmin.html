@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8" />
+    <meta name="author" content="Codecool" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Three Little Pigs Library</title>
+
+    <link rel="icon" href="http://pngimg.com/uploads/book/book_PNG2118.png"/>
+
+    <!-- Latest compiled and minified Jquery -->
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"
+            integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous" />
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
+          integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous" />
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+            integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+            crossorigin="anonymous"></script>
+
+    <script src="/js/script.js" defer=""></script>
+
+    <link rel="stylesheet" type="text/css" href="/css/custom.css" />
+</head>
+
+<body>
+
+<div th:replace="header :: copy"></div>
+
+<div class="container">
+
+    <table class="table">
+        <tr>
+            <th>ISBN</th>
+            <th>Title</th>
+            <th>Rented by</th>
+            <th>Reserved by</th>
+        </tr>
+
+        <tr th:each="book, iterStat : ${books}">
+            <td th:text="${book.getIsbn()}"></td>
+            <td th:text="${book.getTitle()}"></td>
+            <td th:if="${book.getRentedBy() != null}" th:text="${book.getRentedBy().getFirstName() + ' ' + book.getRentedBy().getLastName()}"></td>
+            <td th:if="${book.getRentedBy() == null}">Isn't rented out!</td>
+            <td th:if="${book.getReservedBy() != null}" th:text="${book.getReservedBy().getFirstName() + ' ' + book.getReservedBy().getLastName()}"></td>
+            <td th:if="${book.getReservedBy() == null}">Isn't reserved!</td>
+        </tr>
+    </table>
+
+</div>
+
+<div th:replace="footer :: copy"></div>
+
+<script src="https://code.jquery.com/jquery-3.2.1.js" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" crossorigin="anonymous"></script>
+
+</body>
+</html>
