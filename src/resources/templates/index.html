@@ -41,6 +41,7 @@
             <div class="thumbnail">
                 <div class="caption">
                     <img th:src="${book.picture_url}" width="320" height="250"/>
+                    <hr/>
                     <p th:text="${book.title}"></p>
                     <p>Written by <a data-toggle="modal" data-target="#myModal" th:text="${book.author}"></a></p>
                     <a class="btn btn-primary" th:href="@{//0.0.0.0:8080/books/{title}(title=${book.title})}">More Info</a>

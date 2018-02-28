@@ -95,4 +95,11 @@ public class BookService {
     public List<Book> getBookByReservedByMemberId(User user) {
         return bookRepository.getAllByRentedByMemberOrderByIsbn(user);
     }
+
+    public void updateBookInfo(Book book, String title, String author, String description) {
+        book.setTitle(title);
+        book.setAuthor(author);
+        book.setDescription(description);
+        saveBook(book);
+    }
 }

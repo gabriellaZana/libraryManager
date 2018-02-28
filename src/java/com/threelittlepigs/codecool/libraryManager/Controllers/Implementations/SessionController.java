@@ -2,6 +2,7 @@ package com.threelittlepigs.codecool.libraryManager.Controllers.Implementations;
 
 import com.threelittlepigs.codecool.libraryManager.Entities.Book;
 import com.threelittlepigs.codecool.libraryManager.Entities.Fine;
+import com.threelittlepigs.codecool.libraryManager.Entities.Users.Librarian;
 import com.threelittlepigs.codecool.libraryManager.Entities.Users.Member;
 import com.threelittlepigs.codecool.libraryManager.Entities.Users.User;
 import com.threelittlepigs.codecool.libraryManager.Services.BookService;
@@ -50,6 +51,7 @@ public class SessionController {
     @RequestMapping(value = "/books/{title}", method = RequestMethod.GET)
     public String renderBook(@PathVariable("title") String title, Model model) {
         List<Book> books = bookService.getBooksByTitle(title);
+        model.addAttribute("librarian", currentUser instanceof Librarian);
         model.addAttribute("books", books);
         model.addAttribute("user_id", currentUser != null ? currentUser.getId() : 0 );
         model.addAttribute("userName", currentUser != null ? currentUser.getUserName() : "");
@@ -113,5 +115,26 @@ public class SessionController {
         model.addAttribute("reservedBooks", reservedBooks);
         model.addAttribute("fines", fines);
         return "userinfo";
+    }
+
+    @RequestMapping(value = "/editbook", method = RequestMethod.POST)
+    public String renderEditBookInfo(@RequestParam  Map<String, String> bookData ,Model model) {
+
+        List<Book> books = bookService.getBooksByTitle(bookData.get("title"));
+        model.addAttribute("books", books);
+        return "editbook";
+    }
+
+    @RequestMapping(value = "/editsave", method = RequestMethod.POST)
+    public String saveBookEdit(@RequestParam  Map<String, String> bookData) {
+        String formerTitle = bookData.get("formerTitle");
+        String title = bookData.get("title");
+        String author = bookData.get("author");
+        String description = bookData.get("description");
+        List<Book> books = bookService.getBooksByTitle(formerTitle);
+        for (Book book : books) {
+            bookService.updateBookInfo(book, title, author, description);
+        }
+        return "redirect:books/" + title;
     }
 }
