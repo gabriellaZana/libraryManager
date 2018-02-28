@@ -12,6 +12,9 @@ import java.util.List;
 public interface BookRepository extends JpaRepository<Book, Long> {
 
     List<Book> getBooksByIsbn(String isbn);
-    List<Book> getAllByReservedByMember(User reservedById);
-    List<Book> getAllByRentedByMember(User rentedById);
+    List<Book> getAllByReservedByMemberOrderByIsbn(User reservedById);
+    List<Book> getAllByRentedByMemberOrderByIsbn(User rentedById);
+    List<Book> getBooksByTitleOrderByIsbn(String title);
+    Book getBookByIsbnOrderByIsbn(String isbn);
+
 }
