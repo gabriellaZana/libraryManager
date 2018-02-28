@@ -2,6 +2,7 @@ package com.threelittlepigs.codecool.libraryManager.Controllers.Implementations;
 
 import com.threelittlepigs.codecool.libraryManager.Entities.Book;
 import com.threelittlepigs.codecool.libraryManager.Entities.Fine;
+import com.threelittlepigs.codecool.libraryManager.Entities.Users.Librarian;
 import com.threelittlepigs.codecool.libraryManager.Entities.Users.Member;
 import com.threelittlepigs.codecool.libraryManager.Entities.Users.User;
 import com.threelittlepigs.codecool.libraryManager.Services.BookService;
@@ -15,7 +16,10 @@ import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.websocket.server.PathParam;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -41,7 +45,30 @@ public class SessionController {
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String renderBooks(Model model) {
         List<Book> books = bookService.findAll();
-        model.addAttribute("books", books);
+        List<Book> booksToRender = new ArrayList<>();
+        String title = null;
+        for(Book book : books){
+            if (book.getTitle().equals(title)) continue;
+            title = book.getTitle();
+            booksToRender.add(book);
+        }
+        model.addAttribute("books", booksToRender);
+        model.addAttribute("user_id", currentUser != null ? currentUser.getId() : 0 );
+        model.addAttribute("userName", currentUser != null ? currentUser.getUserName() : "");
+        return "index";
+    }
+
+    @RequestMapping(value = "/search", method = RequestMethod.GET)
+    public String renderSearch(HttpServletRequest request, Model model){
+        List<Book> books = bookService.getBooksByTitleOrAuthorIsContaining(request.getParameter("search"));
+        List<Book> booksToRender = new ArrayList<>();
+        String title = null;
+        for(Book book : books){
+            if (book.getTitle().equals(title)) continue;
+            title = book.getTitle();
+            booksToRender.add(book);
+        }
+        model.addAttribute("books", booksToRender);
         model.addAttribute("user_id", currentUser != null ? currentUser.getId() : 0 );
         model.addAttribute("userName", currentUser != null ? currentUser.getUserName() : "");
         return "index";
