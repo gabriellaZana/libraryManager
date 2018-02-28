@@ -2,6 +2,7 @@ package com.threelittlepigs.codecool.libraryManager.Controllers.Implementations;
 
 import com.threelittlepigs.codecool.libraryManager.Entities.Book;
 import com.threelittlepigs.codecool.libraryManager.Entities.Fine;
+import com.threelittlepigs.codecool.libraryManager.Entities.Users.Librarian;
 import com.threelittlepigs.codecool.libraryManager.Entities.Users.Member;
 import com.threelittlepigs.codecool.libraryManager.Entities.Users.User;
 import com.threelittlepigs.codecool.libraryManager.Services.BookService;
@@ -44,6 +45,9 @@ public class SessionController {
         model.addAttribute("books", books);
         model.addAttribute("user_id", currentUser != null ? currentUser.getId() : 0 );
         model.addAttribute("userName", currentUser != null ? currentUser.getUserName() : "");
+        if (currentUser != null && currentUser instanceof Librarian) {
+            return "indexAdmin";
+        }
         return "index";
     }
 
