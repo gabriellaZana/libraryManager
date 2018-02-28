@@ -45,7 +45,9 @@ const responseHandler = {
             $("#reglogbutton").attr("id", "logout");
             $("#logout").html('<a id="log-out" href="/logout">Logout</a>');
             $("#logout").wrap('<strong></strong>');
-        },
+            console.log(window.location.href);
+            redirect('/', 'GET');
+            },
 
         errorRegistration: function (response) {
             console.log(response);
@@ -97,7 +99,7 @@ const responseHandler = {
     }
 
 function register(){
-    $('#register').on('submit', function (event) {
+    $('#register-button').on('click', function (event) {
         event.preventDefault();
         let regData = {
             "userName": $("#username").val(),
@@ -123,8 +125,7 @@ function register(){
 
 
 function login(){
-    $('#login').on('submit', function (event) {
-        event.preventDefault();
+    $('#loginButton').on('click', function (event) {
         let logData = {
             "logUserName" : $("#logusername").val(),
             "password" : $("#pwd").val()
@@ -152,3 +153,10 @@ $(document).ready(function () {
     login();
     register();
 });
+
+var redirect = function(url, method) {
+    var form = document.createElement('form');
+    form.method = method;
+    form.action = url;
+    form.submit();
+};
