@@ -1,6 +1,7 @@
 package com.threelittlepigs.codecool.libraryManager.Services;
 
 import com.threelittlepigs.codecool.libraryManager.Entities.Fine;
+import com.threelittlepigs.codecool.libraryManager.Entities.Users.Member;
 import com.threelittlepigs.codecool.libraryManager.Repository.FineRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -48,7 +49,7 @@ public class FineService {
         fine.setMember(members.get(0));*/
     }
 
-    public List<Fine> getFinesByUserId(int id) {
-        return null;
+    public List<Fine> getFinesByMemberId(long member) {
+        return fineRepository.getFinesByMemberId(member);
     }
 }
