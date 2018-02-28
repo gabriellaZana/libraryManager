@@ -148,10 +148,10 @@ public class SessionController {
         User userRentedBy = book.getRentedBy();
         User userReservedBy = book.getReservedBy();
         model.addAttribute("book", book);
+        model.addAttribute("user_id", currentUser != null ? currentUser.getId() : 0 );
+        model.addAttribute("userName", currentUser != null ? currentUser.getUserName() : "");
         model.addAttribute("reservedByName", userReservedBy != null ? userReservedBy.getUserName() : null);
         model.addAttribute("rentedByName", userRentedBy != null ? userRentedBy.getUserName() : null);
-       // model.addAttribute("reservedById", userReservedBy.getId());
-        //model.addAttribute("rentedById", userRentedBy.getId());
         return "adminbookview";
     }
 
