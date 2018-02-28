@@ -96,10 +96,11 @@ public class BookService {
         return bookRepository.getAllByRentedByMemberOrderByIsbn(user);
     }
 
-    public void updateBookInfo(Book book, String title, String author, String description) {
+    public void updateBookInfo(Book book, String title, String author, String description, String isbn) {
         book.setTitle(title);
         book.setAuthor(author);
         book.setDescription(description);
+        book.setIsbn(isbn);
         saveBook(book);
     }
 }

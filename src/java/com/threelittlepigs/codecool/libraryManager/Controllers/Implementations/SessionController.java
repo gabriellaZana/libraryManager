@@ -133,7 +133,8 @@ public class SessionController {
         String description = bookData.get("description");
         List<Book> books = bookService.getBooksByTitle(formerTitle);
         for (Book book : books) {
-            bookService.updateBookInfo(book, title, author, description);
+            String isbn = bookData.get(String.valueOf(book.getId()));
+            bookService.updateBookInfo(book, title, author, description, isbn);
         }
         return "redirect:books/" + title;
     }
