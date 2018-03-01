@@ -108,7 +108,6 @@ public class BookService {
 
     public void adminBookReturnCancelUpdate(Map<String, String> bookData) {
         String isbn = bookData.get("isbn");
-        String id = bookData.get("id");
         Book book = getBookByIsbn(isbn);
         if (bookData.get("cancel") != null) {
             book.setReservedBy(null);
@@ -121,12 +120,15 @@ public class BookService {
 
     public void adminRentBook(Map<String, String> bookData, UserService userService)  {
         String isbn = bookData.get("isbn");
-        String id = bookData.get("id");
-        Member user = (Member) userService.getUserById(Integer.parseInt(id));
         Book book = getBookByIsbn(isbn);
-        book.setRentedBy(user);
-        book.setReservedBy(null);
-        book.setAvailability(true);
-        saveBook(book);
+        long reservedUserId = book.getReservedBy().getId();
+        User rentedUser = book.getRentedBy();
+        if (rentedUser == null) {
+            Member user = (Member) userService.getUserById((int) reservedUserId);
+            book.setRentedBy(user);
+            book.setReservedBy(null);
+            book.setAvailability(true);
+            saveBook(book);
+        }
     }
 }
