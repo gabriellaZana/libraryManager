@@ -11,6 +11,7 @@ import com.threelittlepigs.codecool.libraryManager.Services.UserService;
 import com.threelittlepigs.codecool.libraryManager.Utils.JSONUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -170,23 +171,21 @@ public class SessionController {
 
     @RequestMapping(value = "/editbook", method = RequestMethod.POST)
     public String renderEditBookInfo(@RequestParam  Map<String, String> bookData ,Model model) {
-        List<Book> books = bookService.getBooksByTitle(bookData.get("title"));
-        model.addAttribute("books", books);
+        Book book = bookService.getBookById(Long.parseLong(bookData.get("bookId")));
+        model.addAttribute("books", book);
         return "editbook";
     }
 
     @RequestMapping(value = "/editsave", method = RequestMethod.POST)
     public String saveBookEdit(@RequestParam  Map<String, String> bookData) {
-        String formerTitle = bookData.get("formerTitle");
+        String formerIsbn = bookData.get("formerIsbn");
         String title = bookData.get("title");
         String author = bookData.get("author");
         String description = bookData.get("description");
-        List<Book> books = bookService.getBooksByTitle(formerTitle);
-        for (Book book : books) {
-            String isbn = bookData.get(String.valueOf(book.getId()));
-            bookService.updateBookInfo(book, title, author, description, isbn);
-        }
-        return "redirect:books/" + title;
+        Book book = bookService.getBookByIsbn(formerIsbn);
+        String isbn = bookData.get("newIsbn");
+        bookService.updateBookInfo(book, title, author, description, isbn);
+        return "redirect:adminBookView/" + isbn;
     }
 
     @RequestMapping(value = "/adminBookView/{isbn}", method = RequestMethod.GET)
@@ -221,6 +220,34 @@ public class SessionController {
         return "Success";
     }
 
+
+    @RequestMapping("/404")
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public String notFound(Model model) {
+        model.addAttribute("statusCode", "404");
+        model.addAttribute("user_id", currentUser != null ? currentUser.getId() : 0 );
+        model.addAttribute("userName", currentUser != null ? currentUser.getUserName() : "");
+        return "error";
+    }
+
+    @RequestMapping("/500")
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public String internalServerError(Model model) {
+        model.addAttribute("statusCode", "500");
+        model.addAttribute("user_id", currentUser != null ? currentUser.getId() : 0 );
+        model.addAttribute("userName", currentUser != null ? currentUser.getUserName() : "");
+        return "error";
+    }
+
+    @RequestMapping("/405")
+    @ResponseStatus(HttpStatus.METHOD_NOT_ALLOWED)
+    public String methodNotAllowed(Model model) {
+        model.addAttribute("statusCode", "405");
+        model.addAttribute("user_id", currentUser != null ? currentUser.getId() : 0 );
+        model.addAttribute("userName", currentUser != null ? currentUser.getUserName() : "");
+        return "error";
+    }
+
     @RequestMapping(value="/pay/{id}", method = RequestMethod.POST)
     @ResponseBody
     public String payment(@PathVariable("id") String id, ModelMap model, HttpServletResponse response){
@@ -229,5 +256,4 @@ public class SessionController {
         fineService.saveFine(fine);
         return jsonUtil.toJson("success");
     }
-
 }
