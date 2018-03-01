@@ -71,11 +71,14 @@
                 <td th:unless="${book.isAvailable()}">Already reserved</td>
             </tr>
         </table>
-        <div>
-            <a class="btn btn-primary" href="/">Back</a>
-        </div>
+
     </div>
 </div>
+<br/>
+<div class="back">
+    <a class="btn btn-primary" href="/">Back</a>
+</div>
+<br/>
 
 <div th:replace="footer :: copy"></div>
 

@@ -39,8 +39,12 @@ public class BookService {
         return bookRepository.getBookByIsbnOrderByIsbn(isbn);
     }
 
-    public List<Book> getBooksByTitleOrAuthorIsContaining(String title){
-        return bookRepository.getBooksByTitleIsContainingOrAuthorIsContaining(title, title);
+    public List<Book> getBooksByTitleOrAuthorIsContaining(String searchString){
+        return bookRepository.getBooksByTitleIsContainingOrAuthorIsContaining(searchString, searchString);
+    }
+
+    public List<Book> getBooksByIsbnOrTitleIsContaining(String searchString) {
+        return bookRepository.getBooksByIsbnContainingOrTitleContaining(searchString, searchString);
     }
 
     public void changeTitle(String title, int id) {
