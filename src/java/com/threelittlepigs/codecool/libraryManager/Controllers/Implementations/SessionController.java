@@ -8,21 +8,16 @@ import com.threelittlepigs.codecool.libraryManager.Entities.Users.User;
 import com.threelittlepigs.codecool.libraryManager.Services.BookService;
 import com.threelittlepigs.codecool.libraryManager.Services.FineService;
 import com.threelittlepigs.codecool.libraryManager.Services.UserService;
-import com.threelittlepigs.codecool.libraryManager.Utils.FileStorage.StorageService;
 import com.threelittlepigs.codecool.libraryManager.Utils.JSONUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.websocket.server.PathParam;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -40,9 +35,6 @@ public class SessionController {
 
     @Autowired
     private FineService fineService;
-
-    @Autowired
-    private StorageService storageService;
 
     @Autowired
     JSONUtil jsonUtil;
@@ -164,15 +156,16 @@ public class SessionController {
     }
 
     @RequestMapping(value = "/uploadFile", method = RequestMethod.POST)
-    public String handleFileUpload(@RequestParam("file") MultipartFile file) {
-        storageService.store(file);
-        currentUser.setPicture(file.getOriginalFilename());
-        return "redirect:/userprofile/" + currentUser.getId();
+    @ResponseBody
+    public String handleFileUpload(@RequestBody Map<String, String> fileData) {
+        System.out.println(fileData);
+        currentUser.setPicture(fileData.get("url"));
+        userService.saveUser(currentUser);
+        return jsonUtil.toJson(currentUser.getPicture());
     }
 
     @RequestMapping(value = "/editbook", method = RequestMethod.POST)
     public String renderEditBookInfo(@RequestParam  Map<String, String> bookData ,Model model) {
-
         List<Book> books = bookService.getBooksByTitle(bookData.get("title"));
         model.addAttribute("books", books);
         return "editbook";
