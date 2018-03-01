@@ -55,6 +55,11 @@ public class SessionController {
         model.addAttribute("books", booksToRender);
         model.addAttribute("user_id", currentUser != null ? currentUser.getId() : 0 );
         model.addAttribute("userName", currentUser != null ? currentUser.getUserName() : "");
+        if (currentUser != null && currentUser instanceof Librarian) {
+            model.addAttribute("books", books);
+            return "indexAdmin";
+        }
+        model.addAttribute("books", booksToRender);
         return "index";
     }
 
