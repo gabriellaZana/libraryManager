@@ -68,10 +68,10 @@
                             <input type="hidden" id="id" name="id" th:value="${reservedById}"/>
                             <input type="hidden" id="reservedBy" name="reservedBy" th:value="${reservedByName}"/>
                             <div th:if="${book.getReservedBy() != null and book.getRentedBy() == null}  ">
-                                <input type="submit" id="rent" name="rent" class="btn btn-default" value="Rent book" />
+                                <input type="submit" id="rent" name="rent" class="btn btn-default pull-right" value="Rent book" />
                             </div>
                             <div th:unless="${book.getReservedBy() != null and book.getRentedBy() == null}">
-                                <input type="submit" id="rent" name="rent" class="btn btn-default" value="Rent book" disabled="disabled"/>
+                                <input type="submit" id="rent" name="rent" class="btn btn-default pull-right" value="Rent book" disabled="disabled"/>
                             </div>
                         </form>
                     </div>
@@ -82,10 +82,10 @@
                         <input type="hidden" name="cancel" value="cancel"/>
                         <input type="hidden" name="id" th:value="${reservedById}"/>
                         <div th:if="${book.getReservedBy() != null}">
-                            <input type="submit" id="cancel" class="btn btn-default" value="Cancel reservation" />
+                            <input type="submit" id="cancel" class="btn btn-default pull-right" value="Cancel reservation" />
                         </div>
                         <div th:unless="${book.getReservedBy() != null}">
-                            <input type="submit" id="cancel" class="btn btn-default" value="Cancel reservation" disabled="disabled"/>
+                            <input type="submit" id="cancel" class="btn btn-default pull-right" value="Cancel reservation" disabled="disabled"/>
                         </div>
                     </form>
                 </th>
@@ -104,10 +104,10 @@
                         <input type="hidden" name="id" th:value="${rentedById}"/>
                         <input type="hidden" id="possibleReservation" th:value="${reservedByName}"/>
                         <div th:if="${book.getRentedBy() != null}">
-                            <input type="submit" id="return" name="return" class="btn btn-default" value="Return book" />
+                            <input type="submit" id="return" name="return" class="btn btn-default pull-right" value="Return book" />
                         </div>
                         <div th:unless="${book.getRentedBy() != null}">
-                            <input type="submit" id="return" name="return" class="btn btn-default" value="Return book" disabled="disabled"/>
+                            <input type="submit" id="return" name="return" class="btn btn-default pull-right" value="Return book" disabled="disabled"/>
                         </div>
                     </form>
                 </th>
