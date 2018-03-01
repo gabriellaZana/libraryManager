@@ -19,6 +19,10 @@ public class FineService {
         return fineRepository.findOne((long) id);
     }
 
+    public List<Fine> findAll(){
+        return fineRepository.findAll();
+    }
+
     public void changeAmount(int id, double amount) {
         Fine fine = getFineById(id);
         fine.setAmount(amount);
@@ -49,7 +53,7 @@ public class FineService {
         fine.setMember(members.get(0));*/
     }
 
-    public List<Fine> getFinesByMemberId(long member) {
-        return fineRepository.getFinesByMemberId(member);
+    public List<Fine> getFinesByMemberId(long member, boolean status) {
+        return fineRepository.getFinesByMemberIdAndStatus(member,status);
     }
 }

@@ -12,7 +12,6 @@ import com.threelittlepigs.codecool.libraryManager.Utils.JSONUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -20,11 +19,12 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.websocket.server.PathParam;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import static java.lang.Integer.parseInt;
 
 @Controller
 @Scope("session")
@@ -58,6 +58,8 @@ public class SessionController {
         model.addAttribute("user_id", currentUser != null ? currentUser.getId() : 0 );
         model.addAttribute("userName", currentUser != null ? currentUser.getUserName() : "");
         if (currentUser != null && currentUser instanceof Librarian) {
+            List<Fine> fines = fineService.findAll();
+            model.addAttribute("fines", fines);
             model.addAttribute("books", books);
             return "indexAdmin";
         }
@@ -142,9 +144,13 @@ public class SessionController {
 
     @RequestMapping(value = "/userprofile/{id}", method = RequestMethod.GET)
     public String renderUserInfo(@PathVariable("id") String id, Model model) {
+        if (!String.valueOf(currentUser != null ? currentUser.getId() : 0).equals(id)) {
+            return "redirect:/";
+        }
+        System.out.println(currentUser.getPicture());
         List<Book> rentedBooks = bookService.getBookByRentedByMemberId(currentUser);
         List<Book> reservedBooks = bookService.getBookByReservedByMemberId(currentUser);
-        List<Fine> fines = fineService.getFinesByMemberId(Long.valueOf(id));
+        List<Fine> fines = fineService.getFinesByMemberId(Long.valueOf(id), true);
         model.addAttribute("user", currentUser);
         model.addAttribute("user_id", currentUser != null ? currentUser.getId() : 0 );
         model.addAttribute("userName", currentUser != null ? currentUser.getUserName() : "");
@@ -154,9 +160,17 @@ public class SessionController {
         return "userinfo";
     }
 
+    @RequestMapping(value = "/uploadFile", method = RequestMethod.POST)
+    @ResponseBody
+    public String handleFileUpload(@RequestBody Map<String, String> fileData) {
+        System.out.println(fileData);
+        currentUser.setPicture(fileData.get("url"));
+        userService.saveUser(currentUser);
+        return jsonUtil.toJson(currentUser.getPicture());
+    }
+
     @RequestMapping(value = "/editbook", method = RequestMethod.POST)
     public String renderEditBookInfo(@RequestParam  Map<String, String> bookData ,Model model) {
-
         Book book = bookService.getBookById(Long.parseLong(bookData.get("bookId")));
         model.addAttribute("books", book);
         return "editbook";
@@ -206,6 +220,7 @@ public class SessionController {
         return "Success";
     }
 
+
     @RequestMapping("/404")
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public String notFound(Model model) {
@@ -231,5 +246,14 @@ public class SessionController {
         model.addAttribute("user_id", currentUser != null ? currentUser.getId() : 0 );
         model.addAttribute("userName", currentUser != null ? currentUser.getUserName() : "");
         return "error";
+    }
+
+    @RequestMapping(value="/pay/{id}", method = RequestMethod.POST)
+    @ResponseBody
+    public String payment(@PathVariable("id") String id, ModelMap model, HttpServletResponse response){
+        Fine fine = fineService.getFineById((parseInt(id)));
+        fine.setStatus(false);
+        fineService.saveFine(fine);
+        return jsonUtil.toJson("success");
     }
 }

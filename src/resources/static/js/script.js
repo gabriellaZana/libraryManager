@@ -91,6 +91,7 @@ const responseHandler = {
         $("#dateOfBirth").val("");
         $("#newpwd").val("");
         $("#newpwd2").val("");
+        location.reload(true);
     },
 
     errorBookAction: function (response) {
@@ -119,6 +120,10 @@ const responseHandler = {
         $('#displayReservedBy').text("");
         $('#possibleReservation').removeAttr('value');
         $('#cancel').attr('disabled', 'disabled');
+    },
+    successPay: function (repsonse){
+        $("#pay").remove();
+        $("#status").text("Paid");
     }
 }
 
@@ -235,6 +240,19 @@ function cancelBookReservation() {
     })
 }
 
+function pay(){
+    $('#pay').on('click', function (event) {
+        var id = $("#pay").data("id");
+
+        $.ajax({
+            url:'/pay/' + id,
+            type: 'POST',
+            contentType: 'application/json; charset=UTF-8',
+            success: responseHandler.successPay
+        })
+    })
+}
+
 
 $(document).ready(function () {
     getCookie();
@@ -242,5 +260,6 @@ $(document).ready(function () {
     register();
     rentBook();
     returnBook();
-    cancelBookReservation()
+    cancelBookReservation();
+    pay();
 });
