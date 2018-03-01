@@ -2,6 +2,7 @@ package com.threelittlepigs.codecool.libraryManager.Controllers.Implementations;
 
 import com.threelittlepigs.codecool.libraryManager.Entities.Book;
 import com.threelittlepigs.codecool.libraryManager.Entities.Fine;
+import com.threelittlepigs.codecool.libraryManager.Entities.Users.Librarian;
 import com.threelittlepigs.codecool.libraryManager.Entities.Users.Member;
 import com.threelittlepigs.codecool.libraryManager.Entities.Users.User;
 import com.threelittlepigs.codecool.libraryManager.Services.BookService;
@@ -11,6 +12,7 @@ import com.threelittlepigs.codecool.libraryManager.Utils.FileStorage.StorageServ
 import com.threelittlepigs.codecool.libraryManager.Utils.JSONUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -18,7 +20,10 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.websocket.server.PathParam;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -47,16 +52,49 @@ public class SessionController {
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String renderBooks(Model model) {
         List<Book> books = bookService.findAll();
-        model.addAttribute("books", books);
+        List<Book> booksToRender = new ArrayList<>();
+        String title = null;
+        for(Book book : books){
+            if (book.getTitle().equals(title)) continue;
+            title = book.getTitle();
+            booksToRender.add(book);
+        }
+        model.addAttribute("books", booksToRender);
         model.addAttribute("user_id", currentUser != null ? currentUser.getId() : 0 );
         model.addAttribute("userName", currentUser != null ? currentUser.getUserName() : "");
+        if (currentUser != null && currentUser instanceof Librarian) {
+            model.addAttribute("books", books);
+            return "indexAdmin";
+        }
+        model.addAttribute("books", booksToRender);
+        return "index";
+    }
+
+    @RequestMapping(value = "/search", method = RequestMethod.GET)
+    public String renderSearch(HttpServletRequest request, Model model){
+        List<Book> books = bookService.getBooksByTitleOrAuthorIsContaining(request.getParameter("search"));
+        List<Book> booksToRender = new ArrayList<>();
+        String title = null;
+        for(Book book : books){
+            if (book.getTitle().equals(title)) continue;
+            title = book.getTitle();
+            booksToRender.add(book);
+        }
+        model.addAttribute("books", booksToRender);
+        model.addAttribute("user_id", currentUser != null ? currentUser.getId() : 0 );
+        model.addAttribute("userName", currentUser != null ? currentUser.getUserName() : "");
+        if (currentUser != null && currentUser instanceof Librarian) {
+            return "indexAdmin";
+        }
         return "index";
     }
 
     @RequestMapping(value = "/books/{title}", method = RequestMethod.GET)
     public String renderBook(@PathVariable("title") String title, Model model) {
         List<Book> books = bookService.getBooksByTitle(title);
+        model.addAttribute("librarian", currentUser instanceof Librarian);
         model.addAttribute("books", books);
+        model.addAttribute("admin", currentUser instanceof Librarian);
         model.addAttribute("user_id", currentUser != null ? currentUser.getId() : 0 );
         model.addAttribute("userName", currentUser != null ? currentUser.getUserName() : "");
         return "book";
@@ -130,5 +168,59 @@ public class SessionController {
         storageService.store(file);
         currentUser.setPicture(file.getOriginalFilename());
         return "redirect:/userprofile/" + currentUser.getId();
+    }
+
+    @RequestMapping(value = "/editbook", method = RequestMethod.POST)
+    public String renderEditBookInfo(@RequestParam  Map<String, String> bookData ,Model model) {
+
+        List<Book> books = bookService.getBooksByTitle(bookData.get("title"));
+        model.addAttribute("books", books);
+        return "editbook";
+    }
+
+    @RequestMapping(value = "/editsave", method = RequestMethod.POST)
+    public String saveBookEdit(@RequestParam  Map<String, String> bookData) {
+        String formerTitle = bookData.get("formerTitle");
+        String title = bookData.get("title");
+        String author = bookData.get("author");
+        String description = bookData.get("description");
+        List<Book> books = bookService.getBooksByTitle(formerTitle);
+        for (Book book : books) {
+            String isbn = bookData.get(String.valueOf(book.getId()));
+            bookService.updateBookInfo(book, title, author, description, isbn);
+        }
+        return "redirect:books/" + title;
+    }
+
+    @RequestMapping(value = "/adminBookView/{isbn}", method = RequestMethod.GET)
+    public String renderEditBookInfo(@PathVariable  String isbn ,Model model) {
+        if (!(currentUser instanceof Librarian)) {
+            return "redirect:/";
+        }
+        Book book = bookService.getBookByIsbn(isbn);
+        User userRentedBy = book.getRentedBy();
+        User userReservedBy = book.getReservedBy();
+        model.addAttribute("book", book);
+        model.addAttribute("user_id", currentUser != null ? currentUser.getId() : 0 );
+        model.addAttribute("userName", currentUser != null ? currentUser.getUserName() : "");
+        model.addAttribute("reservedByName", userReservedBy != null ? userReservedBy.getUserName() : null);
+        model.addAttribute("rentedByName", userRentedBy != null ? userRentedBy.getUserName() : null);
+        model.addAttribute("reservedById", userReservedBy != null ? userReservedBy.getId() : null);
+        model.addAttribute("rentedById", userRentedBy != null ? userRentedBy.getId() : null);
+        return "adminbookview";
+    }
+
+    @RequestMapping(value = "/rentBook", method = RequestMethod.POST)
+    @ResponseBody
+    public String rentBook(@RequestBody Map<String, String> bookData) {
+        bookService.adminRentBook(bookData, userService);
+        return "Success";
+    }
+
+    @RequestMapping(value={"/cancelReservation", "/returnBook"}, method = RequestMethod.POST)
+    @ResponseBody
+    public String cancelReservation(@RequestBody Map<String, String> bookData) {
+        bookService.adminBookReturnCancelUpdate(bookData);
+        return "Success";
     }
 }

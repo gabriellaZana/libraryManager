@@ -20,83 +20,107 @@ function checkPass() {
 
 
 const responseHandler = {
-        errorLogin: function (response) {
-            alert("Incorrect password or username!");
-            $("#logusername").val("");
-            $("#pwd").val("");
-        },
+    errorLogin: function (response) {
+        alert("Incorrect password or username!");
+        $("#logusername").val("");
+        $("#pwd").val("");
+    },
 
-        successLogin: function (response) {
-            console.log(response)
-            alert("Logged in, welcome:)");
-            $(function () {
-                $('#myLoginModal').modal('toggle');
-            });
-            $('.modal-backdrop').remove();
-            $("#logusername").val("");
-            $("#pwd").val("");
-            $("#reglogbutton").hide();
-            $("#logoutbutton").show();
-            console.log((JSON.parse(response)).userName);
-            $("#displayUserName").text((JSON.parse(response)).userName);
-            console.log((JSON.parse(response)).id)
-            $("#refToUserInfo").attr('href', '/userprofile/'+(JSON.parse(response)).id);
+    successLogin: function (response) {
+        console.log(response)
+        alert("Logged in, welcome:)");
+        $(function () {
+            $('#myLoginModal').modal('toggle');
+        });
+        $('.modal-backdrop').remove();
+        $("#logusername").val("");
+        $("#pwd").val("");
+        $("#reglogbutton").hide();
+        $("#logoutbutton").show();
+        $("#displayUserName").text((JSON.parse(response)).userName);
+        $("#refToUserInfo").attr('href', '/userprofile/' + (JSON.parse(response)).id);
+        $("#reglogbutton").attr("id", "logout");
+        $("#logout").html('<a id="log-out" href="/logout">Logout</a>');
+        $("#logout").wrap('<strong></strong>');
+        location.reload(true);
+    },
 
-            $("#reglogbutton").attr("id", "logout");
-            $("#logout").html('<a id="log-out" href="/logout">Logout</a>');
-            $("#logout").wrap('<strong></strong>');
-            console.log(window.location.href);
-            redirect('/', 'GET');
-            },
-
-        errorRegistration: function (response) {
-            console.log(response);
-            let res = JSON.parse(response.responseText)
-            alert("The emptied fields were wrong!");
-            if (res.userName) {
-                $("#username").val("");
-            }
-            if (res.firstName) {
-                $("#firstname").val("");
-            }
-            if (res.lastName) {
-                $("#lastname").val("");
-            }
-            if (res.address) {
-                $("#address").val("");
-            }
-            if (res.email) {
-                $("#newemail").val("");
-            }
-            if (res.phoneNumber) {
-                $("#phonenum").val("");
-            }
-            if (res.dateOfBirth) {
-                $("#dateOfBirth").val("");
-            }
-            if (res.password) {
-                $("#newpwd").val("");
-                $("#newpwd2").val("");
-            }
-        },
-
-        successRegistration: function (response) {
-            alert("Thank you for registering!");
-            $(function () {
-                $('#myLoginModal').modal('toggle');
-            });
-            $('.modal-backdrop').remove();
+    errorRegistration: function (response) {
+        console.log(response);
+        let res = JSON.parse(response.responseText)
+        alert("The emptied fields were wrong!");
+        if (res.userName) {
             $("#username").val("");
+        }
+        if (res.firstName) {
             $("#firstname").val("");
+        }
+        if (res.lastName) {
             $("#lastname").val("");
+        }
+        if (res.address) {
             $("#address").val("");
+        }
+        if (res.email) {
             $("#newemail").val("");
+        }
+        if (res.phoneNumber) {
             $("#phonenum").val("");
+        }
+        if (res.dateOfBirth) {
             $("#dateOfBirth").val("");
+        }
+        if (res.password) {
             $("#newpwd").val("");
             $("#newpwd2").val("");
         }
+    },
+
+    successRegistration: function (response) {
+        alert("Thank you for registering!");
+        $(function () {
+            $('#myLoginModal').modal('toggle');
+        });
+        $('.modal-backdrop').remove();
+        $("#username").val("");
+        $("#firstname").val("");
+        $("#lastname").val("");
+        $("#address").val("");
+        $("#newemail").val("");
+        $("#phonenum").val("");
+        $("#dateOfBirth").val("");
+        $("#newpwd").val("");
+        $("#newpwd2").val("");
+    },
+
+    errorBookAction: function (response) {
+        alert("Something went wrong :( Try again latter!");
+    },
+
+    successRentBook: function (data) {
+        $('#displayRentedBy').text(data.reservedBy);
+        $("#displayReservedBy").text("");
+        $('#return').removeAttr('disabled');
+        $('#rent').attr('disabled', 'disabled');
+        $('#cancel').attr('disabled', 'disabled');
+        $('#possibleReservation').removeAttr('value');
+    },
+
+    successReturnBook: function (data) {
+        $('#displayRentedBy').text("");
+        $('#return').attr('disabled', 'disabled');
+        console.log(data.possibleReservation);
+        if (data.possibleReservation) {
+            $("#rent").removeAttr('disabled');
+        }
+    },
+
+    successCancelBookReservation: function () {
+        $('#displayReservedBy').text("");
+        $('#possibleReservation').removeAttr('value');
+        $('#cancel').attr('disabled', 'disabled');
     }
+}
 
 function register(){
     $('#register-button').on('click', function (event) {
@@ -147,16 +171,76 @@ function getCookie() {
     console.log(document.cookie);
 }
 
+function rentBook() {
+    $('#rent').on('click', function (event) {
+        event.preventDefault();
+        let rentData = {
+            "reservedBy": $("#reservedBy").val(),
+            "id": $("#id").val(),
+            "isbn": $("#isbn").val()
+        };
+
+        $.ajax({
+            url: '/rentBook',
+            type: 'POST',
+            contentType: 'application/json; charset=UTF-8',
+            data: JSON.stringify(rentData),
+            success: responseHandler.successRentBook(rentData),
+            error: responseHandler.errorBookAction
+        })
+    })
+}
+
+function returnBook() {
+    $('#return').on('click', function (event) {
+        event.preventDefault();
+        let returnData = {
+            "rentedBy": $("#rentedBy").val(),
+            "possibleReservation": $("#possibleReservation").val(),
+            "reservedBy": $("#rentedBy").val(),
+            "id": $("#id").val(),
+            "isbn": $("#isbn").val()
+        };
+
+        $.ajax({
+            url: '/returnBook',
+            type: 'POST',
+            contentType: 'application/json; charset=UTF-8',
+            data: JSON.stringify(returnData),
+            success: responseHandler.successReturnBook(returnData),
+            error: responseHandler.errorBookAction
+        })
+    })
+}
+
+function cancelBookReservation() {
+    $('#cancel').on('click', function (event) {
+        event.preventDefault();
+        let data = {
+            "rentedBy": $("#rentedBy").val(),
+            "cancel": $("#cancel").val(),
+            "reservedBy": $("#rentedBy").val(),
+            "id": $("#id").val(),
+            "isbn": $("#isbn").val()
+        };
+
+        $.ajax({
+            url: '/cancelReservation',
+            type: 'POST',
+            contentType: 'application/json; charset=UTF-8',
+            data: JSON.stringify(data),
+            success: responseHandler.successCancelBookReservation,
+            error: responseHandler.errorBookAction
+        })
+    })
+}
+
 
 $(document).ready(function () {
     getCookie();
     login();
     register();
+    rentBook();
+    returnBook();
+    cancelBookReservation()
 });
-
-var redirect = function(url, method) {
-    var form = document.createElement('form');
-    form.method = method;
-    form.action = url;
-    form.submit();
-};

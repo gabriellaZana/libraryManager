@@ -36,36 +36,25 @@
 <div th:replace="header :: copy"></div>
 
 <div class="container">
-    <div class="row list-group">
-        <div  class="item col-xs-4 col-lg-4" th:each="book,iterStat : ${books}">
-            <div class="thumbnail">
-                <div class="caption">
-                    <img th:src="${book.picture_url}" width="320" height="250"/>
-                    <hr/>
-                    <p th:text="${book.title}"></p>
-                    <p>Written by <a data-toggle="modal" data-target="#myModal" th:text="${book.author}"></a></p>
-                    <a class="btn btn-primary" th:href="@{//0.0.0.0:8080/books/{title}(title=${book.title})}">More Info</a>
-                </div>
-            </div>
-        </div>
-    </div>
 
-    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h2 class="modal-title" id="exampleModalLabel">Benkó</h2>
-                </div>
-                <div class="modal-body">
-                    <img src="/pictures/benkó.jpeg" width="480" height="600"/>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="push"></div>
+    <table class="table">
+        <tr>
+            <th>ISBN</th>
+            <th>Title</th>
+            <th>Rented by</th>
+            <th>Reserved by</th>
+        </tr>
+
+        <tr th:each="book, iterStat : ${books}">
+            <td><a th:href="@{~/adminBookView/{isbn} (isbn = ${book.getIsbn()})}" th:text="${book.getIsbn()}"></a></td>
+            <td th:text="${book.getTitle()}"></td>
+            <td th:if="${book.getRentedBy() != null}" th:text="${book.getRentedBy().getFirstName() + ' ' + book.getRentedBy().getLastName()}"></td>
+            <td th:if="${book.getRentedBy() == null}">Isn't rented out!</td>
+            <td th:if="${book.getReservedBy() != null}" th:text="${book.getReservedBy().getFirstName() + ' ' + book.getReservedBy().getLastName()}"></td>
+            <td th:if="${book.getReservedBy() == null}">Isn't reserved!</td>
+        </tr>
+    </table>
+
 </div>
 
 <div th:replace="footer :: copy"></div>
