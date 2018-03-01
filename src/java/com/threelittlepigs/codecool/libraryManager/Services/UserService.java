@@ -61,8 +61,8 @@ public class UserService {
         return null;
     }
 
-    User getUserById(int id) {
-        return userRepository.getOne((long) id);
+    public User getUserById(int id) {
+        return userRepository.findOne((long) id);
     }
 
     User getUserByName(String firstName, String lastName) {

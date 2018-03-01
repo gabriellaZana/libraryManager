@@ -1,6 +1,7 @@
 package com.threelittlepigs.codecool.libraryManager.Services;
 
 import com.threelittlepigs.codecool.libraryManager.Entities.Book;
+import com.threelittlepigs.codecool.libraryManager.Entities.Users.Member;
 import com.threelittlepigs.codecool.libraryManager.Entities.Users.User;
 import com.threelittlepigs.codecool.libraryManager.Enums.Genre;
 import com.threelittlepigs.codecool.libraryManager.Enums.Location;
@@ -9,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class BookService {
@@ -97,5 +99,39 @@ public class BookService {
 
     public List<Book> getBookByReservedByMemberId(User user) {
         return bookRepository.getAllByRentedByMemberOrderByIsbn(user);
+    }
+
+    public void updateBookInfo(Book book, String title, String author, String description, String isbn) {
+        book.setTitle(title);
+        book.setAuthor(author);
+        book.setDescription(description);
+        book.setIsbn(isbn);
+        saveBook(book);
+    }
+
+    public void adminBookReturnCancelUpdate(Map<String, String> bookData) {
+        String isbn = bookData.get("isbn");
+        Book book = getBookByIsbn(isbn);
+        if (bookData.get("cancel") != null) {
+            book.setReservedBy(null);
+        } else {
+            book.setRentedBy(null);
+        }
+        book.setAvailability(true);
+        saveBook(book);
+    }
+
+    public void adminRentBook(Map<String, String> bookData, UserService userService)  {
+        String isbn = bookData.get("isbn");
+        Book book = getBookByIsbn(isbn);
+        long reservedUserId = book.getReservedBy().getId();
+        User rentedUser = book.getRentedBy();
+        if (rentedUser == null) {
+            Member user = (Member) userService.getUserById((int) reservedUserId);
+            book.setRentedBy(user);
+            book.setReservedBy(null);
+            book.setAvailability(true);
+            saveBook(book);
+        }
     }
 }
