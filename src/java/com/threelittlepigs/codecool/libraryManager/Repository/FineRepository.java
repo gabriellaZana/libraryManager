@@ -9,5 +9,5 @@ import java.util.List;
 
 @Repository
 public interface FineRepository extends JpaRepository<Fine, Long> {
-    List<Fine> getFinesByMemberId(long member_id);
+    List<Fine> getFinesByMemberIdAndStatus(long member_id, boolean status);
 }

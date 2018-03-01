@@ -25,6 +25,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static java.lang.Integer.parseInt;
+
 @Controller
 @Scope("session")
 public class SessionController {
@@ -57,6 +59,8 @@ public class SessionController {
         model.addAttribute("user_id", currentUser != null ? currentUser.getId() : 0 );
         model.addAttribute("userName", currentUser != null ? currentUser.getUserName() : "");
         if (currentUser != null && currentUser instanceof Librarian) {
+            List<Fine> fines = fineService.findAll();
+            model.addAttribute("fines", fines);
             model.addAttribute("books", books);
             return "indexAdmin";
         }
@@ -143,7 +147,7 @@ public class SessionController {
     public String renderUserInfo(@PathVariable("id") String id, Model model) {
         List<Book> rentedBooks = bookService.getBookByRentedByMemberId(currentUser);
         List<Book> reservedBooks = bookService.getBookByReservedByMemberId(currentUser);
-        List<Fine> fines = fineService.getFinesByMemberId(Long.valueOf(id));
+        List<Fine> fines = fineService.getFinesByMemberId(Long.valueOf(id), true);
         model.addAttribute("user", currentUser);
         model.addAttribute("user_id", currentUser != null ? currentUser.getId() : 0 );
         model.addAttribute("userName", currentUser != null ? currentUser.getUserName() : "");
@@ -207,5 +211,13 @@ public class SessionController {
         return "Success";
     }
 
-    
+    @RequestMapping(value="/pay/{id}", method = RequestMethod.POST)
+    @ResponseBody
+    public String payment(@PathVariable("id") String id, ModelMap model, HttpServletResponse response){
+        Fine fine = fineService.getFineById((parseInt(id)));
+        fine.setStatus(false);
+        fineService.saveFine(fine);
+        return jsonUtil.toJson("success");
+    }
+
 }
