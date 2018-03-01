@@ -78,6 +78,7 @@ public class SessionController {
     public String renderBook(@PathVariable("title") String title, Model model) {
         List<Book> books = bookService.getBooksByTitle(title);
         model.addAttribute("books", books);
+        model.addAttribute("admin", currentUser instanceof Librarian);
         model.addAttribute("user_id", currentUser != null ? currentUser.getId() : 0 );
         model.addAttribute("userName", currentUser != null ? currentUser.getUserName() : "");
         return "book";
