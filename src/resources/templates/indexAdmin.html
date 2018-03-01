@@ -95,7 +95,7 @@
                         <td th:text="${fine.getDueDate()}">2018-02-05</td>
                         <td th:text="${fine.getAmount()}">Amount</td>
                         <td id="status" th:if="${fine.isStatus()}">Active</td>
-                        <td th:unless="${fine.isStatus()}">Payed</td>
+                        <td th:unless="${fine.isStatus()}">Paid</td>
                         <td th:if="${fine.isStatus()}"><button id="pay" type="button" th:attr="data-id=${fine.getId()}" data-toggle="modal" data-target="#edit" data-uid="1" class="update btn btn-warning btn-sm">Set Payed</button></td>
                     </tr>
                     </tbody>
