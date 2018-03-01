@@ -68,7 +68,21 @@ public class SessionController {
 
     @RequestMapping(value = "/search", method = RequestMethod.GET)
     public String renderSearch(HttpServletRequest request, Model model){
-        List<Book> books = bookService.getBooksByTitleOrAuthorIsContaining(request.getParameter("search"));
+        model.addAttribute("user_id", currentUser != null ? currentUser.getId() : 0 );
+        model.addAttribute("userName", currentUser != null ? currentUser.getUserName() : "");
+        if (currentUser != null && currentUser instanceof Librarian) {
+            List<Book> books = bookService.getBooksByIsbnOrTitleIsContaining(request.getParameter("search"));
+            model.addAttribute("books", books);
+            return "indexAdmin";
+        } else {
+            List<Book> books = bookService.getBooksByTitleOrAuthorIsContaining(request.getParameter("search"));
+            List<Book> booksToRender = getBooksToRender(books);
+            model.addAttribute("books", booksToRender);
+            return "index";
+        }
+    }
+
+    private List<Book> getBooksToRender(List<Book> books) {
         List<Book> booksToRender = new ArrayList<>();
         String title = null;
         for(Book book : books){
@@ -76,13 +90,7 @@ public class SessionController {
             title = book.getTitle();
             booksToRender.add(book);
         }
-        model.addAttribute("books", booksToRender);
-        model.addAttribute("user_id", currentUser != null ? currentUser.getId() : 0 );
-        model.addAttribute("userName", currentUser != null ? currentUser.getUserName() : "");
-        if (currentUser != null && currentUser instanceof Librarian) {
-            return "indexAdmin";
-        }
-        return "index";
+        return booksToRender;
     }
 
     @RequestMapping(value = "/books/{title}", method = RequestMethod.GET)
