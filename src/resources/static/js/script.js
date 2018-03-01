@@ -122,7 +122,7 @@ const responseHandler = {
     },
     successPay: function (repsonse){
         $("#pay").remove();
-        $("#status").text("Payed");
+        $("#status").text("Paid");
     }
 }
 
