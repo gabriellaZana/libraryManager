@@ -39,6 +39,9 @@ public abstract class User {
     @Column(nullable = false)
     private Date dateOfBirth;
 
+    @Column
+    private String picture;
+
     private String phoneNumber;
 
     public User(String userName, String password, String firstName, String lastName, String email, String dateOfBirth, String address, String phoneNumber) {
@@ -117,5 +120,13 @@ public abstract class User {
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
+    }
+
+    public void setPicture(String picture) {
+        this.picture = picture;
+    }
+
+    public String getPicture() {
+        return picture;
     }
 }
