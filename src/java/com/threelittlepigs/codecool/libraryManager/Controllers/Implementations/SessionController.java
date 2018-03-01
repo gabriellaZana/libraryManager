@@ -11,6 +11,7 @@ import com.threelittlepigs.codecool.libraryManager.Services.UserService;
 import com.threelittlepigs.codecool.libraryManager.Utils.JSONUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -205,5 +206,32 @@ public class SessionController {
     public String cancelReservation(@RequestBody Map<String, String> bookData) {
         bookService.adminBookReturnCancelUpdate(bookData);
         return "Success";
+    }
+
+    @RequestMapping("/404")
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public String notFound(Model model) {
+        model.addAttribute("statusCode", "404");
+        model.addAttribute("user_id", currentUser != null ? currentUser.getId() : 0 );
+        model.addAttribute("userName", currentUser != null ? currentUser.getUserName() : "");
+        return "error";
+    }
+
+    @RequestMapping("/500")
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public String internalServerError(Model model) {
+        model.addAttribute("statusCode", "500");
+        model.addAttribute("user_id", currentUser != null ? currentUser.getId() : 0 );
+        model.addAttribute("userName", currentUser != null ? currentUser.getUserName() : "");
+        return "error";
+    }
+
+    @RequestMapping("/405")
+    @ResponseStatus(HttpStatus.METHOD_NOT_ALLOWED)
+    public String methodNotAllowed(Model model) {
+        model.addAttribute("statusCode", "405");
+        model.addAttribute("user_id", currentUser != null ? currentUser.getId() : 0 );
+        model.addAttribute("userName", currentUser != null ? currentUser.getUserName() : "");
+        return "error";
     }
 }
