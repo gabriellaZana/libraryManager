@@ -14,7 +14,7 @@ import java.util.Date;
 public class Book {
     @Id
     @GeneratedValue
-    private int id;
+    private long id;
 
     @Column(nullable = false)
     private String title;
@@ -78,7 +78,7 @@ public class Book {
     }
 
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
