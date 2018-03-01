@@ -65,9 +65,10 @@
             </tr>
             <tr th:each="book,iterStat : ${books}">
                 <td th:text="${book.isbn}">isbn</td>
-                <td th:if="${book.isAvailable() and user_id != 0}"><a th:href="@{//0.0.0.0:8080/reserve/{isbn}(isbn=${book.isbn})}" class="btn btn-secondary">Reserve</a></td>
+                <td th:if="${book.isAvailable() and user_id != 0 and !admin}"><a th:href="@{//0.0.0.0:8080/reserve/{isbn}(isbn=${book.isbn})}" class="btn btn-primary">Reserve</a></td>
+                <td th:if="${book.isAvailable() and user_id != 0 and admin}">Available to reserve</td>
                 <td th:if="${book.isAvailable() and user_id == 0}">Available, log in to reserve</td>
-                <td th:unless="${book.isAvailable()}">Not available</td>
+                <td th:unless="${book.isAvailable()}">Already reserved</td>
             </tr>
         </table>
         <div>

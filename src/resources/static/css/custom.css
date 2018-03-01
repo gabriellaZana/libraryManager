@@ -72,14 +72,19 @@
 }
 
 html, body {
-  height: 75%;
+  height: 91%;
   margin: 0;
 }
 
 .container {
   padding: 20px;
   min-height: 100%;
+  margin-bottom: -50px;
  }
+
+.footer, .push {
+    height: 50px;
+}
 
 .btn-light{
    font-size: 30px;
