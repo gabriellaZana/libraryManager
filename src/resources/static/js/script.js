@@ -91,6 +91,7 @@ const responseHandler = {
         $("#dateOfBirth").val("");
         $("#newpwd").val("");
         $("#newpwd2").val("");
+        location.reload(true);
     },
 
     errorBookAction: function (response) {
