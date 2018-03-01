@@ -157,23 +157,21 @@ public class SessionController {
     @RequestMapping(value = "/editbook", method = RequestMethod.POST)
     public String renderEditBookInfo(@RequestParam  Map<String, String> bookData ,Model model) {
 
-        List<Book> books = bookService.getBooksByTitle(bookData.get("title"));
-        model.addAttribute("books", books);
+        Book book = bookService.getBookById(Long.parseLong(bookData.get("bookId")));
+        model.addAttribute("books", book);
         return "editbook";
     }
 
     @RequestMapping(value = "/editsave", method = RequestMethod.POST)
     public String saveBookEdit(@RequestParam  Map<String, String> bookData) {
-        String formerTitle = bookData.get("formerTitle");
+        String formerIsbn = bookData.get("formerIsbn");
         String title = bookData.get("title");
         String author = bookData.get("author");
         String description = bookData.get("description");
-        List<Book> books = bookService.getBooksByTitle(formerTitle);
-        for (Book book : books) {
-            String isbn = bookData.get(String.valueOf(book.getId()));
-            bookService.updateBookInfo(book, title, author, description, isbn);
-        }
-        return "redirect:books/" + title;
+        Book book = bookService.getBookByIsbn(formerIsbn);
+        String isbn = bookData.get("newIsbn");
+        bookService.updateBookInfo(book, title, author, description, isbn);
+        return "redirect:adminBookView/" + isbn;
     }
 
     @RequestMapping(value = "/adminBookView/{isbn}", method = RequestMethod.GET)

@@ -22,8 +22,8 @@ public class BookService {
         return bookRepository.findAll();
     }
 
-    public Book getBookById(int id) {
-        Book book = bookRepository.findOne(Long.valueOf(id));
+    public Book getBookById(long id) {
+        Book book = bookRepository.findOne(id);
         return book;
     }
 
