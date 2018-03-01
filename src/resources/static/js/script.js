@@ -117,6 +117,7 @@ const responseHandler = {
 
     successCancelBookReservation: function () {
         $('#displayReservedBy').text("");
+        $('#possibleReservation').removeAttr('value');
         $('#cancel').attr('disabled', 'disabled');
     }
 }
